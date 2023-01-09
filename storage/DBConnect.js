@@ -66,7 +66,7 @@ export default class {
                 [id, first_name, last_name, email, token, isActivated, createdAt], function (tx, res) {
                     console.log(res);
                 })
-        })
+        });
     }
     static updateData = async (id, first_name, last_name, email, token, isActivated) => {
         db.transaction(function (txn) {

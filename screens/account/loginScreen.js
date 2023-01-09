@@ -43,6 +43,7 @@ export default LoginScreen = (props) => {
       if (res.status_code == 200) {
         let data = res.data;
         await DBConnect.insertData(data.id, data.first_name, data.last_name, data.email, data.token, data.is_activated, "2022-02-21 10:20:22");
+        await DBConnect.getByEmail(data.email);
         props.navigation.reset({
           index: 0,
           routes: [{ name: 'Home' }],

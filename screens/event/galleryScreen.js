@@ -1,9 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { Appearance, Dimensions, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Appearance, Dimensions, Image, PermissionsAndroid, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import GridImageView from 'react-native-grid-image-viewer';
 import { Color, Dark } from '../../config/global';
 import { FloatingAction } from "react-native-floating-action";
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import GeneralApiData from '../../Data/GeneralApiData';
 
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
@@ -28,10 +30,64 @@ export default function GalleryScreen(props) {
     useEffect(() => {
         setEvent(props.route.params.event);
     }, []);
+
     const openCamera = async () => {
-        navigation.navigate("Camera", {
-            event: event
-        })
+        // navigation.navigate("Camera", {
+        //     event: event
+        // })
+        const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            const result = await launchCamera({
+                mediaType: "photo",
+                maxWidth: 800,
+                maxHeight: 600,
+                durationLimit: 20,
+                quality: 1,
+                saveToPhotos: true,
+                selectionLimit: 10
+            });
+            if (result && result.assets) {
+                let form = new FormData();
+                let files = [];
+                result.assets.forEach(photo => {
+                    files.push({
+                        name: photo.fileName,
+                        type: photo.type,
+                        uri:
+                            Platform.OS === 'android'
+                                ? photo.uri
+                                : photo.uri.replace('file://', ''),
+                    });
+                });
+                console.log(files);
+                form.append('images', JSON.stringify())
+                let res = await GeneralApiData.EventUploadLiveGallery(event.id, form);
+                console.log(res);
+            }
+        } else {
+            // if get here, the user did NOT accepted the permissions
+        }
+
+
+    }
+    const openGallery = async () => {
+        const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            const result = await launchImageLibrary({
+                mediaType: "photo",
+                maxWidth: 800,
+                maxHeight: 600,
+                durationLimit: 20,
+                quality: 1,
+                saveToPhotos: true,
+                selectionLimit: 10
+            });
+            console.log(result)
+            if (result && result.assets) {
+                console.log(result.assets);
+
+            }
+        }
     }
     return (
         <>
@@ -54,26 +110,6 @@ export default function GalleryScreen(props) {
                         'https://media.istockphoto.com/id/1189304032/photo/doctor-holding-digital-tablet-at-meeting-room.jpg?s=612x612&w=0&k=20&c=RtQn8w_vhzGYbflSa1B5ea9Ji70O8wHpSgGBSh0anUg=',
                         'https://t4.ftcdn.net/jpg/02/60/04/09/360_F_260040900_oO6YW1sHTnKxby4GcjCvtypUCWjnQRg5.jpg',
                         'https://t4.ftcdn.net/jpg/03/05/41/27/360_F_305412791_XRNiWaFCREjLLpSQfj0e736foBoYXXYv.jpg',
-                        'https://media.istockphoto.com/id/1189304032/photo/doctor-holding-digital-tablet-at-meeting-room.jpg?s=612x612&w=0&k=20&c=RtQn8w_vhzGYbflSa1B5ea9Ji70O8wHpSgGBSh0anUg=',
-                        'https://t4.ftcdn.net/jpg/03/05/41/27/360_F_305412791_XRNiWaFCREjLLpSQfj0e736foBoYXXYv.jpg',
-                        'https://t4.ftcdn.net/jpg/03/05/41/27/360_F_305412791_XRNiWaFCREjLLpSQfj0e736foBoYXXYv.jpg',
-                        'https://media.istockphoto.com/id/1189304032/photo/doctor-holding-digital-tablet-at-meeting-room.jpg?s=612x612&w=0&k=20&c=RtQn8w_vhzGYbflSa1B5ea9Ji70O8wHpSgGBSh0anUg=',
-                        'https://t4.ftcdn.net/jpg/02/60/04/09/360_F_260040900_oO6YW1sHTnKxby4GcjCvtypUCWjnQRg5.jpg',
-                        'https://t4.ftcdn.net/jpg/02/60/04/09/360_F_260040900_oO6YW1sHTnKxby4GcjCvtypUCWjnQRg5.jpg',
-                        'https://media.istockphoto.com/id/1189304032/photo/doctor-holding-digital-tablet-at-meeting-room.jpg?s=612x612&w=0&k=20&c=RtQn8w_vhzGYbflSa1B5ea9Ji70O8wHpSgGBSh0anUg=',
-                        'https://t4.ftcdn.net/jpg/02/60/04/09/360_F_260040900_oO6YW1sHTnKxby4GcjCvtypUCWjnQRg5.jpg',
-                        'https://t4.ftcdn.net/jpg/03/05/41/27/360_F_305412791_XRNiWaFCREjLLpSQfj0e736foBoYXXYv.jpg',
-                        'https://media.istockphoto.com/id/1189304032/photo/doctor-holding-digital-tablet-at-meeting-room.jpg?s=612x612&w=0&k=20&c=RtQn8w_vhzGYbflSa1B5ea9Ji70O8wHpSgGBSh0anUg=',
-                        'https://t4.ftcdn.net/jpg/02/60/04/09/360_F_260040900_oO6YW1sHTnKxby4GcjCvtypUCWjnQRg5.jpg',
-                        'https://t4.ftcdn.net/jpg/03/05/41/27/360_F_305412791_XRNiWaFCREjLLpSQfj0e736foBoYXXYv.jpg',
-                        'https://media.istockphoto.com/id/1189304032/photo/doctor-holding-digital-tablet-at-meeting-room.jpg?s=612x612&w=0&k=20&c=RtQn8w_vhzGYbflSa1B5ea9Ji70O8wHpSgGBSh0anUg=',
-                        'https://t4.ftcdn.net/jpg/02/60/04/09/360_F_260040900_oO6YW1sHTnKxby4GcjCvtypUCWjnQRg5.jpg',
-                        'https://t4.ftcdn.net/jpg/03/05/41/27/360_F_305412791_XRNiWaFCREjLLpSQfj0e736foBoYXXYv.jpg',
-                        'https://media.istockphoto.com/id/1189304032/photo/doctor-holding-digital-tablet-at-meeting-room.jpg?s=612x612&w=0&k=20&c=RtQn8w_vhzGYbflSa1B5ea9Ji70O8wHpSgGBSh0anUg=',
-                        'https://t4.ftcdn.net/jpg/02/60/04/09/360_F_260040900_oO6YW1sHTnKxby4GcjCvtypUCWjnQRg5.jpg',
-                        'https://t4.ftcdn.net/jpg/03/05/41/27/360_F_305412791_XRNiWaFCREjLLpSQfj0e736foBoYXXYv.jpg',
-                        'https://media.istockphoto.com/id/1189304032/photo/doctor-holding-digital-tablet-at-meeting-room.jpg?s=612x612&w=0&k=20&c=RtQn8w_vhzGYbflSa1B5ea9Ji70O8wHpSgGBSh0anUg=',
-                        'https://t4.ftcdn.net/jpg/02/60/04/09/360_F_260040900_oO6YW1sHTnKxby4GcjCvtypUCWjnQRg5.jpg',
 
                     ]} />
 
@@ -88,7 +124,7 @@ export default function GalleryScreen(props) {
                         if (name == "camera") {
                             openCamera();
                         } else {
-                            console.log(`selected button: ${name}`);
+                            openGallery()
                         }
                     }}
                 />

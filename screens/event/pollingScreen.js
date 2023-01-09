@@ -9,23 +9,26 @@ let Colors = Color;
 
 export default function PollingScreen(props) {
     const [loading, isLoading] = useState(false);
-    const [pollingUrl, setPollingUrl] = useState(false);
     const [event, setEvent] = useState(null);
     const [eventPolling, setEventPolling] = useState(null);
 
 
     const init = async () => {
         isLoading(true);
-        if (event && event.id != 0) {
-            const res = await GeneralApiData.EventPolling(event ? event.id : 0);
-            isLoading(false);
-            if (res && res.status_code == 200) {
-                console.log(res.data);
-                setEventPolling(res.data);
-            } else {
-                setEventPolling(null);
+        let time = setTimeout(async () => {
+            clearTimeout(time);
+            if (event && event.id != 0) {
+                const res = await GeneralApiData.EventPolling(event ? event.id : 0);
+                isLoading(false);
+                console.log(res);
+                if (res && res.status_code == 200) {
+                    console.log(res.data);
+                    setEventPolling(res.data);
+                } else {
+                    setEventPolling(null);
+                }
             }
-        }
+        }, 2000);
     }
     useEffect(() => {
         setEvent(props.route.params.event);

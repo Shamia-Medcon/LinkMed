@@ -3,10 +3,11 @@ export default class {
     //Init Route
     static _initRoute = _prefix + "/init";
 
-    // Account Route
+    // Guest Route
     static _loginRoute = _prefix + "/accounts/login";
     static _registerRoute = _prefix + "/accounts/register";
     static _resetPasswordRoute = _prefix + "/accounts/resetPassword";
+    static _specialityRoute = _prefix + "/specialities";
 
 
     // Auth Route
@@ -24,6 +25,7 @@ export default class {
     static _eventFeedbackRoute = _prefix + "/eventFeedback";
     static _eventQuestionByUser = _prefix + "/questionByEvent";
     static _eventPollingRoute = _prefix + "/pollingEventLatest";
+    static _eventGalleryRoute = _prefix + "/eventUploadGallery";
     static _eventFeedbackEvaluation = _prefix + "/eventFeedbackEvaluation";
     static _eventFeedbackEvaluationUserAnswer = _prefix + "/eventFeedbackEvaluationUserAnswer";
 

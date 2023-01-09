@@ -11,31 +11,35 @@ export default function ListOfEvents(props) {
     const [loading, isLoading] = useState(false);
     const [page, setPage] = useState(0);
     const [events, setEvents] = useState([]);
-
-    init = async () => {
-        isLoading(true);
-        let data = {
-            page: page
-        }
-        const res = await GeneralApiData.EventList(data);
-        isLoading(false);
-        if (res && res.status_code == 200) {
-            setEvents(res.data);
-        } else {
-            setEvents([]);
-        }
-    }
     useEffect(() => {
 
         init();
     }, []);
+    const init = async () => {
+        isLoading(true);
+        let time = setTimeout(async () => {
+            clearTimeout(time);
+            let data = {
+                page: page
+            }
+            const res = await GeneralApiData.EventList(data);
+            isLoading(false);
+            if (res && res.status_code == 200) {
+                setEvents(res.data);
+                setPage(page + 1);
+            } else {
+                setEvents([]);
+            }
+        }, 2000);
+    }
+
     return (
         <>
 
             {loading ? (<>
                 <ActivityIndicator />
             </>) : (<>
-                {events.map((item, key) => {
+                {events.length > 0 && events.map((item, key) => {
                     return (<View key={key}>
                         <EventItem event={item} navigation={props.navigation} />
                     </View>

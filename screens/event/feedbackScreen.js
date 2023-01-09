@@ -17,29 +17,30 @@ export default function FeedBackScreen(props) {
 
     init = async () => {
         isLoading(true);
-        if (event && event.id > 0) {
-
-            const res = await GeneralApiData.EventFeedbackEvaluation(event ? event.id : 0);
-            if (res && res.status_code == 200) {
-                setEventFeedback(res.data);
-                let data = res.data;
-                for (var i = 0; i < data.length; i++) {
-                    let answersList = data[i].answers;
-                    for (var j = 0; j < answersList.length; j++) {
-                        if (answersList[j].selected) {
-                            answers.push({
-                                'id': data[i].id,
-                                'answer_id': answersList[j].id
-                            });
+        let time = setTimeout(async () => {
+            clearTimeout(time);
+            if (event && event.id > 0) {
+                const res = await GeneralApiData.EventFeedbackEvaluation(event ? event.id : 0);
+                if (res && res.status_code == 200) {
+                    setEventFeedback(res.data);
+                    let data = res.data;
+                    for (var i = 0; i < data.length; i++) {
+                        let answersList = data[i].answers;
+                        for (var j = 0; j < answersList.length; j++) {
+                            if (answersList[j].selected) {
+                                answers.push({
+                                    'id': data[i].id,
+                                    'answer_id': answersList[j].id
+                                });
+                            }
                         }
                     }
+                } else {
+                    setEventFeedback([]);
                 }
-            } else {
-                setEventFeedback([]);
             }
-        }
-        isLoading(false);
-
+            isLoading(false);
+        }, 2000);
     }
     useEffect(() => {
         setEvent(props.route.params.event);

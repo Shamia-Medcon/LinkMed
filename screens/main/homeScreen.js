@@ -7,13 +7,11 @@ const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
 
 export default function HomeScreen(props) {
-    const [loading, isLoading] = useState(false);
-    const [fetched, isFetched] = useState(false);
 
 
 
     return (<>
-        <StatusBar  barStyle={"light-content"} backgroundColor={Colors.main_color} />
+        <StatusBar barStyle={"light-content"} backgroundColor={Colors.main_color} />
 
         <View style={styles.container}>
 
@@ -32,6 +30,7 @@ export default function HomeScreen(props) {
 const styles = StyleSheet.create({
     scroll: {
         flex: 1,
+        flexDirection:'column',
         backgroundColor: Colors.white,
     },
     container: {
@@ -50,7 +49,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     lists: {
-        marginTop: 20
+        marginTop: 20,
+      
     }
 
 

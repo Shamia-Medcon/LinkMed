@@ -16,17 +16,21 @@ export default function ProgramScreen(props) {
 
     init = async () => {
         isLoading(true);
-        if (event && event.id > 0) {
-            const res = await GeneralApiData.EventAgendaList({}, event ? event.id : 0);
-            if (res && res.status_code == 200) {
-                setDays(res.data.days);
-                setEventAgenda(res.data.agenda);
-                setTime(res.data.time)
-            } else {
-                setEventAgenda([]);
+        let time = setTimeout(async () => {
+            clearTimeout(time);
+            if (event && event.id > 0) {
+                const res = await GeneralApiData.EventAgendaList({}, event ? event.id : 0);
+                if (res && res.status_code == 200) {
+                    setDays(res.data.days);
+                    setEventAgenda(res.data.agenda);
+                    setTime(res.data.time)
+                } else {
+                    setEventAgenda([]);
+                }
             }
-        }
-        isLoading(false);
+            isLoading(false);
+        }, 2000);
+
 
     }
     useEffect(() => {
@@ -87,6 +91,7 @@ export default function ProgramScreen(props) {
 const styles = StyleSheet.create({
     program: {
         flex: 1,
+        flexDirection: 'column',
         width: Dimensions.get('screen').width,
         height: Dimensions.get('screen').height,
     },

@@ -49,4 +49,32 @@ export default class {
                 return error.response.data;
             });
     }
+    static async multipart(url, formdata) {
+        let user = await LocalStorage.getData('user');
+        let token = ""
+        if (user) {
+            token = user.token;
+        }
+        let config = {
+            responseType: "json",
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                 Authorization: "Bearer " + token,
+                 Accept: "application/json"
+            },
+        };
+        return await fetch(url, {
+            method: "post",
+            body: formdata,
+            headers: config
+        })
+            .then(response => {
+                console.log(response);
+            }).then(response => {
+                console.log(response);
+                return response
+            }).catch((error) => {
+                console.error(error);
+            });
+    }
 }

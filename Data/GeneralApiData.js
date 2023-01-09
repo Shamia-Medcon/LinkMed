@@ -5,6 +5,15 @@ export default class {
     static async InitApp() {
 
     }
+
+
+
+    //-----------
+    //Specialities Function
+    //--------------------
+    static async SprcialityFunction() {
+        return await AxiosApi.get(routerAPI._specialityRoute);
+    }
     //////////////Registration Routes//////////////
     //-----------
     //Login Function
@@ -63,8 +72,14 @@ export default class {
     //-----------
     //Post Event Feedback Evaluation Answers Function
     //--------------------
-    static async EventFeedbackEvaluationUserAnswer(data) { 
+    static async EventFeedbackEvaluationUserAnswer(data) {
         return AxiosApi.post(routerAPI._eventFeedbackEvaluationUserAnswer, data);
+    }
+    //-----------
+    //Upload List of Images Function
+    //--------------------
+    static async EventUploadLiveGallery(id, data) {
+        return AxiosApi.multipart(routerAPI._eventGalleryRoute + "/" + id, data);
     }
 
 

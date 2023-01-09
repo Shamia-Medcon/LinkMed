@@ -14,16 +14,19 @@ export default function FacultyScreen(props) {
 
     init = async () => {
         isLoading(true);
-        if (event && event.id > 0) {
+        let time = setTimeout(async () => {
+            clearTimeout(time);
+            if (event && event.id > 0) {
 
-            const res = await GeneralApiData.EventSpeakerList(event ? event.id : 0);
-            if (res && res.status_code == 200) {
-                setEventFaculty(res.data);
-            } else {
-                setEventFaculty([]);
+                const res = await GeneralApiData.EventSpeakerList(event ? event.id : 0);
+                if (res && res.status_code == 200) {
+                    setEventFaculty(res.data);
+                } else {
+                    setEventFaculty([]);
+                }
             }
-        }
-        isLoading(false);
+            isLoading(false);
+        }, 2000);
 
     }
     useEffect(() => {
