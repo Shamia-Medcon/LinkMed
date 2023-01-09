@@ -1,0 +1,30 @@
+const _prefix = "http://192.168.0.156/MedConnect/public/api/v1";
+export default class {
+    //Init Route
+    static _initRoute = _prefix + "/init";
+
+    // Account Route
+    static _loginRoute = _prefix + "/accounts/login";
+    static _registerRoute = _prefix + "/accounts/register";
+    static _resetPasswordRoute = _prefix + "/accounts/resetPassword";
+
+
+    // Auth Route
+    static _homeRoute = _prefix + "/home";
+    static _aboutRoute = _prefix + "/about";
+    static _contactUsRoute = _prefix + "/contactUs";
+    static _privacyRoute = _prefix + "/privacy";
+
+    // Resources Route
+    static _companyRoute = _prefix + "/company";
+    static _eventRoute = _prefix + "/events";
+    static _eventActivityRoute = _prefix + "/eventActivity";
+    static _eventAgendaRoute = _prefix + "/agendaByEvent";
+    static _eventSpeakerRoute = _prefix + "/speakersByEvent";
+    static _eventFeedbackRoute = _prefix + "/eventFeedback";
+    static _eventQuestionByUser = _prefix + "/questionByEvent";
+    static _eventPollingRoute = _prefix + "/pollingEventLatest";
+    static _eventFeedbackEvaluation = _prefix + "/eventFeedbackEvaluation";
+    static _eventFeedbackEvaluationUserAnswer = _prefix + "/eventFeedbackEvaluationUserAnswer";
+
+}
