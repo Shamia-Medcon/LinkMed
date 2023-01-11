@@ -68,7 +68,6 @@
 	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>For taking photos</string>
-
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>For saving photos</string>
 </dict>

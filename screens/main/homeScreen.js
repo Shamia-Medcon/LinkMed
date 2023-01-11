@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, StatusBar, Appearance, StyleSheet, Dimensions, Image } from 'react-native';
-import Header from '../../components/common/header';
 import Layout from '../../components/common/layout';
 import ListOfEvents from '../../components/events/list';
 import { Color, Dark } from '../../config/global';
@@ -51,7 +50,6 @@ const styles = StyleSheet.create({
     },
     lists: {
         marginTop: 20,
-
     },
     title: {
         color: Colors.main_color,
@@ -61,7 +59,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontFamily: "OpenSans-Bold",
         textTransform:'uppercase',
-
     },
 
 
