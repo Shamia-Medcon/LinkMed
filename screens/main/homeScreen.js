@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, StatusBar, Appearance, StyleSheet, Dimensions, Image } from 'react-native';
 import Header from '../../components/common/header';
+import Layout from '../../components/common/layout';
 import ListOfEvents from '../../components/events/list';
 import { Color, Dark } from '../../config/global';
 const colorScheme = Appearance.getColorScheme();
@@ -15,12 +16,12 @@ export default function HomeScreen(props) {
 
         <View style={styles.container}>
 
-            <ScrollView contentContainerStyle={{ paddingBottom: 100 }} style={styles.scroll} >
-                <Header />
+            <Layout contentContainerStyle={{ paddingBottom: 100 }} style={styles.scroll} >
+                <Text style={styles.title}>My Events</Text>
                 <View style={{ ...styles.center, ...styles.lists }}>
                     <ListOfEvents navigation={props.navigation} />
                 </View>
-            </ScrollView>
+            </Layout>
         </View>
 
     </>
@@ -30,7 +31,7 @@ export default function HomeScreen(props) {
 const styles = StyleSheet.create({
     scroll: {
         flex: 1,
-        flexDirection:'column',
+        flexDirection: 'column',
         backgroundColor: Colors.white,
     },
     container: {
@@ -50,8 +51,18 @@ const styles = StyleSheet.create({
     },
     lists: {
         marginTop: 20,
-      
-    }
+
+    },
+    title: {
+        color: Colors.main_color,
+        width: Dimensions.get('screen').width,
+        textAlign: 'center',
+        marginVertical: 5,
+        fontSize: 20,
+        fontFamily: "OpenSans-Bold",
+        textTransform:'uppercase',
+
+    },
 
 
 });

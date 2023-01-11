@@ -79,8 +79,14 @@ export default class {
     //Upload List of Images Function
     //--------------------
     static async EventUploadLiveGallery(id, data) {
-        return AxiosApi.multipart(routerAPI._eventGalleryRoute + "/" + id, data);
+        return AxiosApi.multipart(routerAPI._eventUploadGalleryRoute + "/" + id, data);
     }
+    //-----------
+    //Get List of Images Function
+    //--------------------
+    static async EventLoadGallery(id, data) {
 
+        return AxiosApi.get(routerAPI._eventGalleryRoute + "/" + id, data);
+    }
 
 }

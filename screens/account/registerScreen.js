@@ -19,7 +19,7 @@ export default function RegisterScreen() {
 
   const [countries, setCountries] = useState([]);
   const [specialities, setSpecialities] = useState([]);
-  const [verify, setVerify] = useState(true);
+  const [verify, setVerify] = useState(false);
 
   const [loading, isLoading] = useState(false);
   const [fristNameError, setFirstNameError] = useState("");
@@ -108,13 +108,22 @@ export default function RegisterScreen() {
   const onSubmit = async () => {
     //show loading
     isLoading(true);
-    console.log(info);
     if (valid()) {
       //call API
       let res = await GeneralApiData.RegisterFunction(info);
       //processing response
       if (res.status_code == 200) {
-        console.log(res.data);
+        setVerify(true);
+        setInfo({
+          first_name: "",
+          last_name: "",
+          email: "",
+          password: "",
+          confirm_password: "",
+          speciality_id: "",
+          country: "",
+          term: false
+        });
       } else {
         setError(res.message);
       }
@@ -177,9 +186,9 @@ export default function RegisterScreen() {
           <ProgressBarLoading />
         </>) : (<>
           {verify ? (<>
-            <View style={{ ...styles.verifyContent,...styles.center }}>
+            <View style={{ ...styles.verifyContent, ...styles.center }}>
               <View style={{ ...styles.center, ...styles.verify, }}>
-                <Text style={{ ...styles.title, padding: 20, textAlign: 'center',color: Colors.main_color }}>Thank you for your registration, Please check your email to verify your account</Text>
+                <Text style={{ ...styles.title, padding: 20, textAlign: 'center', color: Colors.main_color }}>Thank you for your registration, Please check your email to verify your account</Text>
                 <TouchableOpacity
                   style={styles.button}
                   activeOpacity={.9} onPress={() => {
@@ -201,9 +210,13 @@ export default function RegisterScreen() {
                           ...styles.backIcon
                         }} />
                     </TouchableOpacity>
+                    <View>
+                      <Text style={styles.signupTitle}>Sign Up</Text>
+                    </View>
                   </View>
 
                   <View>
+
                     {error != "" ? (<>
                       <View style={styles.errorContent}>
                         <Text style={styles.error}>{error}</Text>
@@ -458,6 +471,17 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderRadius: 50,
     height: 50,
+  },
+  signupTitle: {
+    color: Colors.white,
+    fontSize: 20,
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 30,
+    fontFamily: "OpenSans-Bold",
+    textTransform: 'capitalize',
+    textAlign:'center'
   },
   title: {
     width: Dimensions.get('screen').width * .8,

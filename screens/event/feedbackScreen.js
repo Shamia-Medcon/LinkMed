@@ -44,8 +44,10 @@ export default function FeedBackScreen(props) {
     }
     useEffect(() => {
         setEvent(props.route.params.event);
-        init();
     }, [event]);
+    useEffect(() => {
+        init();
+    }, []);
     const selectAnswers = (id, answer_id) => {
         let exists = false;
         let newAnswers = answers.map((item) => {
@@ -197,6 +199,7 @@ const styles = StyleSheet.create({
     question: {
         fontSize: 15,
         fontFamily: "OpenSans-ExtraBold",
+        color:Colors.grey_color
 
     },
     inline: {

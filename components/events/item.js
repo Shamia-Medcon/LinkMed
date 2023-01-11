@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
         position: 'relative',
     },
     item: {
-        backgroundColor: Colors.main_color
+        backgroundColor: Colors.white
     },
     row: {
         width: Dimensions.get('screen').width * .95,
@@ -96,10 +96,12 @@ const styles = StyleSheet.create({
     details: {
         height: Dimensions.get('screen').height * .25,
         width: Dimensions.get('screen').width * .35,
-        borderRadius: 1,
-        elevation: 1,
+        borderRadius: 2,
+        elevation: 5,
         borderTopLeftRadius: 20,
         borderBottomLeftRadius: 20,
+        borderTopRightRadius: 20,
+        borderBottomRightRadius: 20,
         shadowColor: "#000000",
         justifyContent: 'center',
         position: 'relative',

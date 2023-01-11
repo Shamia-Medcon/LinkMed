@@ -18,8 +18,8 @@ export default function ProgramScreen(props) {
         isLoading(true);
         let time = setTimeout(async () => {
             clearTimeout(time);
-            if (event && event.id > 0) {
-                const res = await GeneralApiData.EventAgendaList({}, event ? event.id : 0);
+            if (props.route.params.event && props.route.params.event.id > 0) {
+                const res = await GeneralApiData.EventAgendaList({}, props.route.params.event ? props.route.params.event.id : 0);
                 if (res && res.status_code == 200) {
                     setDays(res.data.days);
                     setEventAgenda(res.data.agenda);
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     verticalBorder: {
         borderLeftWidth: 2,
         borderLeftColor: Colors.main_color,
-        paddingLeft: 10
+        paddingLeft: 10,
 
     },
     center: {
@@ -126,20 +126,20 @@ const styles = StyleSheet.create({
     top: {
         fontSize: 12,
         lineHeight: 20,
-        color: Colors.main_color,
+        color: Colors.grey_color,
         fontFamily: "OpenSans-Bold",
     },
     prefix: {
         fontSize: 15,
         lineHeight: 30,
-        color: Colors.main_color,
+        color: Colors.grey_color,
         fontFamily: "OpenSans-ExtraBold",
 
     },
     postfix: {
         fontSize: 15,
         lineHeight: 30,
-        color: Colors.main_color,
+        color: Colors.grey_color,
         fontFamily: "OpenSans-ExtraBold",
         marginHorizontal: 5
     },
@@ -152,18 +152,19 @@ const styles = StyleSheet.create({
     },
     timeTitle: {
         fontSize: 15,
-        color: Colors.main_color,
+        color: Colors.grey_color,
         fontFamily: "OpenSans-Bold",
     },
     agendaTimeTitle: {
-        fontSize: 12,
-        color: Colors.main_color,
+        fontSize: 10,
+        color: Colors.grey_color,
         fontFamily: "OpenSans-SemiBold",
         paddingHorizontal: 5
     },
     title: {
-        fontSize: 15,
+        fontSize: 14,
         fontFamily: "OpenSans-Bold",
+        color:Color.grey_color,
     },
     item: {
         paddingVertical: 10,
@@ -172,6 +173,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontFamily: "OpenSans-Bold",
         color: Colors.main_color,
+        marginBottom:10
 
     },
 });

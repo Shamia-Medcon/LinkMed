@@ -7,7 +7,7 @@ import GeneralApiData from '../../Data/GeneralApiData';
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
 
-export default function SendingQuestionScreen(props) {
+export default function SendingQuestionScreenOld(props) {
     const [loading, isLoading] = useState(false);
     const [submitLoading, isSubmitLoading] = useState(false);
     const [eventQuestion, setEventQuestion] = useState([]);
@@ -133,6 +133,7 @@ const styles = StyleSheet.create({
     input: {
         borderWidth: 2,
         borderColor: Colors.main_color,
+        color:Colors.grey_color
     },
     button: {
         backgroundColor: Colors.main_color,
@@ -152,24 +153,28 @@ const styles = StyleSheet.create({
     previousQuestionTitle: {
         fontFamily: "OpenSans-Bold",
         color: Colors.main_color,
-        fontSize: 20
+        fontSize: 20,
+        marginHorizontal:20
 
     },
     questionText: {
-        padding: 10,
         fontFamily: "OpenSans-Bold",
+        margin:20
 
     },
     text: {
         alignItems: 'center',
-        fontSize: 17
+        fontSize: 17,
+        color:Colors.grey_color,
 
     },
     date: {
         justifyContent: 'flex-end',
         textAlign: 'right',
         alignItems: 'center',
-        fontSize: 15
+        fontSize: 15,
+        color:Colors.grey_color,
+
 
     },
     error: {

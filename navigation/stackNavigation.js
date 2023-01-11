@@ -13,7 +13,7 @@ import { CameraScreen } from "react-native-camera-kit";
 import EventDetails from "../screens/event/detailsScreen";
 import FacultyScreen from "../screens/event/facultyScreen";
 import FeedBackScreen from "../screens/event/feedbackScreen";
-import SendingQuestionScreen from "../screens/event/questionScreen";
+import SendingQuestionScreen from "../screens/event/sendingQuestionScreen";
 import PollingScreen from "../screens/event/pollingScreen";
 import ProgramScreen from "../screens/event/programScreen";
 

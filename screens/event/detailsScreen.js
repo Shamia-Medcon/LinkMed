@@ -59,115 +59,128 @@ export default function EventDetails(props) {
             },
         ]
     ]);
+    const init = async () => {
+        isLoading(true);
+        let timer = setTimeout(() => {
+            clearTimeout(timer);
+            isLoading(false);
+
+        }, 2000);
+    }
     useEffect(() => {
         setEvent(props.route.params.event);
+        init();
     }, []);
-
     return (
         <>
-            {loading ? (<>
-                <ActivityIndicator />
-            </>) : (<>
-                <>
+            <Layout back={true} >
 
-                    <Layout back={true} >
-                        <View>
-                            <View style={styles.center}>
-                                <Text style={{ ...styles.title, ...styles._margin }}>
-                                    {event ? event.title : ""}
+                {loading ? (<>
+                    <ActivityIndicator />
+                </>) : (<>
+                    <>
+                        {event ? (<>
+                            <View>
+                                <View style={styles.center}>
+                                    <Text style={{ ...styles.title, ...styles._margin }}>
+                                        {event.title}
+                                    </Text>
+                                </View>
+                                <View style={styles.rowItem}>
+                                    <View style={styles.colItem}>
+                                        <Image source={{ uri: event ? event.logo : "" }}
+                                            resizeMode='contain'
+                                            style={{
+                                                ...styles.logo,
+                                                ...styles.center,
+                                            }} />
+                                    </View>
+                                    <View style={styles.colItem}>
+                                        <View style={{ ...styles.rowItem }}>
+                                            <Image source={require('../../assets/img/date.png')}
+                                                resizeMode='contain'
+                                                style={{
+                                                    ...styles.smallIcon
+                                                }} />
+                                            <View style={{ ...styles.split }}>
+                                            </View>
+                                            <Text style={{ ...styles.time }}>
+                                                {event ? event.event_start : ""}
+                                            </Text>
+
+                                        </View>
+
+                                        <View style={{ ...styles.rowItem }}>
+                                            <Image source={require('../../assets/img/time.png')}
+                                                resizeMode='contain'
+                                                style={{
+                                                    ...styles.smallIcon
+                                                }} />
+                                            <View style={{ ...styles.split }}>
+                                            </View>
+                                            <Text style={{ ...styles.time }}>
+                                                {event ? event.time : ""}
+                                            </Text>
+                                        </View>
+                                        <View style={{ ...styles.rowItem }}>
+                                            <Image source={require('../../assets/img/location.png')}
+                                                resizeMode='contain'
+                                                style={{
+                                                    ...styles.smallIcon,
+                                                }} />
+                                            <View style={{ ...styles.split }}>
+                                            </View>
+                                            <TouchableOpacity activeOpacity={.9} onPress={() => {
+                                                Linking.openURL(event.location);
+
+                                            }}>
+                                                <Text style={{ ...styles.location }}>
+                                                    {event ? event.address : ""}
+                                                </Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                </View>
+                                <Text style={styles.description}>
+                                    {event ? event.description : ""}
                                 </Text>
                             </View>
-                            <View style={styles.rowItem}>
-                                <View style={styles.colItem}>
-                                    <Image source={require('../../assets/img/logo_dark.png')}
-                                        resizeMode='contain'
-                                        style={{
-                                            ...styles.icon,
-                                            ...styles.center,
 
-                                        }} />
-                                </View>
-                                <View style={styles.colItem}>
-                                    <View style={{ ...styles.rowItem }}>
-                                        <Image source={require('../../assets/img/date.png')}
-                                            resizeMode='contain'
-                                            style={{
-                                                ...styles.smallIcon
-                                            }} />
-                                        <View style={{ ...styles.split }}>
-                                        </View>
-                                        <Text style={{ ...styles.time }}>
-                                            {event ? event.event_start : ""}
-                                        </Text>
+                            {items && items.map((row, key) => {
+                                return (<View key={key}>
+                                    <View style={styles.row}>
+                                        {row.map((item, key1) => {
+                                            return <View key={key1}>
+                                                <TouchableOpacity key={key1} onPress={() => {
 
+                                                    navigation.navigate(item.route, {
+                                                        event: event
+                                                    })
+                                                }} activeOpacity={1} style={styles.col}>
+
+                                                    <Image source={item.icon}
+                                                        resizeMode='contain'
+                                                        style={{
+                                                            ...styles.icon
+                                                        }} />
+                                                    <Text style={{ ...styles._margin, ...styles.text }}>{item.title}</Text>
+                                                </TouchableOpacity>
+
+                                            </View>
+                                        })}
                                     </View>
+                                </View>)
+                            })}
 
-                                    <View style={{ ...styles.rowItem }}>
-                                        <Image source={require('../../assets/img/time.png')}
-                                            resizeMode='contain'
-                                            style={{
-                                                ...styles.smallIcon
-                                            }} />
-                                        <View style={{ ...styles.split }}>
-                                        </View>
-                                        <Text style={{ ...styles.time }}>
-                                            {event ? event.time : ""}
-                                        </Text>
-                                    </View>
-                                    <View style={{ ...styles.rowItem }}>
-                                        <Image source={require('../../assets/img/location.png')}
-                                            resizeMode='contain'
-                                            style={{
-                                                ...styles.smallIcon,
-                                            }} />
-                                        <View style={{ ...styles.split }}>
-                                        </View>
-                                        <TouchableOpacity activeOpacity={.9} onPress={() => {
-                                            Linking.openURL(event.location);
+                        </>) : (<>
+                        </>)}
 
-                                        }}>
-                                            <Text style={{ ...styles.location }}>
-                                                {event ? event.address : ""}
-                                            </Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-                            </View>
-                            <Text style={styles.description}>
-                                {event ? event.description : ""}
-                            </Text>
-                        </View>
+                    </>
 
-                        {items && items.map((row, key) => {
-                            return (<View key={key}>
-                                <View style={styles.row}>
-                                    {row.map((item, key1) => {
-                                        return <View key={key1}>
-                                            <TouchableOpacity key={key1} onPress={() => {
-                                                
-                                                navigation.navigate(item.route, {
-                                                    event: event
-                                                })
-                                            }} activeOpacity={1} style={styles.col}>
+                </>)
+                }
+            </Layout>
 
-                                                <Image source={item.icon}
-                                                    resizeMode='contain'
-                                                    style={{
-                                                        ...styles.icon
-                                                    }} />
-                                                <Text style={{ ...styles._margin, ...styles.text }}>{item.title}</Text>
-                                            </TouchableOpacity>
-
-                                        </View>
-                                    })}
-                                </View>
-                            </View>)
-                        })}
-                    </Layout>
-                </>
-
-            </>)
-            }
         </>
     );
 }
@@ -183,6 +196,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 15,
         marginVertical: 10,
         fontFamily: "OpenSans-Regular",
+        color: Colors.grey_color
     },
     title: {
         fontSize: 20,
@@ -233,7 +247,11 @@ const styles = StyleSheet.create({
         height: 30,
     },
     icon: {
-        height: 80
+        height: 80,
+    },
+    logo: {
+        height: 80,
+        width: Dimensions.get('screen').width * .5,
     },
     Icons: {
         width: "25%",
@@ -277,6 +295,8 @@ const styles = StyleSheet.create({
     },
     colItem: {
         flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center'
 
     }
 });

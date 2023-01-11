@@ -1,11 +1,15 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { Appearance, Dimensions, Image, PermissionsAndroid, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import GridImageView from 'react-native-grid-image-viewer';
+import { ActivityIndicator, Appearance, Dimensions, Image, PermissionsAndroid, Platform, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Color, Dark } from '../../config/global';
 import { FloatingAction } from "react-native-floating-action";
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import GeneralApiData from '../../Data/GeneralApiData';
+import Layout from '../../components/common/layout';
+import GalleryImage from '../../components/common/image';
+import GridImageView from 'react-native-grid-image-viewer';
+import Header from '../../components/common/header';
+import ModalImage from '../../components/common/modal';
 
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
@@ -26,31 +30,55 @@ const actions = [
 ];
 export default function GalleryScreen(props) {
     const navigation = useNavigation();
+    const [loading, isLoading] = useState(false);
+    const [uploadLoading, isUploadLoading] = useState(false);
     const [event, setEvent] = useState(null);
+    const [gallery, setGallery] = useState([]);
+    const [page, setPage] = useState(1);
+    const [dataUrl, setDataUrl] = useState([]);
     useEffect(() => {
         setEvent(props.route.params.event);
-    }, []);
+        loadGallery();
+
+    }, [event]);
+
+    const loadGallery = async () => {
+        isLoading(true);
+        let time = setTimeout(async () => {
+            clearTimeout(time);
+            if (event && event.id > 0) {
+                let data = {
+                    page: page,
+                };
+                let res = await GeneralApiData.EventLoadGallery(event.id, data)
+                // setPage(page + 1);
+                if (res && res.status_code == 200) {
+
+                    setGallery(res.data);
+
+                }
+                isLoading(false);
+
+            }
+        }, 1000);
+    }
 
     const openCamera = async () => {
-        // navigation.navigate("Camera", {
-        //     event: event
-        // })
+
         const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
             const result = await launchCamera({
                 mediaType: "photo",
-                maxWidth: 800,
-                maxHeight: 600,
                 durationLimit: 20,
-                quality: 1,
                 saveToPhotos: true,
-                selectionLimit: 10
+                cameraType: "back",
+                includeExtra: true,
             });
             if (result && result.assets) {
                 let form = new FormData();
                 let files = [];
                 result.assets.forEach(photo => {
-                    files.push({
+                    form.append('images[]', {
                         name: photo.fileName,
                         type: photo.type,
                         uri:
@@ -58,11 +86,17 @@ export default function GalleryScreen(props) {
                                 ? photo.uri
                                 : photo.uri.replace('file://', ''),
                     });
+
                 });
-                console.log(files);
-                form.append('images', JSON.stringify())
+                form.append('images[]', (files))
+                //show loading
+                isLoading(true);
                 let res = await GeneralApiData.EventUploadLiveGallery(event.id, form);
-                console.log(res);
+                if (res && (res.status_code == 200 || res.status == 200)) {
+                    loadGallery();
+                }
+                //hide loading
+                isLoading(false);
             }
         } else {
             // if get here, the user did NOT accepted the permissions
@@ -75,101 +109,108 @@ export default function GalleryScreen(props) {
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
             const result = await launchImageLibrary({
                 mediaType: "photo",
-                maxWidth: 800,
-                maxHeight: 600,
                 durationLimit: 20,
-                quality: 1,
-                saveToPhotos: true,
-                selectionLimit: 10
+                selectionLimit: 5,
+
             });
-            console.log(result)
-            if (result && result.assets) {
-                console.log(result.assets);
+            if (result.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (result.error) {
+                console.log('ImagePicker Error: ', result.error);
+            } else if (result.customButton) {
+                console.log('User tapped custom button: ', result.customButton);
+            } else {
+                //show loading
+                isLoading(true);
+                let form = new FormData();
+                result.assets.forEach(photo => {
+                    form.append('images[]', {
+                        name: photo.fileName,
+                        type: photo.type,
+                        uri:
+                            Platform.OS === 'android'
+                                ? photo.uri
+                                : photo.uri.replace('file://', ''),
+                    });
+
+                });
+                let res = await GeneralApiData.EventUploadLiveGallery(event.id, form);
+                if (res && (res.status_code == 200 || res.status == 200)) {
+                    isLoading(false);
+                    loadGallery();
+                }
+                //hide loading
+
 
             }
         }
     }
+
     return (
         <>
-            <View style={{ backgroundColor: Colors.white, flex: 1 }}>
+            <StatusBar barStyle={"light-content"} backgroundColor={Colors.main_color} />
 
-                <View style={{ ...styles.header, ...styles.shadowProp }}>
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Image source={require('../../assets/img/back.png')}
-                            resizeMode='contain'
-                            style={{
-                                ...styles.backIcon
-                            }} />
-                    </TouchableOpacity>
-                    <Text style={styles.header_title}>{event ? event.title : ""}</Text>
-                </View>
-
+            <View style={styles.scroll}>
+                <Header back={true} />
                 <View style={styles.container}>
-
-                    <GridImageView data={[
-                        'https://media.istockphoto.com/id/1189304032/photo/doctor-holding-digital-tablet-at-meeting-room.jpg?s=612x612&w=0&k=20&c=RtQn8w_vhzGYbflSa1B5ea9Ji70O8wHpSgGBSh0anUg=',
-                        'https://t4.ftcdn.net/jpg/02/60/04/09/360_F_260040900_oO6YW1sHTnKxby4GcjCvtypUCWjnQRg5.jpg',
-                        'https://t4.ftcdn.net/jpg/03/05/41/27/360_F_305412791_XRNiWaFCREjLLpSQfj0e736foBoYXXYv.jpg',
-
-                    ]} />
-
+                    {loading ? (<>
+                        <ActivityIndicator />
+                    </>) : (<>
+                        <GridImageView heightOfGridImage={100} data={gallery}
+                            renderModalImage={(item, defaultStyle) =>
+                                (<ModalImage defaultStyle={defaultStyle} url={item.url} />)
+                            }
+                            renderGridImage={(item, defaultStyle) =>
+                                (<GalleryImage defaultStyle={defaultStyle} url={item.url} />)
+                            } />
+                    </>)}
                 </View>
-
-
-                <FloatingAction
-                    actions={actions}
-                    color={Colors.main_color}
-                    dismissKeyboardOnPress={true}
-                    onPressItem={name => {
-                        if (name == "camera") {
-                            openCamera();
-                        } else {
-                            openGallery()
-                        }
-                    }}
-                />
-
             </View>
+            <FloatingAction
+                buttonSize={80}
+                iconHeight={50}
+                iconWidth={50}
+                actions={actions}
+                color={Colors.main_color}
+                dismissKeyboardOnPress={true}
+                style={styles.flatbtn}
+                onPressItem={name => {
+                    if (name == "camera") {
+                        openCamera();
+                    } else {
+                        openGallery()
+                    }
+                }}
+            />
         </>
     );
 }
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.white
+        backgroundColor: Colors.white,
+
     },
     scroll: {
         flex: 1,
-        backgroundColor: Colors.white,
+        flexDirection: 'column',
     },
-    header: {
-        backgroundColor: Colors.main_color,
-        height: Dimensions.get('screen').height * .1,
-        width: Dimensions.get('screen').width,
-        // borderBottomLeftRadius: 30,
-        // borderBottomRightRadius: 30,
-        position: 'relative',
-        justifyContent: 'flex-start',
-        alignContent: 'center',
-        alignItems: 'center',
-        paddingHorizontal: 20,
-        flexDirection: 'row',
 
 
-    },
-    header_title: {
-        color: Color.white,
-        width: Dimensions.get('screen').width * .8,
-        fontSize: 20,
-        fontFamily: "OpenSans-Bold",
-        justifyContent: 'center',
-        alignItems: 'center',
-        textAlign: 'center',
+    images: {
+        flex: 4, // the number of columns you want to devide the screen into
+        width: 400,
 
     },
-    backIcon: {
-        width: 30,
-        height: 30,
+    flatbtn: {
+        position: 'absolute',
+        bottom: 0
     },
+    gridView: {
+        marginTop: 10,
+        flex: 1,
+        borderWidth: 1
+    },
+
 });
 

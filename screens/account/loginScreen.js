@@ -42,7 +42,7 @@ export default LoginScreen = (props) => {
       //processing response
       if (res.status_code == 200) {
         let data = res.data;
-        await DBConnect.insertData(data.id, data.first_name, data.last_name, data.email, data.token, data.is_activated, "2022-02-21 10:20:22");
+        await DBConnect.insertData(data.id, data.first_name, data.last_name, data.email, data.token, data.is_activated, data.created_at);
         await DBConnect.getByEmail(data.email);
         props.navigation.reset({
           index: 0,
@@ -97,6 +97,7 @@ export default LoginScreen = (props) => {
                   onChangeText={setEmail}
                   value={email}
                   placeholder="Email Address"
+                  placeholderTextColor={Colors.main_color}
                   keyboardType="email-address" />
               </View>
             </View>
@@ -114,6 +115,8 @@ export default LoginScreen = (props) => {
                   onChangeText={setPassword}
                   value={password}
                   secureTextEntry={true}
+                  placeholderTextColor={Colors.main_color}
+
                   placeholder="Password" />
               </View>
             </View>

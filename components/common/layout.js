@@ -1,5 +1,5 @@
 import React from 'react';
-import { Appearance, Dimensions, ScrollView, StyleSheet, View } from 'react-native';
+import { Appearance, Dimensions, ScrollView, StatusBar, StyleSheet, View } from 'react-native';
 import Header from './header';
 import { Color, Dark } from '../../config/global';
 import { useNavigation } from '@react-navigation/native';
@@ -10,14 +10,17 @@ export default function Layout(props) {
     const navigation = useNavigation();
 
     return (
-        <View style={{ backgroundColor: Colors.white, flex: 1 }}>
-            <Header back={props.back} />
-            <ScrollView contentContainerStyle={{ paddingBottom: 40 }} style={styles.scroll} >
-                <View style={styles.container}>
-                    {props.children}
-                </View>
-            </ScrollView>
-        </View>
+        <>
+            <StatusBar  barStyle={"light-content"} backgroundColor={Colors.main_color} />
+            <View style={{ backgroundColor: Colors.white, flex: 1 }}>
+                <Header back={props.back} />
+                <ScrollView contentContainerStyle={{ paddingBottom: 40 }} style={styles.scroll} >
+                    <View style={styles.container}>
+                        {props.children}
+                    </View>
+                </ScrollView>
+            </View>
+        </>
     );
 }
 const styles = StyleSheet.create({
@@ -31,5 +34,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         width: Dimensions.get('screen').width,
         marginTop: 10,
+        backgroundColor: Colors.white
     },
 });

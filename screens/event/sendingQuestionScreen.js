@@ -7,7 +7,7 @@ import GeneralApiData from '../../Data/GeneralApiData';
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
 
-export default function PollingScreen(props) {
+export default function SendingQuestionScreen(props) {
     const [loading, isLoading] = useState(false);
     const [event, setEvent] = useState(null);
     const [eventPolling, setEventPolling] = useState(null);

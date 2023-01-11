@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     profile: {
-        width: 100,
-        height: 100,
+        width: 80,
+        height: 80,
         borderRadius: 100,
         borderWidth: 2,
         borderColor: Colors.dark_blue_color
@@ -48,11 +48,12 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
     },
     name: {
-        fontSize: 18,
+        fontSize: 16,
         color: Colors.main_color
     },
     details: {
-        fontSize: 13,
+        fontSize: 12,
+        color:Colors.grey_color,
     }
 
 });

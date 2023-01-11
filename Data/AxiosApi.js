@@ -59,20 +59,17 @@ export default class {
             responseType: "json",
             headers: {
                 'Content-Type': 'multipart/form-data',
-                 Authorization: "Bearer " + token,
-                 Accept: "application/json"
+                Authorization: "Bearer " + token,
+                Accept: "application/json"
             },
         };
-        return await fetch(url, {
-            method: "post",
-            body: formdata,
-            headers: config
-        })
+        return await axios.post(url,
+            formdata,
+            config
+        )
             .then(response => {
                 console.log(response);
-            }).then(response => {
-                console.log(response);
-                return response
+                return response;
             }).catch((error) => {
                 console.error(error);
             });

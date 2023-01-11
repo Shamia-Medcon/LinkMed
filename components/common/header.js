@@ -3,18 +3,23 @@ import React, { useEffect, useState } from 'react';
 import { Appearance, Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Color, Dark } from '../../config/global';
 import LocalStorage from '../../storage/LocalStorage';
-import Back from './back';
+import DBConnect from '../../storage/DBConnect';
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
 
 export default function Header({ back }) {
     const navigation = useNavigation();
     const [name, setName] = useState("");
+    const [loading, setLoading] = useState(false);
     const loadAuth = async () => {
-        let user = await LocalStorage.getData('user');
-        if (user) {
-            setName(user.first_name);
-        }
+        await DBConnect.checkAuth();
+        const time = setTimeout(async () => {
+            let user = await LocalStorage.getData('user');
+            if (user) {
+                setName(user.first_name);
+                setLoading(true);
+            }
+        }, 2000);
     }
     useEffect(() => {
         loadAuth();
@@ -34,7 +39,10 @@ export default function Header({ back }) {
                     </View>
                 </>) : (<></>)}
                 <View style={styles.name}>
-                    <Text style={styles.title}>Hi {name}!</Text>
+                    {loading ? <>
+                        <Text style={styles.title}>Hi {name}!</Text></>
+                        : <></>
+                    }
                 </View>
             </View>
         </>

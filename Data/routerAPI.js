@@ -1,4 +1,4 @@
-const _prefix = "http://192.168.0.156/MedConnect/public/api/v1";
+const _prefix = "https://www.event.medcon.ae/public/api/v1";
 export default class {
     //Init Route
     static _initRoute = _prefix + "/init";
@@ -25,7 +25,8 @@ export default class {
     static _eventFeedbackRoute = _prefix + "/eventFeedback";
     static _eventQuestionByUser = _prefix + "/questionByEvent";
     static _eventPollingRoute = _prefix + "/pollingEventLatest";
-    static _eventGalleryRoute = _prefix + "/eventUploadGallery";
+    static _eventGalleryRoute = _prefix + "/eventGallery";
+    static _eventUploadGalleryRoute = _prefix + "/eventUploadGallery";
     static _eventFeedbackEvaluation = _prefix + "/eventFeedbackEvaluation";
     static _eventFeedbackEvaluationUserAnswer = _prefix + "/eventFeedbackEvaluationUserAnswer";
 
