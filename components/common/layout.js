@@ -11,7 +11,7 @@ export default function Layout(props) {
 
     return (
         <>
-            <StatusBar  barStyle={"light-content"} backgroundColor={Colors.main_color} />
+            <StatusBar barStyle={"light-content"} backgroundColor={Colors.main_color} />
             <View style={{ backgroundColor: Colors.white, flex: 1 }}>
                 <Header back={props.back} />
                 <ScrollView contentContainerStyle={{ paddingBottom: 40 }} style={styles.scroll} >

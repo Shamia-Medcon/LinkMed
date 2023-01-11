@@ -26,7 +26,7 @@ export default function Header({ back }) {
     }, []);
     return (
         <>
-            <View style={{ ...styles.header, ...styles.shadowProp }}>
+            <View style={{ ...styles.header}}>
                 {back ? (<>
                     <View style={styles.icon}>
                         <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -52,7 +52,7 @@ export default function Header({ back }) {
 const styles = StyleSheet.create({
     header: {
         backgroundColor: Colors.main_color,
-        height: Dimensions.get('screen').height * .08,
+        height:100,
         width: Dimensions.get('screen').width,
         borderBottomLeftRadius: 30,
         borderBottomRightRadius: 30,
@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         paddingHorizontal: 20,
+        paddingTop:30,
 
 
     },

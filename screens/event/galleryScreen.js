@@ -30,16 +30,20 @@ const actions = [
 ];
 export default function GalleryScreen(props) {
     const navigation = useNavigation();
-    const [loading, isLoading] = useState(false);
+    const [loading, isLoading] = useState(true);
     const [uploadLoading, isUploadLoading] = useState(false);
     const [event, setEvent] = useState(null);
     const [gallery, setGallery] = useState([]);
     const [page, setPage] = useState(1);
-    const [dataUrl, setDataUrl] = useState([]);
     useEffect(() => {
         setEvent(props.route.params.event);
-        loadGallery();
-
+        let time = setTimeout(async () => {
+            clearTimeout(time);
+            loadGallery();
+        }, 2000);
+        return () => {
+            setGallery([]); // This worked for me
+        };
     }, [event]);
 
     const loadGallery = async () => {
@@ -62,51 +66,60 @@ export default function GalleryScreen(props) {
             }
         }, 1000);
     }
+    const asyncLaunchCamera = async () => {
+        const result = await launchCamera({
+            mediaType: "photo",
+            durationLimit: 20,
+            saveToPhotos: true,
+            cameraType: "back",
+            includeExtra: true,
+        });
+        if (result && result.assets) {
+            let form = new FormData();
+            let files = [];
+            result.assets.forEach(photo => {
+                form.append('images[]', {
+                    name: photo.fileName,
+                    type: photo.type,
+                    uri:
+                        Platform.OS === 'android'
+                            ? photo.uri
+                            : photo.uri.replace('file://', ''),
+                });
 
+            });
+            form.append('images[]', (files))
+            //show loading
+            isLoading(true);
+            let res = await GeneralApiData.EventUploadLiveGallery(event.id, form);
+            if (res && (res.status_code == 200 || res.status == 200)) {
+                loadGallery();
+            }
+            //hide loading
+            isLoading(false);
+        }
+    }
     const openCamera = async () => {
 
-        const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            const result = await launchCamera({
-                mediaType: "photo",
-                durationLimit: 20,
-                saveToPhotos: true,
-                cameraType: "back",
-                includeExtra: true,
-            });
-            if (result && result.assets) {
-                let form = new FormData();
-                let files = [];
-                result.assets.forEach(photo => {
-                    form.append('images[]', {
-                        name: photo.fileName,
-                        type: photo.type,
-                        uri:
-                            Platform.OS === 'android'
-                                ? photo.uri
-                                : photo.uri.replace('file://', ''),
-                    });
 
-                });
-                form.append('images[]', (files))
-                //show loading
-                isLoading(true);
-                let res = await GeneralApiData.EventUploadLiveGallery(event.id, form);
-                if (res && (res.status_code == 200 || res.status == 200)) {
-                    loadGallery();
-                }
-                //hide loading
-                isLoading(false);
+        if (Platform.OS === 'android') {
+            const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
+
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                await asyncLaunchCamera();
+
+            } else {
+                // if get here, the user did NOT accepted the permissions
             }
         } else {
-            // if get here, the user did NOT accepted the permissions
+            await asyncLaunchCamera();
         }
 
 
     }
-    const openGallery = async () => {
-        const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+    const asyncLaunchImageLibrary = async () => {
+        try {
+
             const result = await launchImageLibrary({
                 mediaType: "photo",
                 durationLimit: 20,
@@ -124,25 +137,39 @@ export default function GalleryScreen(props) {
                 isLoading(true);
                 let form = new FormData();
                 result.assets.forEach(photo => {
+                    let uri = Platform.OS === 'android'
+                        ? photo.uri
+                        : photo.uri.replace('file://', '')
                     form.append('images[]', {
                         name: photo.fileName,
                         type: photo.type,
-                        uri:
-                            Platform.OS === 'android'
-                                ? photo.uri
-                                : photo.uri.replace('file://', ''),
+                        uri: uri,
                     });
 
                 });
                 let res = await GeneralApiData.EventUploadLiveGallery(event.id, form);
                 if (res && (res.status_code == 200 || res.status == 200)) {
-                    isLoading(false);
                     loadGallery();
                 }
+                isLoading(false);
+
                 //hide loading
 
 
             }
+        } catch (e) {
+            isLoading(false);
+
+        }
+    }
+    const openGallery = async () => {
+        if (Platform.OS === 'android') {
+            const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                await asyncLaunchImageLibrary();
+            }
+        } else {
+            await asyncLaunchImageLibrary();
         }
     }
 

@@ -3,7 +3,6 @@ import { View, Text, Appearance, Image, StatusBar, Animated, StyleSheet, Dimensi
 import DBConnect from '../storage/DBConnect';
 import LocalStorage from '../storage/LocalStorage';
 import { Color, Dark } from '../config/global';
-import Orientation from 'react-native-orientation-locker';
 
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
@@ -54,7 +53,6 @@ export default class SplashScreen extends Component {
             await this.prepareDb();
         }
         init();
-        Orientation.lockToPortrait();
         if (colorScheme === 'dark') {
             Colors = Dark
         }

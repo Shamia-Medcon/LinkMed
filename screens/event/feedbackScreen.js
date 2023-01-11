@@ -7,7 +7,7 @@ const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
 
 export default function FeedBackScreen(props) {
-    const [loading, isLoading] = useState(false);
+    const [loading, isLoading] = useState(true);
     const [submitLoading, isSubmitLoading] = useState(false);
     const [event, setEvent] = useState(null);
     const [eventFeedback, setEventFeedback] = useState([]);
@@ -17,8 +17,7 @@ export default function FeedBackScreen(props) {
 
     init = async () => {
         isLoading(true);
-        let time = setTimeout(async () => {
-            clearTimeout(time);
+       
             if (event && event.id > 0) {
                 const res = await GeneralApiData.EventFeedbackEvaluation(event ? event.id : 0);
                 if (res && res.status_code == 200) {
@@ -40,14 +39,17 @@ export default function FeedBackScreen(props) {
                 }
             }
             isLoading(false);
-        }, 2000);
+           
     }
     useEffect(() => {
         setEvent(props.route.params.event);
+        let time = setTimeout(async () => {
+                clearTimeout(time);
+                init();
+        }, 2000);
+
     }, [event]);
-    useEffect(() => {
-        init();
-    }, []);
+
     const selectAnswers = (id, answer_id) => {
         let exists = false;
         let newAnswers = answers.map((item) => {
