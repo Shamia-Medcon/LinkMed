@@ -10,6 +10,7 @@ import { Color, Dark } from '../../config/global';
 import data from "../../Data/countries.json"
 import GeneralApiData from '../../Data/GeneralApiData';
 import validation from '../../config/validation';
+import { Dropdown } from 'react-native-element-dropdown';
 
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
@@ -20,6 +21,7 @@ export default function RegisterScreen() {
   const [countries, setCountries] = useState([]);
   const [specialities, setSpecialities] = useState([]);
   const [verify, setVerify] = useState(false);
+  const [isFocus, setIsFocus] = useState(false);
 
   const [loading, isLoading] = useState(false);
   const [fristNameError, setFirstNameError] = useState("");
@@ -53,7 +55,10 @@ export default function RegisterScreen() {
   const generateData = (data) => {
     const newData = Object.keys(data).reduce((result, currentKey) => {
       if (typeof data[currentKey] === 'string' || data[currentKey] instanceof String) {
-        result.push(data[currentKey]);
+        result.push({
+          label: data[currentKey],
+          value: data[currentKey]
+        });
       } else {
         const nested = generateData(data[currentKey]);
         result.push(...nested);
@@ -70,7 +75,7 @@ export default function RegisterScreen() {
       ...info,
       [key]: content
     });
-    if (key != "term") {
+    if (key != "term" || key != "country") {
       const copiedContent = await Clipboard.getString();
       if (copiedContent) {
         const isPasted = content.includes(copiedContent);
@@ -94,8 +99,8 @@ export default function RegisterScreen() {
       let data = [];
       res.data.forEach(item => {
         data.push({
-          id: item.id,
-          title: item.title
+          value: item.id,
+          label: item.title
         });
       });
       setSpecialities(data);
@@ -134,14 +139,14 @@ export default function RegisterScreen() {
   const valid = () => {
     if (info.first_name == ""
     ) {
-      setFirstNameError("Please type correct email address");
+      setLastNameError("Please type correct First Name");
       return false;
     } else {
       setFirstNameError("");
     }
     if (info.last_name == ""
     ) {
-      setLastNameError("Please type correct email address");
+      setLastNameError("Please type correct Last Name");
       return false;
     } else {
       setLastNameError("");
@@ -202,7 +207,7 @@ export default function RegisterScreen() {
             <View style={styles.container}>
               <View style={{ ...styles.center, ...styles.content }}>
                 <ScrollView contentContainerStyle={styles.scroll}>
-                  <View style={{ ...styles.header, ...styles.shadowProp, ...styles.center }}>
+                  <View style={{ ...styles.header, ...styles.center }}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
                       <Image source={require('../../assets/img/back.png')}
                         resizeMode='contain'
@@ -210,9 +215,7 @@ export default function RegisterScreen() {
                           ...styles.backIcon
                         }} />
                     </TouchableOpacity>
-                    <View>
-                      <Text style={styles.signupTitle}>Sign Up</Text>
-                    </View>
+                    <Text style={styles.signupTitle}>Sign Up</Text>
                   </View>
 
                   <View>
@@ -280,22 +283,31 @@ export default function RegisterScreen() {
                       </View>
                     </>) : (<></>)}
                     <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
-                      <View style={{ ...styles.bordered }}>
-                        <Picker
-                          style={{ ...styles.input, }}
-                          dropdownIconColor={Colors.white}
-                          selectedValue={info.country}
 
-                          onValueChange={(itemValue) => {
-                            handleOnChangeText(itemValue, 'country')
-                          }
-                          }>
-                          <Picker.Item enabled={false} label={"Select Country"} value={""} />
-                          {countries.map((item, index) => {
-                            return <Picker.Item key={index} label={item} value={item} />
-                          })}
-                        </Picker>
-                      </View>
+                      <Dropdown
+                        style={[styles.dropdown]}
+                        placeholderStyle={styles.placeholderStyle}
+                        selectedTextStyle={styles.selectedTextStyle}
+                        inputSearchStyle={styles.inputSearchStyle}
+                        iconStyle={styles.iconStyle}
+                        iconColor={Colors.white}
+                        data={countries}
+                        search
+                        maxHeight={300}
+                        labelField="label"
+                        valueField="value"
+                        placeholder={!isFocus ? 'Country' : '...'}
+                        searchPlaceholder="Search..."
+                        value={info.country}
+                        onFocus={() => setIsFocus(true)}
+                        onBlur={() => setIsFocus(false)}
+                        onChange={item => {
+                          console.log(item);
+                          handleOnChangeText('country', item.value)
+                          setIsFocus(false);
+                        }}
+
+                      />
                     </View>
                     <View>
                       <Text style={styles.title}>Professional Details</Text>
@@ -307,25 +319,29 @@ export default function RegisterScreen() {
                       </View>
                     </>) : (<></>)}
                     <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
-                      <View style={{ ...styles.bordered }}>
-                        <Picker
-                          style={{ ...styles.input, }}
-                          dropdownIconColor={Colors.white}
-                          selectedValue={info.speciality_id}
 
-                          onValueChange={(itemValue) => {
-                            console.log(itemValue)
-                            handleOnChangeText(itemValue, 'speciality_id')
-
-                          }
-                          }>
-                          <Picker.Item enabled={false} label={"Select Speciality"} value={""} />
-                          {Object.keys(specialities).map((key) => {
-                            let item = specialities[key];
-                            return (<Picker.Item label={item.title} value={item.id + ""} key={item.id} />) //if you have a bunch of keys value pair
-                          })}
-                        </Picker>
-                      </View>
+                      <Dropdown
+                        style={[styles.dropdown]}
+                        placeholderStyle={styles.placeholderStyle}
+                        selectedTextStyle={styles.selectedTextStyle}
+                        inputSearchStyle={styles.inputSearchStyle}
+                        iconStyle={styles.iconStyle}
+                        iconColor={Colors.white}
+                        data={specialities}
+                        search
+                        maxHeight={300}
+                        labelField="label"
+                        valueField="value"
+                        placeholder={!isFocus ? 'Speciality' : '...'}
+                        searchPlaceholder="Search..."
+                        value={info.speciality}
+                        onFocus={() => setIsFocus(true)}
+                        onBlur={() => setIsFocus(false)}
+                        onChange={item => {
+                          handleOnChangeText('speciality', item.value)
+                          setIsFocus(false);
+                        }}
+                      />
                     </View>
                     <View>
                       <Text style={styles.title}>Password</Text>
@@ -358,7 +374,7 @@ export default function RegisterScreen() {
                         placeholderTextColor={Colors.white}
                         cursorColor={Colors.white}
                         value={info.confirm_password}
-                        placeholder="Password"
+                        placeholder="Confirm Password"
                         secureTextEntry={true} />
                     </View>
                     {/* Terms */}
@@ -368,7 +384,7 @@ export default function RegisterScreen() {
                       </View>
                     </>) : (<></>)}
 
-                    <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
+                    <View style={{ ...styles.itemMargin, ...styles.inputContent, marginTop: 20 }}>
                       <View style={styles.checkbox}>
                         <BouncyCheckbox
                           size={25}
@@ -377,7 +393,7 @@ export default function RegisterScreen() {
                           text="I agree to the Terms of Service and Privacy Policy"
                           iconStyle={{ borderColor: Colors.white }}
                           innerIconStyle={{ borderWidth: 2, borderRadius: 0, }}
-                          textStyle={{ fontFamily: "OpenSans-Bold", color: Colors.white, fontSize: 12 }}
+                          textStyle={{ fontFamily: "OpenSans-Bold", color: Colors.white, fontSize: 15 }}
                           onPress={(isChecked) => { handleOnChangeText(isChecked, 'term') }}
                         />
                       </View>
@@ -395,9 +411,9 @@ export default function RegisterScreen() {
                       </TouchableOpacity>
                     </View>
                   </View>
-
                 </ScrollView>
               </View>
+
             </View>
           </>)}
         </>)}
@@ -412,7 +428,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     height: Dimensions.get('screen').height,
-    flexDirection: 'row',
+    flexDirection: 'column',
     position: 'relative',
     alignContent: 'center',
 
@@ -420,12 +436,13 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     flexDirection: 'column',
-    height: Dimensions.get('screen').height * .86,
+    height: Dimensions.get('screen').height * .8,
     backgroundColor: Colors.main_color,
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
+    borderBottomLeftRadius: 50,
+    borderBottomRightRadius: 50,
     elevation: 4,
     shadowColor: Colors.black,
+
   },
   center: {
     alignContent: 'center',
@@ -433,15 +450,12 @@ const styles = StyleSheet.create({
 
   },
   header: {
-    backgroundColor: Colors.main_color,
-    height: Dimensions.get('screen').height * .15,
     width: Dimensions.get('screen').width,
-    justifyContent: 'flex-start',
-    alignContent: 'center',
+    position: 'relative',
     alignItems: 'center',
-    paddingHorizontal: 20,
     flexDirection: 'row',
-
+    marginTop: 20,
+    height: 100,
   },
   inputContent: {
     justifyContent: 'center',
@@ -452,6 +466,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   backIcon: {
+
     width: 30,
     height: 30,
   },
@@ -473,15 +488,15 @@ const styles = StyleSheet.create({
     height: 50,
   },
   signupTitle: {
+    flex: .9,
+    fontSize: 30,
     color: Colors.white,
-    fontSize: 20,
-    justifyContent: 'center',
-    alignContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 30,
+    textTransform: "uppercase",
     fontFamily: "OpenSans-Bold",
-    textTransform: 'capitalize',
-    textAlign:'center'
+    justifyContent: 'center',
+    textAlign: 'center',
+    alignContent: "center",
+    alignItems: "center",
   },
   title: {
     width: Dimensions.get('screen').width * .8,
@@ -497,7 +512,6 @@ const styles = StyleSheet.create({
   },
   checkbox: {
     width: Dimensions.get('screen').width * .8,
-    fontSize: 16,
     color: Colors.white,
     fontFamily: "OpenSans-Regular",
   },
@@ -565,4 +579,34 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontFamily: "OpenSans-Bold",
   },
+  dropdown: {
+    height: 50,
+    width: Dimensions.get('screen').width * .8,
+    borderColor: Colors.white,
+    borderWidth: 2,
+    borderRadius: 50,
+    paddingHorizontal: 20,
+    color: Colors.white
+  },
+  placeholderStyle: {
+    fontSize: 16,
+    color: Colors.white
+
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+    color: Colors.white
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+
+
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+    color: Colors.white
+  },
+
 });

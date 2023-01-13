@@ -7,6 +7,7 @@ import { Color, Dark } from '../../config/global';
 import validation from '../../config/validation';
 import GeneralApiData from '../../Data/GeneralApiData';
 import DBConnect from '../../storage/DBConnect';
+import LocalStorage from '../../storage/LocalStorage';
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
 
@@ -42,14 +43,19 @@ export default LoginScreen = (props) => {
       //processing response
       if (res.status_code == 200) {
         let data = res.data;
-        await DBConnect.insertData(data.id, data.first_name, data.last_name, data.email, data.token, data.is_activated, data.created_at);
+        await DBConnect.insertData(data.id, data.first_name, data.last_name, data.email, data.country, data.speciality, data.profession, data.token, data.is_activated, data.created_at);
         await DBConnect.getByEmail(data.email);
-        props.navigation.reset({
-          index: 0,
-          routes: [{ name: 'Home' }],
-        })
+        if (LocalStorage.getData("auth")) {
+          props.navigation.reset({
+            index: 0,
+            routes: [{ name: 'Home' }],
+          })
+        }else{
+          setError("Error in request, please try again");
+
+        }
       } else {
-        setError(res.message);
+        setError("Error in request, please check the credentials");
       }
     } else {
       isLoading(false);

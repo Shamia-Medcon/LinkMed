@@ -29,19 +29,19 @@ export default function BottomNavigation(props) {
                 if (route.name === 'HomeScreen') {
                     return <Image
                         source={!focused ? require('../assets/img/outline_home.png') : require('../assets/img/home.png')}
-                        style={{ height: size * 1.3, width: size , resizeMode: "contain" }} />;
+                        style={{ height: size * 1.3, width: size * 1.3, resizeMode: "contain" }} />;
                 } else if (route.name === 'PrivacyScreen') {
                     return <Image
                         source={!focused ? require('../assets/img/outline_privacy.png') : require('../assets/img/privacy.png')}
-                        style={{ height: size * 1.3, width: size, resizeMode: "contain" }} />;
+                        style={{ height: size * 1.3, width: size * 1.3, resizeMode: "contain" }} />;
                 } else if (route.name === 'NotificationScreen') {
                     return <Image
                         source={!focused ? require('../assets/img/outline_bell.png') : require('../assets/img/bell.png')}
-                        style={{ height: size * 1.3, width: size , resizeMode: "contain" }} />;
+                        style={{ height: size * 1.3, width: size * 1.3, resizeMode: "contain" }} />;
                 } else if (route.name === 'ProfileScreen') {
                     return <Image
                         source={!focused ? require('../assets/img/outline_profile.png') : require('../assets/img/profile.png')}
-                        style={{ height: size * 1.3, width: size , resizeMode: "contain" }} />;
+                        style={{ height: size * 1.3, width: size * 1.3, resizeMode: "contain" }} />;
                 }
 
             },
@@ -49,6 +49,9 @@ export default function BottomNavigation(props) {
             tabBarActiveTintColor: Colors.transparent,
             tabBarInactiveTintColor: Colors.transparent,
             tabBarLabel: () => { return null },
+            tabBarLabelStyle: {
+                borderWidth: 1
+            }
         })}>
             <Tab.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
             <Tab.Screen name="PrivacyScreen" component={PrivacyScreen} options={{ headerShown: false }} />

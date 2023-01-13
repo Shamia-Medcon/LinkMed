@@ -18,7 +18,8 @@ export default class SplashScreen extends Component {
         await DBConnect.createDB();
         await DBConnect.checkAuth();
         let user = await LocalStorage.getData('user');
-        setTimeout(async () => {
+        let timer=setTimeout(async () => {
+            clearTimeout(timer);
             if (!user) {
                 this.props.navigation.reset({
                     index: 0,

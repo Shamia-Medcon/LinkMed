@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Appearance, Dimensions, Image, Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Layout from '../../components/common/layout';
 import { Color, Dark } from '../../config/global';
+import GalleryImage from '../../components/common/image';
+
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
 
@@ -88,12 +90,11 @@ export default function EventDetails(props) {
                                 </View>
                                 <View style={styles.rowItem}>
                                     <View style={styles.colItem}>
-                                        <Image source={{ uri: event ? event.logo : "" }}
-                                            resizeMode='contain'
-                                            style={{
-                                                ...styles.logo,
-                                                ...styles.center,
-                                            }} />
+                                        
+                                        <GalleryImage defaultStyle={{
+                                            ...styles.logo,
+                                            ...styles.center,
+                                        }} url={event.logo} size={"contain"}/>
                                     </View>
                                     <View style={styles.colItem}>
                                         <View style={{ ...styles.rowItem }}>

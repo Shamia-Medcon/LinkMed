@@ -70,5 +70,10 @@
 	<string>For taking photos</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>For saving photos</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>whatsapp</string>
+	</array>
+
 </dict>
 </plist>

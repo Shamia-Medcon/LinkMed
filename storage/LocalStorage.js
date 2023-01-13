@@ -26,4 +26,12 @@ export default class {
             return false;
         }
     }
+    static trancateData = async () => {
+        try {
+            await AsyncStorage.clear()
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
 }

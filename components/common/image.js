@@ -4,14 +4,14 @@ import { Color, Dark } from '../../config/global';
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
 
-export default function GalleryImage({ defaultStyle, url }) {
+export default function GalleryImage({ defaultStyle, url, size }) {
     const [loading, isLoading] = useState(false);
 
     return (
         <>
             <Image style={defaultStyle}
-            resizeMode={"cover"}
-            resizeMethod={"resize"}
+                resizeMode={size ? size : "cover"}
+                resizeMethod={"resize"}
                 onLoadStart={() => {
                     isLoading(true);
                 }}
@@ -28,13 +28,14 @@ export default function GalleryImage({ defaultStyle, url }) {
 }
 
 const styles = StyleSheet.create({
-  
+
     spinner: {
         position: 'absolute',
         width: "100%",
         height: '100%',
         justifyContent: 'center',
         alignContent: 'center',
-        backgroundColor: Colors.placeHolder
+        backgroundColor: Colors.placeHolder,
+        borderRadius: 20
     },
 });

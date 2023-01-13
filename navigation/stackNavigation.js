@@ -16,6 +16,7 @@ import FeedBackScreen from "../screens/event/feedbackScreen";
 import SendingQuestionScreen from "../screens/event/sendingQuestionScreen";
 import PollingScreen from "../screens/event/pollingScreen";
 import ProgramScreen from "../screens/event/programScreen";
+import EditProfileScreen from "../screens/account/editProfileScreen";
 
 const Stack = createNativeStackNavigator();
 export default class StackNavigation extends Component {
@@ -48,6 +49,7 @@ export default class StackNavigation extends Component {
             <Stack.Screen name="EventPollingQuestionScreen" component={PollingScreen} options={{ headerShown: false, gestureEnabled: false }} />
             <Stack.Screen name="EventEvaluationFeedbackScreen" component={FeedBackScreen} options={{ headerShown: false, gestureEnabled: false }} />
             <Stack.Screen name="EventGalleryScreen" component={GalleryScreen} options={{ headerShown: false, gestureEnabled: false }} />
+            <Stack.Screen name="EditProfile" component={EditProfileScreen} options={{ headerShown: false, gestureEnabled: false }} />
 
 
 

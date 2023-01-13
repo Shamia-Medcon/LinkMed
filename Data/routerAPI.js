@@ -6,8 +6,11 @@ export default class {
     // Guest Route
     static _loginRoute = _prefix + "/accounts/login";
     static _registerRoute = _prefix + "/accounts/register";
+    static _updateRoute = _prefix + "/user/";
+    static _deleteRoute = _prefix + "/user/";
     static _resetPasswordRoute = _prefix + "/accounts/resetPassword";
     static _specialityRoute = _prefix + "/specialities";
+    static _notificationRoute = _prefix + "/notification";
 
 
     // Auth Route

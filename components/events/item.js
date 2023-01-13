@@ -1,6 +1,7 @@
 import React from 'react';
 import { Appearance, Dimensions, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Color, Dark } from '../../config/global';
+import GalleryImage from '../common/image';
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
 
@@ -51,12 +52,18 @@ export default function EventItem(props) {
 
                             </View>
                         </View>
-                        <Image source={{ uri: props.event.cover }}
-                            resizeMode="contain"
+                        <View>
+
+                            <GalleryImage defaultStyle={{
+                                ...styles.thumb,
+                            }} url={props.event.cover} size={"stretch"} />
+                        </View>
+                        {/* <Image source={{ uri: props.event.cover }}
+                            resizeMode="stretch"
                             borderTopRightRadius={20}
                             borderBottomRightRadius={20}
                             style={styles.thumb}
-                        />
+                        /> */}
 
                     </View>
                 </TouchableOpacity>
@@ -94,8 +101,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     details: {
-        height: Dimensions.get('screen').height * .25,
         width: Dimensions.get('screen').width * .35,
+        height: 200,
         borderRadius: 2,
         elevation: 5,
         borderTopLeftRadius: 20,
@@ -107,7 +114,8 @@ const styles = StyleSheet.create({
         position: 'relative',
         backgroundColor: Colors.white,
         paddingHorizontal: 5,
-   },
+        paddingVertical: 10,
+    },
     iconContent: {
         width: "25%",
         justifyContent: 'center',
@@ -130,7 +138,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     thumb: {
-        height: Dimensions.get('screen').height * .25,
+        height: 200,
         width: Dimensions.get('screen').width * .59,
         backgroundColor: Colors.white,
         borderBottomRightRadius: 20,

@@ -9,6 +9,12 @@ export default class {
 
 
     //-----------
+    //Privacy Function
+    //--------------------
+    static async PrivacyFunction() {
+        return await AxiosApi.get(routerAPI._privacyRoute);
+    }
+    //-----------
     //Specialities Function
     //--------------------
     static async SprcialityFunction() {
@@ -27,6 +33,34 @@ export default class {
     static async RegisterFunction(data) {
         return AxiosApi.post(routerAPI._registerRoute, data);
     }
+    //-----------
+    //Update Information Function
+    //--------------------
+    static async UpdateUserInfoFunction(data, id) {
+        return AxiosApi.put(routerAPI._updateRoute + id, data);
+    }
+
+    //-----------
+    //Update Information Function
+    //--------------------
+    static async DeleteUserInfoFunction(id) {
+        return AxiosApi.delete(routerAPI._updateRoute + id);
+    }
+    //-----------
+    //Notification Function
+    //--------------------
+    static async Notification(data) {
+        return AxiosApi.get(routerAPI._notificationRoute, data);
+    }
+    //-----------
+    //Notification Function
+    //--------------------
+    static async DeleteNotification(id) {
+        return AxiosApi.delete(routerAPI._notificationRoute + "/" + id);
+    }
+
+
+
     //-----------
     //Event Function
     //--------------------

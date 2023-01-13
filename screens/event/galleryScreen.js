@@ -23,15 +23,13 @@ const actions = [
     },
     {
         text: "Gallery",
-        icon: require("../../assets/img/open_gallery.png"),
+        icon: require("../../assets/img/file.png"),
         name: "gallery",
         position: 1
     },
 ];
 export default function GalleryScreen(props) {
-    const navigation = useNavigation();
     const [loading, isLoading] = useState(true);
-    const [uploadLoading, isUploadLoading] = useState(false);
     const [event, setEvent] = useState(null);
     const [gallery, setGallery] = useState([]);
     const [page, setPage] = useState(1);

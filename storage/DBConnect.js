@@ -6,8 +6,10 @@ export default class {
     static createDB = async () => {
         db.transaction(function (txn) {
             txn.executeSql(
-                'CREATE TABLE IF NOT EXISTS Users(id BIGINT PRIMARY KEY NOT NULL, first_name VARCHAR(100), last_name VARCHAR(100), email VARCHAR(150),token TEXT,isActivated Boolean,createdAt DATETIME)',
-                []
+                'CREATE TABLE IF NOT EXISTS Users(id BIGINT PRIMARY KEY NOT NULL, first_name VARCHAR(100), last_name VARCHAR(100), email VARCHAR(150), country VARCHAR(150), speciality VARCHAR(150), profession TEXT,token TEXT,isActivated Boolean,createdAt DATETIME)',
+                [], function (tx, res) {
+                    console.log(res);
+                }
             )
             txn.executeSql(
                 'CREATE TABLE IF NOT EXISTS Setting(id BIGINT PRIMARY KEY NOT NULL, url VARCHAR(255), type INTEGER DEFAULT 1)',
@@ -16,8 +18,8 @@ export default class {
         });
     }
     static getById = async (id) => {
-        await db.transaction(function (txn) {
-            return txn.executeSql('SELECT * FROM `users` where id=:id limit 1', [id], function (tx, res) {
+        db.transaction(function (txn) {
+            return txn.executeSql('SELECT * FROM `Users` where id=:id limit 1', [id], function (tx, res) {
                 if (res.rows.length > 0) {
                     let store = async () => {
                         await LocalStorage.storeData("user", res.rows['_array'][0]);
@@ -28,8 +30,8 @@ export default class {
         });
     }
     static getByEmail = async (email) => {
-        await db.transaction(function (txn) {
-            return txn.executeSql('SELECT * FROM `users` where email=:email', [email], function (tx, res) {
+        db.transaction(function (txn) {
+            return txn.executeSql('SELECT * FROM `Users` where email=:email', [email], function (tx, res) {
                 if (res.rows.length > 0) {
                     let store = async () => {
                         await LocalStorage.storeData("user", res.rows['_array'][0]);
@@ -39,9 +41,9 @@ export default class {
             })
         });
     }
-    static checkAuth = async () => {
-        await db.transaction(function (txn) {
-            return txn.executeSql('SELECT * FROM `users` order by created_at desc limit 1', [], function (tx, res) {
+    static checkAuth = () => {
+       db.transaction(function (txn) {
+            return txn.executeSql('SELECT * FROM `Users` order by created_at desc limit 1', [], function (tx, res) {
                 if (res.rows.length > 0) {
                     let store = async () => {
                         await LocalStorage.storeData("auth", true);
@@ -59,19 +61,25 @@ export default class {
         });
     }
 
-    static insertData = async (id, first_name, last_name, email, token, isActivated, createdAt) => {
+    static insertData = async (id, first_name, last_name, email, country, speciaity, profession, token, isActivated, createdAt) => {
         db.transaction(function (txn) {
-            txn.executeSql('delete from users where id=:id', [id]);
-            txn.executeSql('INSERT INTO Users (id,first_name,last_name,email,token,isActivated,createdAt) VALUES (:id,:first_name,:last_name,:email,:token,:isActivated,:createdAt)',
-                [id, first_name, last_name, email, token, isActivated, createdAt], function (tx, res) {
-                    console.log(res);
+            txn.executeSql('delete from Users where id=:id', [id]);
+            txn.executeSql('INSERT INTO Users (id,first_name,last_name,email,country,speciality,profession,token,isActivated,createdAt) VALUES (:id,:first_name,:last_name,:email,:country,:speciality,:profession,:token,:isActivated,:createdAt)',
+                [id, first_name, last_name, email, country, speciaity, profession, token, isActivated, createdAt], function (tx, res) {
+                    console.log(`Record ${id} was Inserterd`);
                 })
         });
     }
-    static updateData = async (id, first_name, last_name, email, token, isActivated) => {
+    static updateData = async (id, first_name, last_name, email,  country, speciaity, profession,token, isActivated) => {
         db.transaction(function (txn) {
-            txn.executeSql('UPDATE Users set first_name=:first_name,last_name=:last_name,email=:email,token=:token,isActivated=:isActivated where id=:id',
-                [first_name, last_name, email, token, isActivated, id])
+            txn.executeSql('UPDATE Users set first_name=:first_name,last_name=:last_name,email=:email,country=:country,speciaity=:speciaity,profession=:profession,token=:token,isActivated=:isActivated where id=:id',
+                [first_name, last_name, email, country, speciaity, profession, token, isActivated, id])
+        })
+    }
+    static deleteData = async () => {
+        db.transaction(function (txn) {
+            txn.executeSql('delete * from Users');
+
         })
     }
 }
