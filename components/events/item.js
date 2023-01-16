@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     },
     details: {
         width: Dimensions.get('screen').width * .35,
-        height: 200,
+        height: Dimensions.get('screen').height * .25,
         borderRadius: 2,
         elevation: 5,
         borderTopLeftRadius: 20,
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     thumb: {
-        height: 200,
+        height: Dimensions.get('screen').height * .25,
         width: Dimensions.get('screen').width * .59,
         backgroundColor: Colors.white,
         borderBottomRightRadius: 20,

@@ -101,7 +101,6 @@ export default function EditProfileScreen(props) {
         // isLoading(false);
     }
     const update = async () => {
-        console.log(info);
         let data = {
             id: info.id,
             first_name: info.first_name,

@@ -16,7 +16,7 @@ export default function ModalImage({ url, defaultStyle }) {
                 transparent={true}
                 style={styles.container}
                 visible={modal}>
-                <Image style={styles.image} resizeMode={"contain"} source={{ uri: url }} />
+                <Image style={styles.image} resizeMode={"center"} source={{ uri: url }} />
                 
             </View>
 
@@ -36,6 +36,6 @@ const styles = StyleSheet.create({
     },
     image: {
         width: "100%",
-        height: Dimensions.get('screen').height * .7
+        height: Dimensions.get('screen').height
     },
 });

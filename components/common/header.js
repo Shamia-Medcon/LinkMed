@@ -12,21 +12,31 @@ export default function Header({ back }) {
     const [name, setName] = useState("");
     const [loading, setLoading] = useState(false);
     const loadAuth = async () => {
-        await DBConnect.checkAuth();
-        const time = setTimeout(async () => {
+        let check=await LocalStorage.checkExist("user")
+        if (check) {
             let user = await LocalStorage.getData('user');
             if (user) {
                 setName(user.first_name);
                 setLoading(true);
             }
-        }, 2000);
+        } else {
+            DBConnect.checkAuth();
+            const time = setTimeout(async () => {
+                let user = await LocalStorage.getData('user');
+                clearTimeout(time);
+                if (user) {
+                    setName(user.first_name);
+                    setLoading(true);
+                }
+            }, 2000);
+        }
     }
     useEffect(() => {
         loadAuth();
     }, []);
     return (
         <>
-            <View style={{ ...styles.header}}>
+            <View style={{ ...styles.header }}>
                 {back ? (<>
                     <View style={styles.icon}>
                         <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -52,7 +62,7 @@ export default function Header({ back }) {
 const styles = StyleSheet.create({
     header: {
         backgroundColor: Colors.main_color,
-        height:100,
+        height: 100,
         width: Dimensions.get('screen').width,
         borderBottomLeftRadius: 30,
         borderBottomRightRadius: 30,
@@ -61,7 +71,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         paddingHorizontal: 20,
-        paddingTop:30,
+        paddingTop: 30,
 
 
     },

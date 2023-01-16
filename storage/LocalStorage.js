@@ -18,6 +18,14 @@ export default class {
             return null;
         }
     }
+    static checkExist = async (key) => {
+        try {
+            const jsonValue = await AsyncStorage.getItem(key)
+            return jsonValue != null ? true : false;
+        } catch (e) {
+            return false;
+        }
+    }
     static removeData = async (key) => {
         try {
             await AsyncStorage.removeItem(key)

@@ -14,7 +14,7 @@ export const Color = {
     circle_blue_color: '#75B7C8',
     transparent: 'transparent',
     borderColor: '#A8A8A8',
-    placeHolder: '#00000033',
+    placeHolder: '#00000055',
     textColor: '#033572',
     statusBar: 'white',
 
@@ -35,7 +35,7 @@ export const Dark = {
     circle_blue_color: '#75B7C8',
     transparent: 'transparent',
     borderColor: '#A8A8A8',
-    placeHolder: '#00000033',
+    placeHolder: '#00000055',
     textColor: '#033572',
     statusBar: 'black',
 

@@ -39,12 +39,12 @@ export default function ListOfEvents(props) {
             {loading ? (<>
                 <ActivityIndicator />
             </>) : (<>
-                {events.length > 0 && events.map((item, key) => {
-                    return (<View key={key}>
-                        <EventItem event={item} navigation={props.navigation} />
-                    </View>
-                    )
-                })}
+                        {events.length > 0 && events.map((item, key) => {
+                            return (<View key={key} style={styles.item}>
+                                <EventItem event={item} navigation={props.navigation} />
+                            </View>
+                            )
+                        })}
 
             </>)}
         </>
@@ -52,11 +52,20 @@ export default function ListOfEvents(props) {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: 20
+    scroll:{
+        flex:1,
+        height:Dimensions.get('screen').height,
+
     },
+   
     marginItem: {
         marginBottom: 10
-    }
+    },
+    container: {
+        flex: 1,
+        backgroundColor: Color.white,
+
+ 
+    },
+    
 });

@@ -7,8 +7,7 @@ const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
 
 export default function HomeScreen(props) {
-
-
+   
 
     return (<>
         <StatusBar barStyle={"light-content"} backgroundColor={Colors.main_color} />
@@ -58,7 +57,7 @@ const styles = StyleSheet.create({
         marginVertical: 5,
         fontSize: 20,
         fontFamily: "OpenSans-Bold",
-        textTransform:'uppercase',
+        textTransform: 'uppercase',
     },
 
 

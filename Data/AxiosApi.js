@@ -109,7 +109,6 @@ export default class {
             config
         )
             .then(response => {
-                console.log(response);
                 return response;
             }).catch((error) => {
                 console.error(error);
