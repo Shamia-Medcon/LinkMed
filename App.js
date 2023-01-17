@@ -12,8 +12,6 @@ const App = () => {
     OneSignal.promptForPushNotificationsWithUserResponse();
     OneSignal.setNotificationWillShowInForegroundHandler(notificationReceivedEvent => {
       let notification = notificationReceivedEvent.getNotification();
-      console.log(notification);
-      console.log(notification.additionalData);
       notificationReceivedEvent.complete(notification);
     })
     OneSignal.setNotificationOpenedHandler(notification => {

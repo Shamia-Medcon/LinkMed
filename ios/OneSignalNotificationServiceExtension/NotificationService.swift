@@ -18,13 +18,16 @@ class NotificationService: UNNotificationServiceExtension {
     override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
         self.contentHandler = contentHandler
         self.contentHandler=contentHandler
-        self.bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
+        bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
         
         if let bestAttemptContent = bestAttemptContent {
             // Modify the notification content here...
             // bestAttemptContent.title = "\(bestAttemptContent.title) [modified]"
             
             // contentHandler(bestAttemptContent)
+            OneSignal.setLogLevel(.LL_VERBOSE, visualLevel: .LL_NONE)
+            bestAttemptContent.body="[modified]"+bestAttemptContent.body
+          
             OneSignal.didReceiveNotificationExtensionRequest(self.receivedRequest,with: bestAttemptContent,withContentHandler:self.contentHandler)
         }
     }
