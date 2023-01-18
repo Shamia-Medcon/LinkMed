@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Appearance, Dimensions, Image, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import { Color, Dark } from '../../config/global';
@@ -11,12 +11,16 @@ import DBConnect from '../../storage/DBConnect';
 import LocalStorage from '../../storage/LocalStorage';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import OneSignal from 'react-native-onesignal';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
 
 
 export default function EditProfileScreen(props) {
     const navigation = useNavigation();
+    const _scrollRef = useRef();
+
     const [countries, setCountries] = useState([]);
     const [show, setShow] = useState(false);
     const [specialities, setSpecialities] = useState([]);
@@ -221,154 +225,169 @@ export default function EditProfileScreen(props) {
         <>
             <StatusBar barStyle={"light-content"} backgroundColor={Colors.main_color} />
             <View style={styles.container}>
-                <ScrollView contentContainerStyle={{ paddingBottom: 40, flex: 1 }} style={styles.scroll}>
-                    <View style={styles.header}>
-                        <View style={styles.icon}>
-                            <TouchableOpacity onPress={() => navigation.goBack()}>
-                                <Image source={require('../../assets/img/back.png')}
-                                    resizeMode='contain'
-                                    style={{
-                                        ...styles.backIcon
-                                    }} />
-                            </TouchableOpacity>
-                        </View>
-                        <Text style={styles.title}>My Profile</Text>
-                    </View>
-                    {loading ? (<>
-                        <ActivityIndicator color={Colors.white} size={"large"} style={{ ...styles.center, flex: 1 }} />
-                    </>) : (<>
-                        <View style={styles.details}>
+                <KeyboardAwareScrollView>
 
-                            <Text style={styles.headerTitle}>Personal Details</Text>
-
-                            <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
-                                <TextInput style={styles.input}
-                                    onChangeText={(first_name) => { handleOnChangeText(first_name, 'first_name') }}
-                                    placeholderTextColor={Colors.white}
-                                    cursorColor={Colors.white}
-                                    value={info.first_name}
-                                    placeholder="First Name"
-                                />
-                            </View>
-
-                            <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
-                                <TextInput style={styles.input}
-                                    onChangeText={(last_name) => { handleOnChangeText(last_name, 'last_name') }}
-                                    placeholderTextColor={Colors.white}
-                                    cursorColor={Colors.white}
-                                    value={info.last_name}
-                                    placeholder="Last Name"
-                                />
-                            </View>
-
-                            <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
-
-                                <TextInput style={styles.input}
-                                    onChangeText={(email) => { handleOnChangeText(email, 'email') }}
-                                    placeholderTextColor={Colors.white}
-                                    cursorColor={Colors.white}
-                                    editable={false} selectTextOnFocus={false}
-                                    value={info.email}
-                                    placeholder="Email Address"
-                                    keyboardType="email-address" />
-                            </View>
-
-                            <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
-
-                                <Dropdown
-                                    style={[styles.dropdown]}
-                                    placeholderStyle={styles.placeholderStyle}
-                                    selectedTextStyle={styles.selectedTextStyle}
-                                    inputSearchStyle={styles.inputSearchStyle}
-                                    iconStyle={styles.iconStyle}
-                                    iconColor={Colors.white}
-                                    data={countries}
-                                    maxHeight={300}
-                                    labelField="label"
-                                    valueField="value"
-                                    placeholder={!isFocus ? 'Country' : '...'}
-                                    searchPlaceholder="Search..."
-                                    value={info.country}
-                                    onFocus={() => setIsFocus(true)}
-                                    onBlur={() => setIsFocus(false)}
-                                    onChange={item => {
-                                        handleOnChangeText(item.value, 'country')
-                                        setIsFocus(false);
-                                    }}
-
-                                />
-                            </View>
-                            <Text style={{ ...styles.itemMargin, ...styles.headerTitle }}>Professional Details</Text>
-
-
-                            <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
-
-                                <Dropdown
-                                    style={[styles.dropdown]}
-                                    placeholderStyle={styles.placeholderStyle}
-                                    selectedTextStyle={styles.selectedTextStyle}
-                                    inputSearchStyle={styles.inputSearchStyle}
-                                    iconStyle={styles.iconStyle}
-                                    iconColor={Colors.white}
-                                    data={specialities}
-                                    maxHeight={300}
-                                    labelField="label"
-                                    valueField="value"
-                                    placeholder={!isFocus ? 'Speciality' : '...'}
-                                    searchPlaceholder="Search..."
-                                    value={speciality}
-                                    onFocus={() => setIsFocus(true)}
-                                    onBlur={() => setIsFocus(false)}
-                                    onChange={item => {
-                                        setSpeciaity(item)
-                                        setIsFocus(false);
-                                    }}
-                                />
-                            </View>
-                            <Text style={{ ...styles.itemMargin, ...styles.headerTitle }}>Password</Text>
-
-                            <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
-                                <TextInput style={styles.input}
-                                    onChangeText={(password) => { handleOnChangeText(password, 'password') }}
-                                    placeholderTextColor={Colors.white}
-                                    cursorColor={Colors.white}
-                                    value={info.password}
-                                    placeholder="Password"
-                                    secureTextEntry={true} />
-
-                            </View>
-
-                            <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
-                                <TextInput style={styles.input}
-                                    onChangeText={(confirm_password) => { handleOnChangeText(confirm_password, 'confirm_password') }}
-                                    placeholderTextColor={Colors.white}
-                                    cursorColor={Colors.white}
-                                    value={info.confirm_password}
-                                    placeholder="Confirm Password"
-                                    secureTextEntry={true} />
-                            </View>
-
-                            <View style={{ ...styles.actions, ...styles.center }}>
-                                <TouchableOpacity style={styles.button}
-                                    activeOpacity={.8}
-                                    onPress={update}>
-                                    <Text style={{ ...styles.center, ...styles.buttonText }}>
-                                        Update
-                                    </Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={{ ...styles.button, ...styles.delete }}
-                                    activeOpacity={.8}
-                                    onPress={deleteAccount}>
-                                    <Text style={{ ...styles.center, ...styles.buttonText, ...styles.red }}>
-                                        Delete Account
-                                    </Text>
+                    <ScrollView contentContainerStyle={{ paddingBottom: 40, flex: 1 }} style={styles.scroll} ref={_scrollRef}>
+                        <View style={styles.header}>
+                            <View style={styles.icon}>
+                                <TouchableOpacity onPress={() => navigation.goBack()}>
+                                    <Image source={require('../../assets/img/back.png')}
+                                        resizeMode='contain'
+                                        style={{
+                                            ...styles.backIcon
+                                        }} />
                                 </TouchableOpacity>
                             </View>
+                            <Text style={styles.title}>My Profile</Text>
                         </View>
-                    </>
-                    )}
+                        {loading ? (<>
+                            <ActivityIndicator color={Colors.white} size={"large"} style={{ ...styles.center, flex: 1 }} />
+                        </>) : (<>
+                            <View style={styles.details}>
 
-                </ScrollView>
+                                <Text style={styles.headerTitle}>Personal Details</Text>
+
+                                <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
+                                    <TextInput style={styles.input}
+                                        onChangeText={(first_name) => { handleOnChangeText(first_name, 'first_name') }}
+                                        placeholderTextColor={Colors.white}
+                                        cursorColor={Colors.white}
+                                        value={info.first_name}
+                                        onFocus={() => {
+                                            _scrollRef.current.scrollTo({ x: 0, y: 500 })
+                                        }}
+                                        placeholder="First Name"
+                                    />
+                                </View>
+
+                                <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
+                                    <TextInput style={styles.input}
+                                        onChangeText={(last_name) => { handleOnChangeText(last_name, 'last_name') }}
+                                        placeholderTextColor={Colors.white}
+                                        cursorColor={Colors.white}
+                                        value={info.last_name}
+                                        onFocus={() => {
+                                            _scrollRef.current.scrollTo({ x: 0, y: 500 })
+                                        }}
+                                        placeholder="Last Name"
+                                    />
+                                </View>
+
+                                <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
+
+                                    <TextInput style={{ ...styles.input, color: Colors.main_color, backgroundColor: Colors.dark_grey_color }}
+                                        onChangeText={(email) => { handleOnChangeText(email, 'email') }}
+                                        placeholderTextColor={Colors.white}
+                                        cursorColor={Colors.white}
+                                        editable={false} selectTextOnFocus={false}
+                                        value={info.email}
+                                        placeholder="Email Address"
+                                        keyboardType="email-address" />
+                                </View>
+
+                                <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
+
+                                    <Dropdown
+                                        style={[styles.dropdown]}
+                                        placeholderStyle={styles.placeholderStyle}
+                                        selectedTextStyle={styles.selectedTextStyle}
+                                        inputSearchStyle={styles.inputSearchStyle}
+                                        iconStyle={styles.iconStyle}
+                                        iconColor={Colors.white}
+                                        data={countries}
+                                        maxHeight={300}
+                                        labelField="label"
+                                        valueField="value"
+                                        placeholder={!isFocus ? 'Country' : '...'}
+                                        searchPlaceholder="Search..."
+                                        value={info.country}
+                                        onFocus={() => setIsFocus(true)}
+                                        onBlur={() => setIsFocus(false)}
+                                        onChange={item => {
+                                            handleOnChangeText(item.value, 'country')
+                                            setIsFocus(false);
+                                        }}
+
+                                    />
+                                </View>
+                                <Text style={{ ...styles.itemMargin, ...styles.headerTitle }}>Professional Details</Text>
+
+
+                                <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
+
+                                    <Dropdown
+                                        style={[styles.dropdown]}
+                                        placeholderStyle={styles.placeholderStyle}
+                                        selectedTextStyle={styles.selectedTextStyle}
+                                        inputSearchStyle={styles.inputSearchStyle}
+                                        iconStyle={styles.iconStyle}
+                                        iconColor={Colors.white}
+                                        data={specialities}
+                                        maxHeight={300}
+                                        labelField="label"
+                                        valueField="value"
+                                        placeholder={!isFocus ? 'Speciality' : '...'}
+                                        searchPlaceholder="Search..."
+                                        value={speciality}
+                                        onFocus={() => setIsFocus(true)}
+                                        onBlur={() => setIsFocus(false)}
+                                        onChange={item => {
+                                            setSpeciaity(item)
+                                            setIsFocus(false);
+                                        }}
+                                    />
+                                </View>
+                                <Text style={{ ...styles.itemMargin, ...styles.headerTitle }}>Password</Text>
+
+                                <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
+                                    <TextInput style={styles.input}
+                                        onChangeText={(password) => { handleOnChangeText(password, 'password') }}
+                                        placeholderTextColor={Colors.white}
+                                        cursorColor={Colors.white}
+                                        value={info.password}
+                                        onFocus={() => {
+                                            _scrollRef.current.scrollTo({ x: 0, y: 500 })
+                                        }}
+                                        placeholder="Password"
+                                        secureTextEntry={true} />
+
+                                </View>
+
+                                <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
+                                    <TextInput style={styles.input}
+                                        onChangeText={(confirm_password) => { handleOnChangeText(confirm_password, 'confirm_password') }}
+                                        placeholderTextColor={Colors.white}
+                                        cursorColor={Colors.white}
+                                        value={info.confirm_password}
+                                        onFocus={() => {
+                                            _scrollRef.current.scrollTo({ x: 0, y: 500 })
+                                        }}
+                                        placeholder="Confirm Password"
+                                        secureTextEntry={true} />
+                                </View>
+
+                                <View style={{ ...styles.actions, ...styles.center }}>
+                                    <TouchableOpacity style={styles.button}
+                                        activeOpacity={.8}
+                                        onPress={update}>
+                                        <Text style={{ ...styles.center, ...styles.buttonText }}>
+                                            Update
+                                        </Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={{ ...styles.button, ...styles.delete }}
+                                        activeOpacity={.8}
+                                        onPress={deleteAccount}>
+                                        <Text style={{ ...styles.center, ...styles.buttonText, ...styles.red }}>
+                                            Delete Account
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </>
+                        )}
+
+                    </ScrollView>
+                </KeyboardAwareScrollView>
             </View>
             <AwesomeAlert
                 show={show}

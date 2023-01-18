@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { Component, useEffect, useState } from 'react';
+import React, { Component, useEffect, useRef, useState } from 'react';
 import { View, Text, StyleSheet, Button, Image, Dimensions, TouchableOpacity, Appearance, StatusBar, ScrollView } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import ProgressBarLoading from '../../components/common/ProgressBar';
@@ -8,12 +8,13 @@ import validation from '../../config/validation';
 import GeneralApiData from '../../Data/GeneralApiData';
 import DBConnect from '../../storage/DBConnect';
 import LocalStorage from '../../storage/LocalStorage';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
 
 export default LoginScreen = (props) => {
   const navigation = useNavigation();
-
+  const _scrollRef = useRef();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, isLoading] = useState(false);
@@ -50,7 +51,7 @@ export default LoginScreen = (props) => {
             index: 0,
             routes: [{ name: 'Home' }],
           })
-        }else{
+        } else {
           setError("Error in request, please try again");
 
         }
@@ -74,103 +75,116 @@ export default LoginScreen = (props) => {
   return (
     <>
 
-      <StatusBar translucent barStyle={"light-content"} backgroundColor={Colors.main_color} />
+      <StatusBar translucent barStyle={"dark-content"} backgroundColor={Colors.main_color} />
       {loading ? (<>
         <ProgressBarLoading />
       </>) : (<>
+        <KeyboardAwareScrollView>
 
-        <ScrollView style={styles.scroll}>
-          <View style={styles.content}>
-            <View style={{ ...styles.center, ...styles.logoContent }}>
-              <Image style={styles.logo} resizeMode="contain" source={require('../../assets/img/logo_dark.png')} />
-            </View>
-            {error != "" ? (<>
-              <View style={styles.errorContent}>
-                <Text style={styles.error}>{error}</Text>
+          <ScrollView style={styles.scroll} ref={_scrollRef}>
+            <View style={styles.content}>
+              <View style={{ ...styles.center, ...styles.logoContent }}>
+                <Image style={styles.logo} resizeMode="contain" source={require('../../assets/img/logo_dark.png')} />
               </View>
-            </>) : (<></>)}
-            {emailError != "" ? (<>
-              <View style={styles.errorContent}>
-                <Text style={styles.error}>{emailError}</Text>
-              </View>
-            </>) : (<></>)}
-            <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
-              <View style={{ ...styles.bordered }}>
-                <View style={styles.iconContent}>
-                  <Image style={styles.icon} resizeMode="contain" source={require('../../assets/img/user.png')} />
+              {error != "" ? (<>
+                <View style={styles.errorContent}>
+                  <Text style={styles.error}>{error}</Text>
                 </View>
-                <TextInput style={styles.input}
-                  onChangeText={setEmail}
-                  value={email}
-                  placeholder="Email Address"
-                  placeholderTextColor={Colors.main_color}
-                  keyboardType="email-address" />
-              </View>
-            </View>
-            {passwordError != "" ? (<>
-              <View style={styles.errorContent}>
-                <Text style={styles.error}>{passwordError}</Text>
-              </View>
-            </>) : (<></>)}
-            <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
-              <View style={{ ...styles.bordered }}>
-                <View style={styles.iconContent}>
-                  <Image style={styles.icon} resizeMode="contain" source={require('../../assets/img/lock.png')} />
+              </>) : (<></>)}
+              {emailError != "" ? (<>
+                <View style={styles.errorContent}>
+                  <Text style={styles.error}>{emailError}</Text>
                 </View>
-                <TextInput style={styles.input}
-                  onChangeText={setPassword}
-                  value={password}
-                  secureTextEntry={true}
-                  placeholderTextColor={Colors.main_color}
+              </>) : (<></>)}
 
-                  placeholder="Password" />
+
+              <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
+                <View style={{ ...styles.bordered }}>
+                  <View style={styles.iconContent}>
+                    <Image style={styles.icon} resizeMode="contain" source={require('../../assets/img/user.png')} />
+                  </View>
+                  <TextInput style={styles.input}
+                    onChangeText={setEmail}
+                    cursorColor={Colors.white}
+                    value={email}
+                    placeholderTextColor={Colors.main_color}
+                    onFocus={() => {
+                      _scrollRef.current.scrollTo({ x: 0, y: 500 })
+                    }}
+                    placeholder="Email Address"
+                    keyboardType="email-address" />
+                </View>
+              </View>
+              {passwordError != "" ? (<>
+                <View style={styles.errorContent}>
+                  <Text style={styles.error}>{passwordError}</Text>
+                </View>
+              </>) : (<></>)}
+              <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
+                <View style={{ ...styles.bordered }}>
+                  <View style={styles.iconContent}>
+                    <Image style={styles.icon} resizeMode="contain" source={require('../../assets/img/lock.png')} />
+                  </View>
+                  <TextInput style={styles.input}
+                    onChangeText={setPassword}
+                    value={password}
+                    secureTextEntry={true}
+                    placeholderTextColor={Colors.main_color}
+                    onFocus={() => {
+                      _scrollRef.current.scrollTo({ x: 0, y: 500 })
+                    }}
+                    placeholder="Password" />
+                </View>
+              </View>
+              <View style={{ ...styles.itemMargin, ...styles.linkContent }}>
+                <TouchableOpacity
+                  onPress={() => {
+
+                    navigation.navigate("ForgetPassword", {})
+                  }}
+                >
+                  <Text style={{ ...styles.linkTitle }}>
+                    Forgot Password?
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.itemMargin}>
+                <TouchableOpacity style={styles.button}
+                  activeOpacity={.8}
+                  onPress={onSubmit}
+                >
+                  <Text style={{ ...styles.center, ...styles.buttonText }}>
+                    SIGN IN
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.register}>
+                <Text style={styles.registerTitle}>
+                  Don`t have an account yet?
+                </Text>
+                <TouchableOpacity activeOpacity={.9} onPress={() => {
+                  navigation.navigate("Register", {})
+                }}>
+                  <Text style={{ ...styles.registerTitle, ...styles.bold }}>Register</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.medconLogo}>
+                <View>
+                  <Text style={styles.footerTitle}>Powered by</Text>
+                </View>
+                <Image
+                  source={require('../../assets/img/medcon_dark.png')}
+                  resizeMode='contain'
+                  style={{
+                    ...styles.logoCompany,
+                  }}
+                />
               </View>
             </View>
-            <View style={{ ...styles.itemMargin, ...styles.linkContent }}>
-              <TouchableOpacity
-                onPress={() => { }}
-              >
-                <Text style={{ ...styles.linkTitle }}>
-                  Forget Password?
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.itemMargin}>
-              <TouchableOpacity style={styles.button}
-                activeOpacity={.8}
-                onPress={onSubmit}
-              >
-                <Text style={{ ...styles.center, ...styles.buttonText }}>
-                  SIGN IN
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.register}>
-              <Text style={styles.registerTitle}>
-                Don`t have an account yet?
-              </Text>
-              <TouchableOpacity activeOpacity={.9} onPress={() => {
-                navigation.navigate("Register", {})
-              }}>
-                <Text style={{ ...styles.registerTitle, ...styles.bold }}>Register</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.medconLogo}>
-              <View>
-                <Text style={styles.footerTitle}>Powered by</Text>
-              </View>
-              <Image
-                source={require('../../assets/img/medcon_dark.png')}
-                resizeMode='contain'
-                style={{
-                  ...styles.logoCompany,
-                }}
-              />
-            </View>
-          </View>
 
 
-        </ScrollView>
+          </ScrollView>
+        </KeyboardAwareScrollView>
 
 
       </>)}
@@ -184,10 +198,7 @@ export default LoginScreen = (props) => {
 }
 const styles = StyleSheet.create({
   scroll: {
-    flex: 1,
-    position: 'relative',
-    height: Dimensions.get('screen').height,
-    width: Dimensions.get('screen').width,
+    flexGrow: 1,
   },
 
   content: {
@@ -197,7 +208,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
     alignItems: 'center',
-    borderWidth: 1
   },
   logoContent: {
   },
@@ -242,9 +252,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   input: {
-    width: Dimensions.get('screen').width * .8,
-    height: '100%',
-    fontSize: 18,
+
+    width: Dimensions.get('screen').width * .55,
+    fontSize: 16,
     color: Colors.main_color,
     fontFamily: "OpenSans-Regular",
 

@@ -9,6 +9,7 @@ export default class {
     static _updateRoute = _prefix + "/user/";
     static _deleteRoute = _prefix + "/user/";
     static _resetPasswordRoute = _prefix + "/accounts/resetPassword";
+    static _forgotPasswordRoute = _prefix + "/accounts/forgotPassword";
     static _specialityRoute = _prefix + "/specialities";
     static _notificationRoute = _prefix + "/notification";
 

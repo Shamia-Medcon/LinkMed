@@ -6,7 +6,9 @@ const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
 
 export default function ModalImage({ url, defaultStyle }) {
+    const [loading, isLoading] = useState(false);
     const [modal, setModal] = useState(false);
+
 
     return (
         <>
@@ -15,8 +17,12 @@ export default function ModalImage({ url, defaultStyle }) {
                 transparent={true}
                 style={styles.container}
                 visible={modal}>
-                <Image style={styles.image} resizeMode={"center"} source={{ uri: url }} />
-                
+                <Image style={styles.image} onLoadEnd={() => { isLoading(false) }} onLoadStart={() => { isLoading(true) }} resizeMode={"center"} source={{ uri: url }} />
+                {loading ? (<>
+                    <View style={styles.spinner}>
+                        <ActivityIndicator size={"large"} />
+                    </View>
+                </>) : (<></>)}
             </View>
 
         </>
@@ -25,7 +31,7 @@ export default function ModalImage({ url, defaultStyle }) {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: Colors.placeHolder,
+        backgroundColor: Colors.modal,
         position: 'relative',
         height: Dimensions.get('window').height,
         width: Dimensions.get('window').width,
@@ -36,5 +42,14 @@ const styles = StyleSheet.create({
     image: {
         width: "100%",
         height: Dimensions.get('screen').height
+    },
+    spinner: {
+        position: 'absolute',
+        width: "100%",
+        height: '100%',
+        justifyContent: 'center',
+        alignContent: 'center',
+        backgroundColor: Colors.placeHolder,
+        borderRadius: 20
     },
 });

@@ -1,7 +1,7 @@
 import Clipboard from '@react-native-clipboard/clipboard';
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, StatusBar, ScrollView, Appearance, StyleSheet, Dimensions, TouchableOpacity, Image, TextInput } from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
@@ -11,6 +11,7 @@ import data from "../../Data/countries.json"
 import GeneralApiData from '../../Data/GeneralApiData';
 import validation from '../../config/validation';
 import { Dropdown } from 'react-native-element-dropdown';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
@@ -23,6 +24,7 @@ export default function RegisterScreen() {
   const [verify, setVerify] = useState(false);
   const [isFocus, setIsFocus] = useState(false);
   const [speciality, setSpeciaity] = useState("");
+  const _scrollRef = useRef();
 
   const [loading, isLoading] = useState(false);
   const [fristNameError, setFirstNameError] = useState("");
@@ -101,7 +103,7 @@ export default function RegisterScreen() {
     if (res && res.status_code == 200) {
       let data = [];
       res.data.forEach(item => {
-        
+
         data.push({
           value: item.id,
           label: item.title
@@ -127,8 +129,8 @@ export default function RegisterScreen() {
         password: info.password,
         confirm_password: info.confirm_password,
         term: info.term
-    };
-    console.log(data);
+      };
+      console.log(data);
       //call API
       let res = await GeneralApiData.RegisterFunction(data);
       //processing response
@@ -221,209 +223,212 @@ export default function RegisterScreen() {
           </>) : (<>
             <View style={styles.container}>
               <View style={{ ...styles.center, ...styles.content }}>
-                <ScrollView contentContainerStyle={styles.scroll}>
-                  <View style={{ ...styles.header, ...styles.center }}>
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
-                      <Image source={require('../../assets/img/back.png')}
-                        resizeMode='contain'
-                        style={{
-                          ...styles.backIcon
-                        }} />
-                    </TouchableOpacity>
-                    <Text style={styles.signupTitle}>Sign Up</Text>
-                  </View>
+                <KeyboardAwareScrollView>
 
-                  <View>
+                  <ScrollView ref={_scrollRef} contentContainerStyle={styles.scroll}>
+                    <View style={{ ...styles.header, ...styles.center }}>
+                      <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Image source={require('../../assets/img/back.png')}
+                          resizeMode='contain'
+                          style={{
+                            ...styles.backIcon
+                          }} />
+                      </TouchableOpacity>
+                      <Text style={styles.signupTitle}>Sign Up</Text>
+                    </View>
 
-                    {error != "" ? (<>
-                      <View style={styles.errorContent}>
-                        <Text style={styles.error}>{error}</Text>
-                      </View>
-                    </>) : (<></>)}
                     <View>
-                      <Text style={styles.title}>Personal Details</Text>
-                    </View>
-                    {/* First Name */}
-                    {fristNameError != "" ? (<>
-                      <View style={styles.errorContent}>
-                        <Text style={styles.error}>{fristNameError}</Text>
-                      </View>
-                    </>) : (<></>)}
-                    <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
-                      <TextInput style={styles.input}
-                        onChangeText={(first_name) => { handleOnChangeText(first_name, 'first_name') }}
-                        placeholderTextColor={Colors.white}
-                        cursorColor={Colors.white}
-                        value={info.first_name}
-                        placeholder="First Name"
-                      />
-                    </View>
 
-                    {/* Last Name */}
-                    {lastNameError != "" ? (<>
-                      <View style={styles.errorContent}>
-                        <Text style={styles.error}>{lastNameError}</Text>
+                      {error != "" ? (<>
+                        <View style={styles.errorContent}>
+                          <Text style={styles.error}>{error}</Text>
+                        </View>
+                      </>) : (<></>)}
+                      <View>
+                        <Text style={styles.title}>Personal Details</Text>
                       </View>
-                    </>) : (<></>)}
-                    <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
-                      <TextInput style={styles.input}
-                        onChangeText={(last_name) => { handleOnChangeText(last_name, 'last_name') }}
-                        placeholderTextColor={Colors.white}
-                        cursorColor={Colors.white}
-                        value={info.last_name}
-                        placeholder="Last Name"
-                      />
-                    </View>
-
-                    {/* Email Address */}
-                    {emailError != "" ? (<>
-                      <View style={styles.errorContent}>
-                        <Text style={styles.error}>{emailError}</Text>
-                      </View>
-                    </>) : (<></>)}
-                    <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
-
-                      <TextInput style={styles.input}
-                        onChangeText={(email) => { handleOnChangeText(email, 'email') }}
-                        placeholderTextColor={Colors.white}
-                        cursorColor={Colors.white}
-                        value={info.email}
-                        placeholder="Email Address"
-                        keyboardType="email-address" />
-                    </View>
-                    {/* Country */}
-                    {countryError != "" ? (<>
-                      <View style={styles.errorContent}>
-                        <Text style={styles.error}>{countryError}</Text>
-                      </View>
-                    </>) : (<></>)}
-                    <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
-
-                      <Dropdown
-                        style={[styles.dropdown]}
-                        placeholderStyle={styles.placeholderStyle}
-                        selectedTextStyle={styles.selectedTextStyle}
-                        inputSearchStyle={styles.inputSearchStyle}
-                        iconStyle={styles.iconStyle}
-                        iconColor={Colors.white}
-                        data={countries}
-                        maxHeight={300}
-                        labelField="label"
-                        valueField="value"
-                        placeholder={!isFocus ? 'Country' : '...'}
-                        searchPlaceholder="Search..."
-                        value={info.country}
-                        onFocus={() => setIsFocus(true)}
-                        onBlur={() => setIsFocus(false)}
-                        onChange={item => {
-                          handleOnChangeText(item.value, 'country')
-                          setIsFocus(false);
-                        }}
-
-                      />
-                    </View>
-                    <View>
-                      <Text style={styles.title}>Professional Details</Text>
-                    </View>
-                    {/* Speciality Address */}
-                    {specialityError != "" ? (<>
-                      <View style={styles.errorContent}>
-                        <Text style={styles.error}>{specialityError}</Text>
-                      </View>
-                    </>) : (<></>)}
-                    <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
-
-                      <Dropdown
-                        style={[styles.dropdown]}
-                        placeholderStyle={styles.placeholderStyle}
-                        selectedTextStyle={styles.selectedTextStyle}
-                        inputSearchStyle={styles.inputSearchStyle}
-                        iconStyle={styles.iconStyle}
-                        iconColor={Colors.white}
-                        data={specialities}
-                        maxHeight={300}
-                        labelField="label"
-                        valueField="value"
-                        placeholder={!isFocus ? 'Speciality' : '...'}
-                        searchPlaceholder="Search..."
-                        value={speciality}
-                        onFocus={() => setIsFocus(true)}
-                        onBlur={() => setIsFocus(false)}
-                        onChange={item => {
-                          setSpeciaity(item)
-                          setIsFocus(false);
-                        }}
-                      />
-                    </View>
-                    <View>
-                      <Text style={styles.title}>Password</Text>
-                    </View>
-                    {/* Password */}
-                    {passwordError != "" ? (<>
-                      <View style={styles.errorContent}>
-                        <Text style={styles.error}>{passwordError}</Text>
-                      </View>
-                    </>) : (<></>)}
-                    <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
-                      <TextInput style={styles.input}
-                        onChangeText={(password) => { handleOnChangeText(password, 'password') }}
-                        placeholderTextColor={Colors.white}
-                        cursorColor={Colors.white}
-                        value={info.password}
-                        placeholder="Password"
-                        secureTextEntry={true} />
-
-                    </View>
-                    {/* Password */}
-                    {confrimPasswordError != "" ? (<>
-                      <View style={styles.errorContent}>
-                        <Text style={styles.error}>{confrimPasswordError}</Text>
-                      </View>
-                    </>) : (<></>)}
-                    <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
-                      <TextInput style={styles.input}
-                        onChangeText={(confirm_password) => { handleOnChangeText(confirm_password, 'confirm_password') }}
-                        placeholderTextColor={Colors.white}
-                        cursorColor={Colors.white}
-                        value={info.confirm_password}
-                        placeholder="Confirm Password"
-                        secureTextEntry={true} />
-                    </View>
-                    {/* Terms */}
-                    {termError != "" ? (<>
-                      <View style={styles.errorContent}>
-                        <Text style={styles.error}>{termError}</Text>
-                      </View>
-                    </>) : (<></>)}
-
-                    <View style={{ ...styles.itemMargin, ...styles.inputContent, marginTop: 20 }}>
-                      <View style={styles.checkbox}>
-                        <BouncyCheckbox
-                          size={25}
-                          fillColor={Colors.main_color}
-                          unfillColor="#FFFFFF"
-                          text="I agree to the Terms of Service and Privacy Policy"
-                          iconStyle={{ borderColor: Colors.white }}
-                          innerIconStyle={{ borderWidth: 2, borderRadius: 0, }}
-                          textStyle={{ fontFamily: "OpenSans-Bold", color: Colors.white, fontSize: 15 }}
-                          onPress={(isChecked) => { handleOnChangeText(isChecked, 'term') }}
+                      {/* First Name */}
+                      {fristNameError != "" ? (<>
+                        <View style={styles.errorContent}>
+                          <Text style={styles.error}>{fristNameError}</Text>
+                        </View>
+                      </>) : (<></>)}
+                      <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
+                        <TextInput style={styles.input}
+                          onChangeText={(first_name) => { handleOnChangeText(first_name, 'first_name') }}
+                          placeholderTextColor={Colors.white}
+                          cursorColor={Colors.white}
+                          value={info.first_name}
+                          placeholder="First Name"
                         />
                       </View>
-                    </View>
+
+                      {/* Last Name */}
+                      {lastNameError != "" ? (<>
+                        <View style={styles.errorContent}>
+                          <Text style={styles.error}>{lastNameError}</Text>
+                        </View>
+                      </>) : (<></>)}
+                      <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
+                        <TextInput style={styles.input}
+                          onChangeText={(last_name) => { handleOnChangeText(last_name, 'last_name') }}
+                          placeholderTextColor={Colors.white}
+                          cursorColor={Colors.white}
+                          value={info.last_name}
+                          placeholder="Last Name"
+                        />
+                      </View>
+
+                      {/* Email Address */}
+                      {emailError != "" ? (<>
+                        <View style={styles.errorContent}>
+                          <Text style={styles.error}>{emailError}</Text>
+                        </View>
+                      </>) : (<></>)}
+                      <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
+
+                        <TextInput style={styles.input}
+                          onChangeText={(email) => { handleOnChangeText(email, 'email') }}
+                          placeholderTextColor={Colors.white}
+                          cursorColor={Colors.white}
+                          value={info.email}
+                          placeholder="Email Address"
+                          keyboardType="email-address" />
+                      </View>
+                      {/* Country */}
+                      {countryError != "" ? (<>
+                        <View style={styles.errorContent}>
+                          <Text style={styles.error}>{countryError}</Text>
+                        </View>
+                      </>) : (<></>)}
+                      <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
+
+                        <Dropdown
+                          style={[styles.dropdown]}
+                          placeholderStyle={styles.placeholderStyle}
+                          selectedTextStyle={styles.selectedTextStyle}
+                          inputSearchStyle={styles.inputSearchStyle}
+                          iconStyle={styles.iconStyle}
+                          iconColor={Colors.white}
+                          data={countries}
+                          maxHeight={300}
+                          labelField="label"
+                          valueField="value"
+                          placeholder={!isFocus ? 'Country' : '...'}
+                          searchPlaceholder="Search..."
+                          value={info.country}
+                          onFocus={() => setIsFocus(true)}
+                          onBlur={() => setIsFocus(false)}
+                          onChange={item => {
+                            handleOnChangeText(item.value, 'country')
+                            setIsFocus(false);
+                          }}
+
+                        />
+                      </View>
+                      <View>
+                        <Text style={styles.title}>Professional Details</Text>
+                      </View>
+                      {/* Speciality Address */}
+                      {specialityError != "" ? (<>
+                        <View style={styles.errorContent}>
+                          <Text style={styles.error}>{specialityError}</Text>
+                        </View>
+                      </>) : (<></>)}
+                      <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
+
+                        <Dropdown
+                          style={[styles.dropdown]}
+                          placeholderStyle={styles.placeholderStyle}
+                          selectedTextStyle={styles.selectedTextStyle}
+                          inputSearchStyle={styles.inputSearchStyle}
+                          iconStyle={styles.iconStyle}
+                          iconColor={Colors.white}
+                          data={specialities}
+                          maxHeight={300}
+                          labelField="label"
+                          valueField="value"
+                          placeholder={!isFocus ? 'Speciality' : '...'}
+                          searchPlaceholder="Search..."
+                          value={speciality}
+                          onFocus={() => setIsFocus(true)}
+                          onBlur={() => setIsFocus(false)}
+                          onChange={item => {
+                            setSpeciaity(item)
+                            setIsFocus(false);
+                          }}
+                        />
+                      </View>
+                      <View>
+                        <Text style={styles.title}>Password</Text>
+                      </View>
+                      {/* Password */}
+                      {passwordError != "" ? (<>
+                        <View style={styles.errorContent}>
+                          <Text style={styles.error}>{passwordError}</Text>
+                        </View>
+                      </>) : (<></>)}
+                      <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
+                        <TextInput style={styles.input}
+                          onChangeText={(password) => { handleOnChangeText(password, 'password') }}
+                          placeholderTextColor={Colors.white}
+                          cursorColor={Colors.white}
+                          value={info.password}
+                          placeholder="Password"
+                          secureTextEntry={true} />
+
+                      </View>
+                      {/* Password */}
+                      {confrimPasswordError != "" ? (<>
+                        <View style={styles.errorContent}>
+                          <Text style={styles.error}>{confrimPasswordError}</Text>
+                        </View>
+                      </>) : (<></>)}
+                      <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
+                        <TextInput style={styles.input}
+                          onChangeText={(confirm_password) => { handleOnChangeText(confirm_password, 'confirm_password') }}
+                          placeholderTextColor={Colors.white}
+                          cursorColor={Colors.white}
+                          value={info.confirm_password}
+                          placeholder="Confirm Password"
+                          secureTextEntry={true} />
+                      </View>
+                      {/* Terms */}
+                      {termError != "" ? (<>
+                        <View style={styles.errorContent}>
+                          <Text style={styles.error}>{termError}</Text>
+                        </View>
+                      </>) : (<></>)}
+
+                      <View style={{ ...styles.itemMargin, ...styles.inputContent, marginTop: 20 }}>
+                        <View style={styles.checkbox}>
+                          <BouncyCheckbox
+                            size={25}
+                            fillColor={Colors.main_color}
+                            unfillColor="#FFFFFF"
+                            text="I agree to the Terms of Service and Privacy Policy"
+                            iconStyle={{ borderColor: Colors.white }}
+                            innerIconStyle={{ borderWidth: 2, borderRadius: 0, }}
+                            textStyle={{ fontFamily: "OpenSans-Bold", color: Colors.white, fontSize: 15 }}
+                            onPress={(isChecked) => { handleOnChangeText(isChecked, 'term') }}
+                          />
+                        </View>
+                      </View>
 
 
-                    <View style={{ ...styles.itemMargin, ...styles.center }}>
-                      <TouchableOpacity style={styles.button}
-                        activeOpacity={.8}
-                        onPress={onSubmit}
-                      >
-                        <Text style={{ ...styles.buttonText }}>
-                          Register
-                        </Text>
-                      </TouchableOpacity>
+                      <View style={{ ...styles.itemMargin, ...styles.center }}>
+                        <TouchableOpacity style={styles.button}
+                          activeOpacity={.8}
+                          onPress={onSubmit}
+                        >
+                          <Text style={{ ...styles.buttonText }}>
+                            Register
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
                     </View>
-                  </View>
-                </ScrollView>
+                  </ScrollView>
+                </KeyboardAwareScrollView>
               </View>
 
             </View>
@@ -456,12 +461,12 @@ const styles = StyleSheet.create({
     shadowColor: Colors.black,
 
   },
-  errorContent:{
+  errorContent: {
     alignContent: 'center',
     alignItems: 'center',
   },
-  error:{
-    color:Colors.red,
+  error: {
+    color: Colors.red,
     fontFamily: "OpenSans-BoldItalic",
 
   },
