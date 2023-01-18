@@ -6,7 +6,6 @@ const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
 
 export default function ModalImage({ url, defaultStyle }) {
-    const [loading, isLoading] = useState(false);
     const [modal, setModal] = useState(false);
 
     return (

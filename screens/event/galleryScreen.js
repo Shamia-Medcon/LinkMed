@@ -11,6 +11,7 @@ import Header from '../../components/common/header';
 import ModalImage from '../../components/common/modal';
 import Toast from 'react-native-toast-message';
 import AwesomeAlert from 'react-native-awesome-alerts';
+import OneSignal from 'react-native-onesignal';
 
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
@@ -114,6 +115,24 @@ export default function GalleryScreen(props) {
             isLoading(false);
         }
     }
+    useEffect(() => {
+        OneSignal.setNotificationOpenedHandler(async (openedEvent) => {
+            const { action, notification } = openedEvent;
+            if (notification.additionalData != undefined) {
+                let target = notification.additionalData;
+                switch (target.type) {
+                    case "event":
+                        navigation.navigate("EventDetails", {
+                            event: target.id
+                        })
+                        break;
+                    default:
+                        break;
+                }
+            }
+        })
+
+    }, [])
     const openCamera = async () => {
 
 

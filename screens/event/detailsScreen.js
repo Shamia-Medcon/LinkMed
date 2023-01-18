@@ -4,6 +4,9 @@ import { ActivityIndicator, Appearance, Dimensions, Image, Linking, ScrollView, 
 import Layout from '../../components/common/layout';
 import { Color, Dark } from '../../config/global';
 import GalleryImage from '../../components/common/image';
+import GeneralApiData from '../../Data/GeneralApiData';
+import OneSignal from 'react-native-onesignal';
+import Toast from 'react-native-toast-message';
 
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
@@ -12,67 +15,100 @@ let Colors = Color;
 export default function EventDetails(props) {
     const navigation = useNavigation();
     const [loading, isLoading] = useState(false);
-    const [event, setEvent] = useState();
-    const [items, setItems] = useState([
-        [
-            {
-                key: 0,
-                title: "Faculty",
-                icon: require('../../assets/img/faculty.png'),
-                color: Colors.main_color,
-                route: "EventFacultyScreen"
-            },
-            {
-                key: 1,
-                title: "Program",
-                icon: require('../../assets/img/program.png'),
-                color: Colors.main_color,
-                route: "EventProgramScreen"
-            },
-        ], [
-            {
-                key: 2,
-                title: "Sending Questions",
-                icon: require('../../assets/img/question.png'),
-                color: Colors.main_color,
-                route: "EventSendingQuestionScreen"
-            },
-            {
-                key: 3,
-                title: "Polling Questions",
-                icon: require('../../assets/img/polling.png'),
-                color: Colors.main_color,
-                route: "EventPollingQuestionScreen"
-            },
-        ], [
-            {
-                key: 4,
-                title: "Evaluation Feedback",
-                icon: require('../../assets/img/evaluation.png'),
-                color: Colors.main_color,
-                route: "EventEvaluationFeedbackScreen"
-            },
-            {
-                key: 5,
-                title: "Gallery",
-                icon: require('../../assets/img/gallery.png'),
-                color: Colors.main_color,
-                route: "EventGalleryScreen"
-            },
-        ]
-    ]);
+    const [event, setEvent] = useState(null);
+    const [event_id, setEventID] = useState(null);
+    const [items, setItems] = useState([]);
     const init = async () => {
         isLoading(true);
-        let timer = setTimeout(() => {
-            clearTimeout(timer);
-            isLoading(false);
+        if (event_id) {
+            let res = await GeneralApiData.EventDetails(event_id);
+            if (res.status_code == 200) {
+                setEvent(res.data);
+                setItems([
+                    [
+                        {
+                            key: 0,
+                            title: "Faculty",
+                            icon: require('../../assets/img/faculty.png'),
+                            color: Colors.main_color,
+                            route: "EventFacultyScreen",
+                            available: true
+                        },
+                        {
+                            key: 1,
+                            title: "Program",
+                            icon: require('../../assets/img/program.png'),
+                            color: Colors.main_color,
+                            route: "EventProgramScreen",
+                            available: true
 
-        }, 2000);
+                        },
+                    ], [
+                        {
+                            key: 2,
+                            title: "Sending Questions",
+                            icon: require('../../assets/img/question.png'),
+                            color: Colors.main_color,
+                            route: "EventSendingQuestionScreen",
+                            available: res.data.isLive
+
+                        },
+                        {
+                            key: 3,
+                            title: "Polling Questions",
+                            icon: require('../../assets/img/polling.png'),
+                            color: Colors.main_color,
+                            route: "EventPollingQuestionScreen",
+                            available: res.data.isLive
+
+                        },
+                    ], [
+                        {
+                            key: 4,
+                            title: "Evaluation Feedback",
+                            icon: require('../../assets/img/evaluation.png'),
+                            color: Colors.main_color,
+                            route: "EventEvaluationFeedbackScreen",
+                            available: res.data.isLive
+
+                        },
+                        {
+                            key: 5,
+                            title: "Gallery",
+                            icon: require('../../assets/img/gallery.png'),
+                            color: Colors.main_color,
+                            route: "EventGalleryScreen",
+                            available: res.data.isLive
+
+                        },
+                    ]
+                ]);
+            }
+            isLoading(false);
+        }
     }
     useEffect(() => {
-        setEvent(props.route.params.event);
+        setEventID(props.route.params.event);
         init();
-    }, []);
+    }, [event_id]);
+    useEffect(() => {
+        OneSignal.setNotificationOpenedHandler(async (openedEvent) => {
+            const { action, notification } = openedEvent;
+            if (notification.additionalData != undefined) {
+                let target = notification.additionalData;
+                switch (target.type) {
+                    case "event":
+                        navigation.navigate("EventDetails", {
+                            event: target.id
+                        })
+                        break;
+                    default:
+                        break;
+                }
+            }
+        })
+
+    }, [])
     return (
         <>
             <Layout back={true} >
@@ -90,11 +126,11 @@ export default function EventDetails(props) {
                                 </View>
                                 <View style={styles.rowItem}>
                                     <View style={styles.colItem}>
-                                        
+
                                         <GalleryImage defaultStyle={{
                                             ...styles.logo,
                                             ...styles.center,
-                                        }} url={event.logo} size={"contain"}/>
+                                        }} url={event.logo} size={"contain"} />
                                     </View>
                                     <View style={styles.colItem}>
                                         <View style={{ ...styles.rowItem }}>
@@ -153,12 +189,20 @@ export default function EventDetails(props) {
                                         {row.map((item, key1) => {
                                             return <View key={key1}>
                                                 <TouchableOpacity key={key1} onPress={() => {
-
-                                                    navigation.navigate(item.route, {
-                                                        event: event
-                                                    })
+                                                    if (item.available) {
+                                                        navigation.navigate(item.route, {
+                                                            event: event
+                                                        })
+                                                    } else {
+                                                        
+                                                            Toast.show({
+                                                                type: "info",
+                                                                text1: "Warning",
+                                                                text2: event.title + (!item.hasEnded?" will be coming soon":" has ended")
+                                                            })
+                                                        
+                                                    }
                                                 }} activeOpacity={1} style={styles.col}>
-
                                                     <Image source={item.icon}
                                                         resizeMode='contain'
                                                         style={{
@@ -174,6 +218,7 @@ export default function EventDetails(props) {
                             })}
 
                         </>) : (<>
+
                         </>)}
 
                     </>
@@ -181,6 +226,7 @@ export default function EventDetails(props) {
                 </>)
                 }
             </Layout>
+            <Toast />
 
         </>
     );

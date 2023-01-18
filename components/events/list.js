@@ -39,12 +39,17 @@ export default function ListOfEvents(props) {
             {loading ? (<>
                 <ActivityIndicator />
             </>) : (<>
-                        {events.length > 0 && events.map((item, key) => {
-                            return (<View key={key} style={styles.item}>
-                                <EventItem event={item} navigation={props.navigation} />
-                            </View>
-                            )
-                        })}
+                {events && events.length > 0 ? (<>
+                    {events.length > 0 && events.map((item, key) => {
+                        return (<View key={key} style={styles.item}>
+                            <EventItem event={item} navigation={props.navigation} />
+                        </View>
+                        )
+                    })}
+                </>) : (<>
+                    <Text style={styles.noItems}>Coming soon</Text>
+                </>)}
+
 
             </>)}
         </>
@@ -52,12 +57,12 @@ export default function ListOfEvents(props) {
 }
 
 const styles = StyleSheet.create({
-    scroll:{
-        flex:1,
-        height:Dimensions.get('screen').height,
+    scroll: {
+        flex: 1,
+        height: Dimensions.get('screen').height,
 
     },
-   
+
     marginItem: {
         marginBottom: 10
     },
@@ -65,7 +70,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: Color.white,
 
- 
+
     },
-    
+
 });

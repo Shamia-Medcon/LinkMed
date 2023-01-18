@@ -2,6 +2,8 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Appearance, Dimensions, Image, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import BottomSheet from 'react-native-gesture-bottom-sheet';
+import { RefreshControl } from 'react-native-gesture-handler';
+import OneSignal from 'react-native-onesignal';
 import NotificationItem from '../../components/notification/item';
 import { Color, Dark } from '../../config/global';
 import GeneralApiData from '../../Data/GeneralApiData';
@@ -30,10 +32,31 @@ export default function NotificationScreen(props) {
     const deleteNotification = async () => {
         isLoading(true);
         let res = await GeneralApiData.DeleteNotification(1);
-        console.log(res);
+        if (res.status_code == 200) {
+            init();
+        }
+        this.bottomRef.close();
         isLoading(false);
-
     }
+    useEffect(() => {
+        OneSignal.setNotificationOpenedHandler(async (openedEvent) => {
+            const { action, notification } = openedEvent;
+            if (notification.additionalData != undefined) {
+                let target = notification.additionalData;
+                switch (target.type) {
+                    case "event":
+                        navigation.navigate("EventDetails", {
+                            event: target.id
+                        })
+                        break;
+                    default:
+                        break;
+                }
+            }
+        })
+
+    }, [])
+
     useEffect(() => {
         init();
     }, []);
@@ -60,12 +83,12 @@ export default function NotificationScreen(props) {
                 <View style={styles.header}>
                     <Text style={styles.title}>Notifications</Text>
                 </View>
-                <ScrollView contentContainerStyle={{ paddingBottom: 40, flex: 1 }} style={styles.scroll}>
+                <ScrollView contentContainerStyle={{ paddingBottom: 40, flex: 1 }} refreshControl={
+                    <RefreshControl refreshing={loading} onRefresh={init} />
+                } style={styles.scroll}>
 
-                    {loading ? (<>
-                        <ActivityIndicator color={Colors.white} size={"large"} style={{ ...styles.center, flex: 1 }} />
-                    </>) : (<>
-                        {notifications && notifications.map((item, key) => {
+                    {notifications && notifications.length > 0 ? (<>
+                        {notifications.map((item, key) => {
                             return (
                                 <TouchableOpacity
                                     activeOpacity={.9}
@@ -78,7 +101,12 @@ export default function NotificationScreen(props) {
                                 </TouchableOpacity>
                             )
                         })}
+                    </>) : (<>
+                        <Text style={styles.noItems}>No new notifications</Text>
+
                     </>)}
+
+
                 </ScrollView>
             </SafeAreaView>
 
@@ -146,5 +174,11 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         alignItems: 'center',
         paddingTop: 15
+    },
+    noItems: {
+        color: Colors.grey_color,
+        fontFamily: "OpenSans-Bold",
+        textAlign: 'center',
+
     }
 });
