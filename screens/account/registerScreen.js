@@ -22,6 +22,7 @@ export default function RegisterScreen() {
   const [specialities, setSpecialities] = useState([]);
   const [verify, setVerify] = useState(false);
   const [isFocus, setIsFocus] = useState(false);
+  const [speciality, setSpeciaity] = useState("");
 
   const [loading, isLoading] = useState(false);
   const [fristNameError, setFirstNameError] = useState("");
@@ -50,6 +51,8 @@ export default function RegisterScreen() {
   useEffect(() => {
     init();
   }, []);
+  // To Generate picker options 
+
   // To Generate picker options 
 
   const generateData = (data) => {
@@ -98,6 +101,7 @@ export default function RegisterScreen() {
     if (res && res.status_code == 200) {
       let data = [];
       res.data.forEach(item => {
+        
         data.push({
           value: item.id,
           label: item.title
@@ -114,8 +118,19 @@ export default function RegisterScreen() {
     //show loading
     isLoading(true);
     if (valid()) {
+      let data = {
+        first_name: info.first_name,
+        email: info.email,
+        last_name: info.last_name,
+        country: info.country,
+        speciality_id: speciality.value,
+        password: info.password,
+        confirm_password: info.confirm_password,
+        term: info.term
+    };
+    console.log(data);
       //call API
-      let res = await GeneralApiData.RegisterFunction(info);
+      let res = await GeneralApiData.RegisterFunction(data);
       //processing response
       if (res.status_code == 200) {
         setVerify(true);
@@ -165,7 +180,7 @@ export default function RegisterScreen() {
     } else {
       setCountryError("");
     }
-    if (info.speciality_id == ""
+    if (speciality == ""
     ) {
       setSpecialityError("Please choose your speciality");
       return false;
@@ -292,7 +307,6 @@ export default function RegisterScreen() {
                         iconStyle={styles.iconStyle}
                         iconColor={Colors.white}
                         data={countries}
-                        search
                         maxHeight={300}
                         labelField="label"
                         valueField="value"
@@ -302,8 +316,7 @@ export default function RegisterScreen() {
                         onFocus={() => setIsFocus(true)}
                         onBlur={() => setIsFocus(false)}
                         onChange={item => {
-                          console.log(item);
-                          handleOnChangeText('country', item.value)
+                          handleOnChangeText(item.value, 'country')
                           setIsFocus(false);
                         }}
 
@@ -328,17 +341,16 @@ export default function RegisterScreen() {
                         iconStyle={styles.iconStyle}
                         iconColor={Colors.white}
                         data={specialities}
-                        search
                         maxHeight={300}
                         labelField="label"
                         valueField="value"
                         placeholder={!isFocus ? 'Speciality' : '...'}
                         searchPlaceholder="Search..."
-                        value={info.speciality}
+                        value={speciality}
                         onFocus={() => setIsFocus(true)}
                         onBlur={() => setIsFocus(false)}
                         onChange={item => {
-                          handleOnChangeText('speciality', item.value)
+                          setSpeciaity(item)
                           setIsFocus(false);
                         }}
                       />
@@ -442,6 +454,15 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 50,
     elevation: 4,
     shadowColor: Colors.black,
+
+  },
+  errorContent:{
+    alignContent: 'center',
+    alignItems: 'center',
+  },
+  error:{
+    color:Colors.red,
+    fontFamily: "OpenSans-BoldItalic",
 
   },
   center: {

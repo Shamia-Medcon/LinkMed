@@ -11,9 +11,10 @@ export default function EventItem(props) {
         <>
             <View style={styles.container}>
                 <TouchableOpacity activeOpacity={.96} onPress={() => {
-                    props.navigation.navigate("EventDetails", {
-                        event: props.event.id
-                    })
+                        props.navigation.navigate("EventDetails", {
+                            event: props.event.id
+                        })
+                   
                 }}>
                     <View style={{ ...styles.row, ...styles.item }}>
 

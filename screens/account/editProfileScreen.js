@@ -292,7 +292,6 @@ export default function EditProfileScreen(props) {
                                     onFocus={() => setIsFocus(true)}
                                     onBlur={() => setIsFocus(false)}
                                     onChange={item => {
-                                        console.log(item);
                                         handleOnChangeText(item.value, 'country')
                                         setIsFocus(false);
                                     }}

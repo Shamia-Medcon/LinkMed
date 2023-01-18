@@ -102,7 +102,7 @@ export default function NotificationScreen(props) {
                             )
                         })}
                     </>) : (<>
-                        <Text style={styles.noItems}>No Notification</Text>
+                        <Text style={styles.noItems}>No new notifications</Text>
 
                     </>)}
 

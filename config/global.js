@@ -1,6 +1,6 @@
 export const Color = {
     white: '#ffffff',
-    red: '#ff0000',
+    red: '#dd3333',
     black: '#000000',
     main_color: '#6AAEC1',
     grey_color: '#707070',
@@ -22,7 +22,7 @@ export const Color = {
 
 export const Dark = {
     white: '#ffffff',
-    red: '#ff0000',
+    red: '#dd3333',
     black: 'black',
     main_color: '#6AAEC1',
     grey_color: '#707070',
