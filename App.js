@@ -11,18 +11,17 @@ const App = () => {
 
   useEffect(() => {
     OneSignal.setLogLevel(6, 0)
-    OneSignal.setAppId("3e57771d-f287-4eee-be24-e305172d1942");
+    OneSignal.setAppId("b3b4fbdf-baf8-428c-bdd2-668fb0c79617");
     OneSignal.promptForPushNotificationsWithUserResponse();
     OneSignal.setNotificationWillShowInForegroundHandler(async (notificationReceivedEvent) => {
       let notification = notificationReceivedEvent.getNotification();
-     
+
       notificationReceivedEvent.complete(notification);
     })
-    
+
   }, [])
   return (
     <SafeAreaProvider>
-
       <NavigationContainer>
         <StackNavigation />
       </NavigationContainer>
