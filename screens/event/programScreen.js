@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Appearance, Dimensions, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
+import OneSignal from 'react-native-onesignal';
 import Layout from '../../components/common/layout';
 import { Color, Dark } from '../../config/global';
 import GeneralApiData from '../../Data/GeneralApiData';
@@ -37,7 +38,24 @@ export default function ProgramScreen(props) {
         setEvent(props.route.params.event);
         init();
     }, []);
+    useEffect(() => {
+        OneSignal.setNotificationOpenedHandler(async (openedEvent) => {
+            const { action, notification } = openedEvent;
+            if (notification.additionalData != undefined) {
+                let target = notification.additionalData;
+                switch (target.type) {
+                    case "event":
+                        navigation.navigate("EventDetails", {
+                            event: target.id
+                        })
+                        break;
+                    default:
+                        break;
+                }
+            }
+        })
 
+    }, [])
     return (
         <Layout back={true}>
 
@@ -144,11 +162,11 @@ const styles = StyleSheet.create({
         marginHorizontal: 5
     },
     details: {
-        width: Dimensions.get('screen').width * .7,
+        width: Dimensions.get('screen').width * .65,
 
     },
     time: {
-        width: Dimensions.get('screen').width * .3,
+        width: Dimensions.get('screen').width * .35,
     },
     timeTitle: {
         fontSize: 15,
@@ -156,10 +174,10 @@ const styles = StyleSheet.create({
         fontFamily: "OpenSans-Bold",
     },
     agendaTimeTitle: {
-        fontSize: 10,
+        fontSize: 11,
         color: Colors.grey_color,
-        fontFamily: "OpenSans-SemiBold",
-        paddingHorizontal: 5
+        fontFamily: "OpenSans-Bold",
+        paddingHorizontal: 2
     },
     title: {
         fontSize: 14,

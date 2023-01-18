@@ -10,6 +10,7 @@ import Toast from 'react-native-toast-message';
 import DBConnect from '../../storage/DBConnect';
 import LocalStorage from '../../storage/LocalStorage';
 import AwesomeAlert from 'react-native-awesome-alerts';
+import OneSignal from 'react-native-onesignal';
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
 
@@ -100,6 +101,24 @@ export default function EditProfileScreen(props) {
         })
         // isLoading(false);
     }
+    useEffect(() => {
+        OneSignal.setNotificationOpenedHandler(async (openedEvent) => {
+            const { action, notification } = openedEvent;
+            if (notification.additionalData != undefined) {
+                let target = notification.additionalData;
+                switch (target.type) {
+                    case "event":
+                        navigation.navigate("EventDetails", {
+                            event: target.id
+                        })
+                        break;
+                    default:
+                        break;
+                }
+            }
+        })
+
+    }, [])
     const update = async () => {
         let data = {
             id: info.id,

@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 
     },
     profileContent: {
-        width: Dimensions.get('screen').width * .4,
+        width: Dimensions.get('screen').width * .3,
         justifyContent: 'center',
         alignContent: 'center',
         alignItems: 'center'
@@ -44,7 +44,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     col: {
-        width: Dimensions.get('screen').width * .6,
+        width: Dimensions.get('screen').width * .7,
+        paddingEnd:10,
         flexDirection: 'column',
     },
     name: {

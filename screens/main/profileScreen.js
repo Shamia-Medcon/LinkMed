@@ -1,6 +1,7 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Appearance, Dimensions, Image, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import OneSignal from 'react-native-onesignal';
 import QRCode from 'react-native-qrcode-svg';
 
 import { Color, Dark } from '../../config/global';
@@ -42,6 +43,24 @@ export default function ProfileScreen(props) {
         })
         return willFoucsSubsription;
     });
+    useEffect(() => {
+        OneSignal.setNotificationOpenedHandler(async (openedEvent) => {
+            const { action, notification } = openedEvent;
+            if (notification.additionalData != undefined) {
+                let target = notification.additionalData;
+                switch (target.type) {
+                    case "event":
+                        navigation.navigate("EventDetails", {
+                            event: target.id
+                        })
+                        break;
+                    default:
+                        break;
+                }
+            }
+        })
+
+    }, [])
     return (
         <>
             <StatusBar barStyle={"light-content"} backgroundColor={Colors.main_color} />

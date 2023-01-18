@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Appearance, Dimensions, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import OneSignal from 'react-native-onesignal';
 import Layout from '../../components/common/layout';
 import { Color, Dark } from '../../config/global';
 import GeneralApiData from '../../Data/GeneralApiData';
@@ -17,39 +18,56 @@ export default function FeedBackScreen(props) {
 
     init = async () => {
         isLoading(true);
-       
-            if (event && event.id > 0) {
-                const res = await GeneralApiData.EventFeedbackEvaluation(event ? event.id : 0);
-                if (res && res.status_code == 200) {
-                    setEventFeedback(res.data);
-                    let data = res.data;
-                    for (var i = 0; i < data.length; i++) {
-                        let answersList = data[i].answers;
-                        for (var j = 0; j < answersList.length; j++) {
-                            if (answersList[j].selected) {
-                                answers.push({
-                                    'id': data[i].id,
-                                    'answer_id': answersList[j].id
-                                });
-                            }
+
+        if (event && event.id > 0) {
+            const res = await GeneralApiData.EventFeedbackEvaluation(event ? event.id : 0);
+            if (res && res.status_code == 200) {
+                setEventFeedback(res.data);
+                let data = res.data;
+                for (var i = 0; i < data.length; i++) {
+                    let answersList = data[i].answers;
+                    for (var j = 0; j < answersList.length; j++) {
+                        if (answersList[j].selected) {
+                            answers.push({
+                                'id': data[i].id,
+                                'answer_id': answersList[j].id
+                            });
                         }
                     }
-                } else {
-                    setEventFeedback([]);
                 }
+            } else {
+                setEventFeedback([]);
             }
-            isLoading(false);
-           
+        }
+        isLoading(false);
+
     }
     useEffect(() => {
         setEvent(props.route.params.event);
         let time = setTimeout(async () => {
-                clearTimeout(time);
-                init();
+            clearTimeout(time);
+            init();
         }, 2000);
 
     }, [event]);
+    useEffect(() => {
+        OneSignal.setNotificationOpenedHandler(async (openedEvent) => {
+            const { action, notification } = openedEvent;
+            if (notification.additionalData != undefined) {
+                let target = notification.additionalData;
+                switch (target.type) {
+                    case "event":
+                        navigation.navigate("EventDetails", {
+                            event: target.id
+                        })
+                        break;
+                    default:
+                        break;
+                }
+            }
+        })
 
+    }, [])
     const selectAnswers = (id, answer_id) => {
         let exists = false;
         let newAnswers = answers.map((item) => {
@@ -201,7 +219,7 @@ const styles = StyleSheet.create({
     question: {
         fontSize: 15,
         fontFamily: "OpenSans-ExtraBold",
-        color:Colors.grey_color
+        color: Colors.grey_color
 
     },
     inline: {

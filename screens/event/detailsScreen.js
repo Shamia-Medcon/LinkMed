@@ -4,6 +4,8 @@ import { ActivityIndicator, Appearance, Dimensions, Image, Linking, ScrollView, 
 import Layout from '../../components/common/layout';
 import { Color, Dark } from '../../config/global';
 import GalleryImage from '../../components/common/image';
+import GeneralApiData from '../../Data/GeneralApiData';
+import OneSignal from 'react-native-onesignal';
 
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
@@ -12,7 +14,8 @@ let Colors = Color;
 export default function EventDetails(props) {
     const navigation = useNavigation();
     const [loading, isLoading] = useState(false);
-    const [event, setEvent] = useState();
+    const [event, setEvent] = useState(null);
+    const [event_id, setEventID] = useState(null);
     const [items, setItems] = useState([
         [
             {
@@ -63,16 +66,36 @@ export default function EventDetails(props) {
     ]);
     const init = async () => {
         isLoading(true);
-        let timer = setTimeout(() => {
-            clearTimeout(timer);
+        if (event_id) {
+            let res = await GeneralApiData.EventDetails(event_id);
+            if (res.status_code == 200) {
+                setEvent(res.data);
+            }
             isLoading(false);
-
-        }, 2000);
+        }
     }
     useEffect(() => {
-        setEvent(props.route.params.event);
+        setEventID(props.route.params.event);
         init();
-    }, []);
+    }, [event_id]);
+    useEffect(() => {
+        OneSignal.setNotificationOpenedHandler(async (openedEvent) => {
+            const { action, notification } = openedEvent;
+            if (notification.additionalData != undefined) {
+                let target = notification.additionalData;
+                switch (target.type) {
+                    case "event":
+                        navigation.navigate("EventDetails", {
+                            event: target.id
+                        })
+                        break;
+                    default:
+                        break;
+                }
+            }
+        })
+
+    }, [])
     return (
         <>
             <Layout back={true} >
@@ -90,11 +113,11 @@ export default function EventDetails(props) {
                                 </View>
                                 <View style={styles.rowItem}>
                                     <View style={styles.colItem}>
-                                        
+
                                         <GalleryImage defaultStyle={{
                                             ...styles.logo,
                                             ...styles.center,
-                                        }} url={event.logo} size={"contain"}/>
+                                        }} url={event.logo} size={"contain"} />
                                     </View>
                                     <View style={styles.colItem}>
                                         <View style={{ ...styles.rowItem }}>
@@ -174,6 +197,7 @@ export default function EventDetails(props) {
                             })}
 
                         </>) : (<>
+
                         </>)}
 
                     </>

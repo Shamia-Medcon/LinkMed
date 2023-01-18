@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Appearance, Dimensions, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import OneSignal from 'react-native-onesignal';
 import WebView from 'react-native-webview';
 import Layout from '../../components/common/layout';
 import { Color, Dark } from '../../config/global';
@@ -32,6 +33,24 @@ export default function PollingScreen(props) {
         setEvent(props.route.params.event);
         init();
     }, [event]);
+    useEffect(() => {
+        OneSignal.setNotificationOpenedHandler(async (openedEvent) => {
+            const { action, notification } = openedEvent;
+            if (notification.additionalData != undefined) {
+                let target = notification.additionalData;
+                switch (target.type) {
+                    case "event":
+                        navigation.navigate("EventDetails", {
+                            event: target.id
+                        })
+                        break;
+                    default:
+                        break;
+                }
+            }
+        })
+
+    }, [])
     return (
         <Layout back={true}>
             {loading ? (<>

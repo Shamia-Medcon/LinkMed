@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Appearance, Dimensions, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import OneSignal from 'react-native-onesignal';
 import Layout from '../../components/common/layout';
 import FacultyItem from '../../components/events/faculty/item';
 import { Color, Dark } from '../../config/global';
@@ -33,6 +34,24 @@ export default function FacultyScreen(props) {
         setEvent(props.route.params.event);
         init();
     }, [event]);
+    useEffect(() => {
+        OneSignal.setNotificationOpenedHandler(async (openedEvent) => {
+            const { action, notification } = openedEvent;
+            if (notification.additionalData != undefined) {
+                let target = notification.additionalData;
+                switch (target.type) {
+                    case "event":
+                        navigation.navigate("EventDetails", {
+                            event: target.id
+                        })
+                        break;
+                    default:
+                        break;
+                }
+            }
+        })
+
+    }, [])
     return (
         <>
             <Layout back={true}>

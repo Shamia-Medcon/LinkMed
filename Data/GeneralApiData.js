@@ -68,6 +68,12 @@ export default class {
         return AxiosApi.get(routerAPI._eventRoute, data);
     }
     //-----------
+    //Event Details Function
+    //--------------------
+    static async EventDetails(id) {
+        return AxiosApi.get(routerAPI._eventRoute + "/" + id);
+    }
+    //-----------
     //Event Faculty Function
     //--------------------
     static async EventSpeakerList(id) {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StatusBar, Appearance, StyleSheet, Dimensions, Image, ActivityIndicator, Linking,TouchableOpacity } from 'react-native';
+import { View, Text, StatusBar, Appearance, StyleSheet, Dimensions, Image, ActivityIndicator, Linking, TouchableOpacity } from 'react-native';
+import OneSignal from 'react-native-onesignal';
 import Layout from '../../components/common/layout';
 import { Color, Dark } from '../../config/global';
 import GeneralApiData from '../../Data/GeneralApiData';
@@ -21,7 +22,24 @@ export default function PrivacyScreen(props) {
     useEffect(() => {
         init();
     }, []);
+    useEffect(() => {
+        OneSignal.setNotificationOpenedHandler(async (openedEvent) => {
+            const { action, notification } = openedEvent;
+            if (notification.additionalData != undefined) {
+                let target = notification.additionalData;
+                switch (target.type) {
+                    case "event":
+                        navigation.navigate("EventDetails", {
+                            event: target.id
+                        })
+                        break;
+                    default:
+                        break;
+                }
+            }
+        })
 
+    }, [])
     return (
         <>
             <StatusBar barStyle={"light-content"} backgroundColor={Colors.main_color} />
@@ -42,7 +60,7 @@ export default function PrivacyScreen(props) {
                             <View style={{ ...styles.col }}>
                                 <Image resizeMode='contain' style={styles.icon} source={require("../../assets/img/vission.png")} />
                                 <View style={{ ...styles.bordered }}>
-                                    <Text style={styles.subtitle}>Vission</Text>
+                                    <Text style={styles.subtitle}>Vision</Text>
                                     <Text style={styles.description}>{data.mission ? data.mission : ""}</Text>
                                 </View>
                             </View>
@@ -50,7 +68,12 @@ export default function PrivacyScreen(props) {
                         <View style={{ ...styles.row, ...styles.center }}>
                             <View>
                                 <Text style={styles.subtitle}>Privacy Policy</Text>
-                                <Text style={styles.description}>{data.privacy ? data.privacy : ""}</Text>
+                                <Text style={styles.description} numberOfLines={13} ellipsizeMode={"tail"}>{data.privacy ? data.privacy : ""}</Text>
+                                <TouchableOpacity onPress={() => {
+                                    Linking.openURL("https://medcon-me.com")
+                                }}>
+                                    <Text style={styles.showMore}>Read More</Text>
+                                </TouchableOpacity>
                             </View>
                         </View>
                         <View style={{ ...styles.center, ...styles.contact_info }}>
@@ -191,6 +214,14 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         marginVertical: 10,
         color: Colors.grey_color
+    },
+    showMore: {
+        paddingHorizontal: 15,
+        marginBottom: 10,
+        color: Colors.dark_grey_color,
+        fontSize:12,
+        fontFamily: "OpenSans-BoldItalic",
+        textAlign:'right'
     },
     value: {
         fontSize: 15,
