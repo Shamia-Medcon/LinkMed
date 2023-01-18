@@ -33,6 +33,10 @@ export default class {
     static async RegisterFunction(data) {
         return AxiosApi.post(routerAPI._registerRoute, data);
     }
+
+    static async ForgetPassword(data) {
+        return AxiosApi.post(routerAPI._forgotPasswordRoute, data);
+    }
     //-----------
     //Update Information Function
     //--------------------
