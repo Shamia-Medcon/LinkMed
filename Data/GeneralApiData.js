@@ -133,4 +133,8 @@ export default class {
         return AxiosApi.get(routerAPI._eventGalleryRoute + "/" + id, data);
     }
 
+    static async EventAttended(){
+        
+    }
+
 }

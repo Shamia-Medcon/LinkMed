@@ -189,7 +189,7 @@ export default function EditProfileScreen(props) {
         let res = await GeneralApiData.UpdateUserInfoFunction(data, info.id);
         if (res && res.status_code == 200) {
             let user = res.data
-            await DBConnect.insertData(user.id, user.first_name, user.last_name, user.email, user.country, user.speciality, user.profession, user.token, user.is_activated);
+            await DBConnect.insertData(user.id, user.first_name, user.last_name, user.email, user.country, user.speciality, user.profession, user.token, user.is_activated, false, user.created_at);
             await DBConnect.getByEmail(user.email);
 
             Toast.show({

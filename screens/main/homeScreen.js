@@ -2,7 +2,6 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, StatusBar, Appearance, StyleSheet, Dimensions, Image } from 'react-native';
 import OneSignal from 'react-native-onesignal';
-import Layout from '../../components/common/layout';
 import ListOfEvents from '../../components/events/list';
 import { Color, Dark } from '../../config/global';
 import LocalStorage from '../../storage/LocalStorage';
@@ -11,7 +10,7 @@ let Colors = Color;
 
 export default function HomeScreen(props) {
     const navigation = useNavigation();
-   
+
     useEffect(() => {
         OneSignal.setNotificationOpenedHandler(async (openedEvent) => {
             const { action, notification } = openedEvent;
@@ -34,13 +33,9 @@ export default function HomeScreen(props) {
         <StatusBar barStyle={"light-content"} backgroundColor={Colors.main_color} />
 
         <View style={styles.container}>
+            <ListOfEvents navigation={props.navigation} />
 
-            <Layout contentContainerStyle={{ paddingBottom: 100 }} style={styles.scroll} >
-                <Text style={styles.title}>My Events</Text>
-                <View style={{ ...styles.center, ...styles.lists }}>
-                    <ListOfEvents navigation={props.navigation} />
-                </View>
-            </Layout>
+            
         </View>
 
     </>

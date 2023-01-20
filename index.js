@@ -1,6 +1,8 @@
 /**
  * @format
  */
+ import 'react-native-reanimated'
+
 import OneSignal from 'react-native-onesignal';
 
 import {AppRegistry} from 'react-native';

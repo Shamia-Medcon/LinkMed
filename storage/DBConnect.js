@@ -6,7 +6,7 @@ export default class {
     static createDB = async () => {
         db.transaction(function (txn) {
             txn.executeSql(
-                'CREATE TABLE IF NOT EXISTS Users(id BIGINT PRIMARY KEY NOT NULL, first_name VARCHAR(100), last_name VARCHAR(100), email VARCHAR(150), country VARCHAR(150), speciality VARCHAR(150), profession TEXT,token TEXT,isActivated Boolean,createdAt DATETIME)',
+                'CREATE TABLE IF NOT EXISTS Users(id BIGINT PRIMARY KEY NOT NULL, first_name VARCHAR(100), last_name VARCHAR(100), email VARCHAR(150), country VARCHAR(150), speciality VARCHAR(150), profession TEXT,token TEXT,isActivated Boolean,isScanner Boolean,createdAt DATETIME)',
                 [], function (tx, res) {
                     console.log(res);
                 }
@@ -41,8 +41,8 @@ export default class {
             })
         });
     }
-    static checkAuth = () => {
-       db.transaction(function (txn) {
+    static checkAuth = async () => {
+        db.transaction(function (txn) {
             return txn.executeSql('SELECT * FROM `Users` order by created_at desc limit 1', [], function (tx, res) {
                 if (res.rows.length > 0) {
                     let store = async () => {
@@ -61,16 +61,16 @@ export default class {
         });
     }
 
-    static insertData = async (id, first_name, last_name, email, country, speciaity, profession, token, isActivated, createdAt) => {
+    static insertData = async (id, first_name, last_name, email, country, speciaity, profession, token, isActivated, isScanner, createdAt) => {
         db.transaction(function (txn) {
             txn.executeSql('delete from Users where id=:id', [id]);
-            txn.executeSql('INSERT INTO Users (id,first_name,last_name,email,country,speciality,profession,token,isActivated,createdAt) VALUES (:id,:first_name,:last_name,:email,:country,:speciality,:profession,:token,:isActivated,:createdAt)',
-                [id, first_name, last_name, email, country, speciaity, profession, token, isActivated, createdAt], function (tx, res) {
+            txn.executeSql('INSERT INTO Users (id,first_name,last_name,email,country,speciality,profession,token,isActivated,isScanner,createdAt) VALUES (:id,:first_name,:last_name,:email,:country,:speciality,:profession,:token,:isActivated,:isScanner,:createdAt)',
+                [id, first_name, last_name, email, country, speciaity, profession, token, isActivated, isScanner, createdAt], function (tx, res) {
                     console.log(`Record ${id} was Inserterd`);
                 })
         });
     }
-    static updateData = async (id, first_name, last_name, email,  country, speciaity, profession,token, isActivated) => {
+    static updateData = async (id, first_name, last_name, email, country, speciaity, profession, token, isActivated) => {
         db.transaction(function (txn) {
             txn.executeSql('UPDATE Users set first_name=:first_name,last_name=:last_name,email=:email,country=:country,speciaity=:speciaity,profession=:profession,token=:token,isActivated=:isActivated where id=:id',
                 [first_name, last_name, email, country, speciaity, profession, token, isActivated, id])
