@@ -63,7 +63,7 @@ export default class {
 
     static insertData = async (id, first_name, last_name, email, country, speciaity, profession, token, isActivated, isScanner, createdAt) => {
         db.transaction(function (txn) {
-            txn.executeSql('delete from Users where id=:id', [id]);
+            txn.executeSql('delete from Users');
             txn.executeSql('INSERT INTO Users (id,first_name,last_name,email,country,speciality,profession,token,isActivated,isScanner,createdAt) VALUES (:id,:first_name,:last_name,:email,:country,:speciality,:profession,:token,:isActivated,:isScanner,:createdAt)',
                 [id, first_name, last_name, email, country, speciaity, profession, token, isActivated, isScanner, createdAt], function (tx, res) {
                     console.log(`Record ${id} was Inserterd`);

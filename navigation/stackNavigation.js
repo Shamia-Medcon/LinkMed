@@ -41,6 +41,8 @@ export default class StackNavigation extends Component {
           </Stack.Group>
 
           <Stack.Group>
+            <Stack.Screen name="Scanner" component={QrScannerScreen} options={{ headerShown: false, gestureEnabled: false }} />
+
             <Stack.Screen name="Home" component={BottomNavigation} options={{ headerShown: false, gestureEnabled: false }} />
 
             {/* Event Route */}
@@ -56,7 +58,6 @@ export default class StackNavigation extends Component {
 
             {/* Open Camera */}
             <Stack.Screen name="Camera" component={CameraScreen} options={{ headerShown: false, gestureEnabled: false }} />
-            <Stack.Screen name="Scanner" component={QrScannerScreen} options={{ headerShown: false, gestureEnabled: false }} />
           </Stack.Group>
 
         </Stack.Navigator>

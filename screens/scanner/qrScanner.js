@@ -77,27 +77,21 @@ export default function QrScannerScreen(props) {
                             topContent={
                                 <View style={styles.header}>
                                     <View style={styles.icon}>
-                                        <TouchableOpacity onPress={() => navigation.goBack()}>
+                                        <TouchableOpacity onPress={() => {
+                                            navigation.goBack()
+                                        }}>
                                             <Image source={require('../../assets/img/back.png')}
                                                 resizeMode='contain'
-                                                style={{
-                                                    ...styles.backIcon
-                                                }} />
+                                                style={styles.backIcon} />
                                         </TouchableOpacity>
 
                                     </View>
-                                    <View style={styles.center}>
-                                        <Image source={require('../../assets/img/logo.png')}
-                                            resizeMode='contain'
-                                            style={{
-                                                ...styles.logo
-                                            }} />
-                                    </View>
+                                    
                                 </View>
                             }
                             bottomContent={
                                 <View style={styles.center}>
-                                    <Image style={styles.logo} resizeMode="contain" source={require('../../assets/img/medcon_dark.png')} />
+                                    <Image style={styles.logo} resizeMode="contain" source={require('../../assets/img/medcon_logo.png')} />
                                 </View>
                             }
 
@@ -123,18 +117,17 @@ const styles = StyleSheet.create({
         position: 'relative',
         alignItems: 'center',
         flexDirection: 'row',
-        position:'relative'
+        position: 'relative'
     },
     logo: {
-        width: 100,
+        width: 150,
         height: 80,
     },
     backIcon: {
-        position: 'absolute',
         width: 40,
         height: 40,
-        left: 20,
-        top:-10,
+        marginLeft:20
+      
     },
     cameraContainerStyle: {
         justifyContent: 'center',
@@ -144,8 +137,6 @@ const styles = StyleSheet.create({
     },
     cameraStyle: {
         height: Dimensions.get('screen').height * .7,
-        width: Dimensions.get('screen').width * .7,
-
     }
 
 });
