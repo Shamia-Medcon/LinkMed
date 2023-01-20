@@ -92,7 +92,7 @@ export default function ProfileScreen(props) {
                                 <Text style={styles.itemValue}>{info ? info.last_name : "--"}</Text>
                             </View>
                             <View style={styles.item}>
-                                <Text style={styles.itemTitle}>Email Address:</Text>
+                                <Text style={styles.itemTitle}>Email:</Text>
                                 <Text style={styles.itemValue}>{info ? info.email : "--"}</Text>
                             </View>
                             <View style={styles.item}>
@@ -173,12 +173,12 @@ const styles = StyleSheet.create({
     itemTitle: {
         color: Colors.white,
         fontFamily: "OpenSans-SemiBold",
-        fontSize: 18,
+        fontSize: 15,
     },
     itemValue: {
         color: Colors.white,
         fontFamily: "OpenSans-Regular",
-        fontSize: 18,
+        fontSize: 14,
         marginStart: 10,
         marginEnd: 20,
     },

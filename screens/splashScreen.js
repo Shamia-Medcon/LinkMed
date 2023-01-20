@@ -28,17 +28,10 @@ export default class SplashScreen extends Component {
                     routes: [{ name: 'Login' }],
                 })
             } else {
-                if (user.isScanner) {
-                    this.props.navigation.reset({
-                        index: 0,
-                        routes: [{ name: 'Scanner' }],
-                    })
-                } else {
-                    this.props.navigation.reset({
-                        index: 0,
-                        routes: [{ name: 'Home' }],
-                    })
-                }
+                this.props.navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'Home' }],
+                })
             }
         }, 2000);
     }
@@ -58,7 +51,7 @@ export default class SplashScreen extends Component {
     componentDidMount = () => {
         let init = async () => {
             await this.prepareDb();
-           
+
         }
         init();
         if (colorScheme === 'dark') {

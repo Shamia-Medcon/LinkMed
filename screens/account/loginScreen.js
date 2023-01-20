@@ -47,29 +47,23 @@ export default LoginScreen = (props) => {
         if (data.isScanner) {
           await DBConnect.insertData(data.id, data.first_name, data.last_name, data.email, "", "", "", data.token, true, true, data.created_at);
           await DBConnect.getByEmail(data.email);
-          if (LocalStorage.getData("auth")) {
-            props.navigation.reset({
-              index: 0,
-              routes: [{ name: 'Scanner' }],
-            })
-          } else {
-            setError("Error in request, please try again");
-
-          }
+         
 
         } else {
           await DBConnect.insertData(data.id, data.first_name, data.last_name, data.email, data.country, data.speciality, data.profession, data.token, data.is_activated,false, data.created_at);
           await DBConnect.getByEmail(data.email);
-          if (LocalStorage.getData("auth")) {
+         
+        }
+        let check=await LocalStorage.getData('auth');
+         if (check) {
             props.navigation.reset({
               index: 0,
               routes: [{ name: 'Home' }],
             })
           } else {
             setError("Error in request, please try again");
-
           }
-        }
+          
       } else {
         setError("Error in request, please check the credentials");
       }

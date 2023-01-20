@@ -5,6 +5,7 @@ import GeneralApiData from '../../Data/GeneralApiData';
 import ProgressBarLoading from '../common/ProgressBar';
 import Layout from '../../components/common/layout';
 import EventItem from './item';
+import LocalStorage from '../../storage/LocalStorage';
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
 
@@ -12,6 +13,7 @@ export default function ListOfEvents(props) {
     const [loading, isLoading] = useState(false);
     const [page, setPage] = useState(0);
     const [events, setEvents] = useState([]);
+    const [user, setUser] = useState(null);
     useEffect(() => {
 
         init();
@@ -19,6 +21,8 @@ export default function ListOfEvents(props) {
     const init = async () => {
         isLoading(true);
         let time = setTimeout(async () => {
+            let user = await LocalStorage.getData('user');
+            setUser(user);
             clearTimeout(time);
             let data = {
                 page: page
@@ -46,7 +50,7 @@ export default function ListOfEvents(props) {
                         {events && events.length > 0 ? (<>
                             {events.length > 0 && events.map((item, key) => {
                                 return (<View key={key} style={styles.item}>
-                                    <EventItem event={item} navigation={props.navigation} />
+                                    <EventItem event={item} navigation={props.navigation} user={user} />
                                 </View>
                                 )
                             })}

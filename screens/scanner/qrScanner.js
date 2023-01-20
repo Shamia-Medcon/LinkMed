@@ -5,10 +5,13 @@ import QRCodeScanner from 'react-native-qrcode-scanner';
 import { Camera } from 'react-native-vision-camera';
 import GeneralApiData from '../../Data/GeneralApiData';
 import validation from '../../config/validation';
+import { useNavigation } from '@react-navigation/native';
 
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
 export default function QrScannerScreen(props) {
+    const navigation = useNavigation();
+
     const [hasPermission, setHasPermission] = useState(false);
     const [data, setData] = useState("");
     const [loading, isLoading] = useState(false);
@@ -34,6 +37,7 @@ export default function QrScannerScreen(props) {
                     email: value.data
                 };
                 let res = await GeneralApiData.EventAttended(1, data);
+
                 if (res && res.status_code == 200) {
                     alert("Success");
                 } else {
@@ -49,6 +53,7 @@ export default function QrScannerScreen(props) {
 
     return (
         <>
+
             {
                 loading ? (<>
                     <ActivityIndicator size={"large"} />
@@ -60,6 +65,9 @@ export default function QrScannerScreen(props) {
                             onRead={(e) => {
                                 submit(e)
                             }}
+                            containerStyle={styles.container}
+                            cameraContainerStyle={styles.cameraContainerStyle}
+                            cameraStyle={styles.cameraStyle}
                             reactivate={true}
                             reactivateTimeout={5000}
 
@@ -67,8 +75,24 @@ export default function QrScannerScreen(props) {
                             checkAndroid6Permissions={true}
 
                             topContent={
-                                <View style={styles.center}>
-                                    <Image style={styles.logo} resizeMode="contain" source={require('../../assets/img/logo_dark.png')} />
+                                <View style={styles.header}>
+                                    <View style={styles.icon}>
+                                        <TouchableOpacity onPress={() => navigation.goBack()}>
+                                            <Image source={require('../../assets/img/back.png')}
+                                                resizeMode='contain'
+                                                style={{
+                                                    ...styles.backIcon
+                                                }} />
+                                        </TouchableOpacity>
+
+                                    </View>
+                                    <View style={styles.center}>
+                                        <Image source={require('../../assets/img/logo.png')}
+                                            resizeMode='contain'
+                                            style={{
+                                                ...styles.logo
+                                            }} />
+                                    </View>
                                 </View>
                             }
                             bottomContent={
@@ -88,20 +112,40 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        flex: .2,
+        flex: 1
     },
-    centerText: {
-        fontSize: 18,
-        padding: 32,
-        color: '#777',
-
+    container: {
+        backgroundColor: Colors.main_color
     },
-    textBold: {
-        fontWeight: '500',
-        color: '#000'
+    header: {
+        height: 100,
+        width: Dimensions.get('screen').width,
+        position: 'relative',
+        alignItems: 'center',
+        flexDirection: 'row',
+        position:'relative'
     },
     logo: {
-        width: 150
+        width: 100,
+        height: 80,
+    },
+    backIcon: {
+        position: 'absolute',
+        width: 40,
+        height: 40,
+        left: 20,
+        top:-10,
+    },
+    cameraContainerStyle: {
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center',
+
+    },
+    cameraStyle: {
+        height: Dimensions.get('screen').height * .7,
+        width: Dimensions.get('screen').width * .7,
+
     }
 
 });

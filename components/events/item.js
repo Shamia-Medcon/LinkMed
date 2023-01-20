@@ -11,10 +11,16 @@ export default function EventItem(props) {
         <>
             <View style={styles.container}>
                 <TouchableOpacity activeOpacity={.96} onPress={() => {
+                    if (props.user && props.user.isScanner) {
+                        props.navigation.navigate("Scanner", {
+                            event: props.event.id
+                        })
+                     } else {
                         props.navigation.navigate("EventDetails", {
                             event: props.event.id
                         })
-                   
+                    }
+
                 }}>
                     <View style={{ ...styles.row, ...styles.item }}>
 
@@ -45,9 +51,7 @@ export default function EventItem(props) {
                                     </View>
                                     <View style={styles.textContent}>
                                         <Text style={{ ...styles._font10, ...styles._center }}>{props.event.address}</Text>
-                                        {/* <Text style={styles._font8}>is simply dummy text of
-                                        the printing and typesetting
-                                        industry.</Text> */}
+                                       
                                     </View>
                                 </View>
 
@@ -59,13 +63,7 @@ export default function EventItem(props) {
                                 ...styles.thumb,
                             }} url={props.event.cover} size={"stretch"} />
                         </View>
-                        {/* <Image source={{ uri: props.event.cover }}
-                            resizeMode="stretch"
-                            borderTopRightRadius={20}
-                            borderBottomRightRadius={20}
-                            style={styles.thumb}
-                        /> */}
-
+                    
                     </View>
                 </TouchableOpacity>
 
