@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "MedConnect.app"
-               BlueprintName = "MedConnect"
-               ReferencedContainer = "container:MedConnect.xcodeproj">
+               BuildableName = "LinkMed.app"
+               BlueprintName = "LinkMed"
+               ReferencedContainer = "container:LinkMed.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "MedConnectTests.xctest"
-               BlueprintName = "MedConnectTests"
-               ReferencedContainer = "container:MedConnect.xcodeproj">
+               BuildableName = "LinkMedTests.xctest"
+               BlueprintName = "LinkMedTests"
+               ReferencedContainer = "container:LinkMed.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "MedConnect.app"
-            BlueprintName = "MedConnect"
-            ReferencedContainer = "container:MedConnect.xcodeproj">
+            BuildableName = "LinkMed.app"
+            BlueprintName = "LinkMed"
+            ReferencedContainer = "container:LinkMed.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "MedConnect.app"
-            BlueprintName = "MedConnect"
-            ReferencedContainer = "container:MedConnect.xcodeproj">
+            BuildableName = "LinkMed.app"
+            BlueprintName = "LinkMed"
+            ReferencedContainer = "container:LinkMed.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

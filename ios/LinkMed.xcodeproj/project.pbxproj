@@ -7,27 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* MedConnectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* MedConnectTests.m */; };
+		00E356F31AD99517003FC87E /* LinkMedTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* LinkMedTests.m */; };
 		0867E661ACC0452CBD1FF76E /* OpenSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 10FA334251C84A4CA9BF170F /* OpenSans-Medium.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		1E4C166B8444F943B2F9440C /* libPods-LinkMed.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D0EE3006B42DE032FC29B9B8 /* libPods-LinkMed.a */; };
 		1F263C6F2A1B42DD83B46D72 /* OpenSans-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CBE1745EC03146E7B26A8967 /* OpenSans-SemiBoldItalic.ttf */; };
 		21E691570A7749519D7ED9B9 /* OpenSans-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD16A25D60E343978845E427 /* OpenSans-MediumItalic.ttf */; };
 		37F6ACE374E6498DA7C1814D /* OpenSans-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 39D35190AA0F49EAB8E898C7 /* OpenSans-BoldItalic.ttf */; };
-		5761A191269534233B2B07F5 /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6756DEA1D80C6DCFF17E0702 /* libPods-OneSignalNotificationServiceExtension.a */; };
+		3A7B1437152D8A2D639F3EA6 /* libPods-LinkMed-LinkMedTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F3FFF39E5901B5600DE83B4A /* libPods-LinkMed-LinkMedTests.a */; };
 		71420AD818334135968878AC /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3AABB341D9D54767B60985E2 /* OpenSans-Bold.ttf */; };
+		71CD40DB8299A08213C6D24C /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 361015DE832441F8CE1519A9 /* libPods-OneSignalNotificationServiceExtension.a */; };
 		7A6FDB86FDE043528617817A /* OpenSans-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8393A79C6A554F49AADDE4E5 /* OpenSans-ExtraBoldItalic.ttf */; };
 		7B8FB33D29756D6200A0A4A3 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8FB33C29756D6200A0A4A3 /* NotificationService.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		871AA9BADC7645C1AE12CC77 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CAC459223D2490E98F2677B /* OpenSans-SemiBold.ttf */; };
 		90E7A3BEBBDF4A598E0B5B34 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 156A682C3FCE46BB948CCD8F /* OpenSans-Regular.ttf */; };
 		A03DF8154CF34EC3B67E3B7E /* OpenSans-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A8E46E635AA34963BB969914 /* OpenSans-Italic.ttf */; };
-		D0F9E1CCBA2228BD3AFA1993 /* libPods-MedConnect-MedConnectTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A59A8B23A32FEDE07E54D3DD /* libPods-MedConnect-MedConnectTests.a */; };
 		DA57FC739DE340809BFFF3E8 /* OpenSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F01ED9BDA1341F9A645D420 /* OpenSans-Light.ttf */; };
 		ECBE135C759743D98B1651BE /* OpenSans-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ACD8A5122F204C7A92A88725 /* OpenSans-LightItalic.ttf */; };
 		F953F34726324121B0AEF9C8 /* OpenSans-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 780379B91A0B4FB1877CC98B /* OpenSans-ExtraBold.ttf */; };
-		FF28BDD3716E6530DC5E94F9 /* libPods-MedConnect.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E88C84EA24E4F8DB2D22AA47 /* libPods-MedConnect.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +36,7 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = MedConnect;
+			remoteInfo = LinkMed;
 		};
 		7B8FB33F29756D6200A0A4A3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -63,40 +63,40 @@
 /* Begin PBXFileReference section */
 		00E356EE1AD99517003FC87E /* LinkMedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LinkMedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* MedConnectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MedConnectTests.m; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* LinkMedTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LinkMedTests.m; sourceTree = "<group>"; };
 		10FA334251C84A4CA9BF170F /* OpenSans-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-Medium.ttf"; path = "../assets/fonts/OpenSans-Medium.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* LinkMed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LinkMed.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = MedConnect/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = MedConnect/AppDelegate.mm; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MedConnect/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = MedConnect/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = MedConnect/main.m; sourceTree = "<group>"; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = LinkMed/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = LinkMed/AppDelegate.mm; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = LinkMed/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = LinkMed/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = LinkMed/main.m; sourceTree = "<group>"; };
+		151F6D4D7C70A395B524F63B /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		156A682C3FCE46BB948CCD8F /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-Regular.ttf"; path = "../assets/fonts/OpenSans-Regular.ttf"; sourceTree = "<group>"; };
+		1FCF82F4199F9373729B9D15 /* Pods-LinkMed-LinkMedTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinkMed-LinkMedTests.release.xcconfig"; path = "Target Support Files/Pods-LinkMed-LinkMedTests/Pods-LinkMed-LinkMedTests.release.xcconfig"; sourceTree = "<group>"; };
+		361015DE832441F8CE1519A9 /* libPods-OneSignalNotificationServiceExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OneSignalNotificationServiceExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		39D35190AA0F49EAB8E898C7 /* OpenSans-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-BoldItalic.ttf"; path = "../assets/fonts/OpenSans-BoldItalic.ttf"; sourceTree = "<group>"; };
 		3AABB341D9D54767B60985E2 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-Bold.ttf"; path = "../assets/fonts/OpenSans-Bold.ttf"; sourceTree = "<group>"; };
-		6756DEA1D80C6DCFF17E0702 /* libPods-OneSignalNotificationServiceExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OneSignalNotificationServiceExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		55C400C04FC6A8CD87A27AF6 /* Pods-LinkMed.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinkMed.release.xcconfig"; path = "Target Support Files/Pods-LinkMed/Pods-LinkMed.release.xcconfig"; sourceTree = "<group>"; };
+		648935B3DC3CED09E07A097F /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
+		764A81F0A93D24AC962998FF /* Pods-LinkMed-LinkMedTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinkMed-LinkMedTests.debug.xcconfig"; path = "Target Support Files/Pods-LinkMed-LinkMedTests/Pods-LinkMed-LinkMedTests.debug.xcconfig"; sourceTree = "<group>"; };
 		780379B91A0B4FB1877CC98B /* OpenSans-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-ExtraBold.ttf"; path = "../assets/fonts/OpenSans-ExtraBold.ttf"; sourceTree = "<group>"; };
 		7B8FB33A29756D6100A0A4A3 /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B8FB33C29756D6200A0A4A3 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		7B8FB33E29756D6200A0A4A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7B8FB3462975707000A0A4A3 /* MedConnect.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = MedConnect.entitlements; path = MedConnect/MedConnect.entitlements; sourceTree = "<group>"; };
+		7B8FB3462975707000A0A4A3 /* LinkMed.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = LinkMed.entitlements; path = LinkMed/LinkMed.entitlements; sourceTree = "<group>"; };
 		7B8FB347297571D200A0A4A3 /* OneSignalNotificationServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneSignalNotificationServiceExtension.entitlements; sourceTree = "<group>"; };
 		7CAC459223D2490E98F2677B /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-SemiBold.ttf"; path = "../assets/fonts/OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
-		80503B0F3C0776BB9C724716 /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = MedConnect/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = LinkMed/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8393A79C6A554F49AADDE4E5 /* OpenSans-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-ExtraBoldItalic.ttf"; path = "../assets/fonts/OpenSans-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
-		8F22D8F56DAA550A775BDA19 /* Pods-MedConnect.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MedConnect.debug.xcconfig"; path = "Target Support Files/Pods-MedConnect/Pods-MedConnect.debug.xcconfig"; sourceTree = "<group>"; };
-		988F156C9B1A16FAD09E099D /* Pods-MedConnect.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MedConnect.release.xcconfig"; path = "Target Support Files/Pods-MedConnect/Pods-MedConnect.release.xcconfig"; sourceTree = "<group>"; };
 		9F01ED9BDA1341F9A645D420 /* OpenSans-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-Light.ttf"; path = "../assets/fonts/OpenSans-Light.ttf"; sourceTree = "<group>"; };
-		A59A8B23A32FEDE07E54D3DD /* libPods-MedConnect-MedConnectTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MedConnect-MedConnectTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8E46E635AA34963BB969914 /* OpenSans-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-Italic.ttf"; path = "../assets/fonts/OpenSans-Italic.ttf"; sourceTree = "<group>"; };
 		ACD8A5122F204C7A92A88725 /* OpenSans-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-LightItalic.ttf"; path = "../assets/fonts/OpenSans-LightItalic.ttf"; sourceTree = "<group>"; };
-		B8F80D565A1808696F012E64 /* Pods-MedConnect-MedConnectTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MedConnect-MedConnectTests.release.xcconfig"; path = "Target Support Files/Pods-MedConnect-MedConnectTests/Pods-MedConnect-MedConnectTests.release.xcconfig"; sourceTree = "<group>"; };
 		CBE1745EC03146E7B26A8967 /* OpenSans-SemiBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-SemiBoldItalic.ttf"; path = "../assets/fonts/OpenSans-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
-		D5234A803A6931A320D02FA9 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
-		E44FB5C3A4AE24699C21CD0B /* Pods-MedConnect-MedConnectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MedConnect-MedConnectTests.debug.xcconfig"; path = "Target Support Files/Pods-MedConnect-MedConnectTests/Pods-MedConnect-MedConnectTests.debug.xcconfig"; sourceTree = "<group>"; };
-		E88C84EA24E4F8DB2D22AA47 /* libPods-MedConnect.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MedConnect.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0EE3006B42DE032FC29B9B8 /* libPods-LinkMed.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LinkMed.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F3534B037BC2C7D2D2D3B84C /* Pods-LinkMed.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LinkMed.debug.xcconfig"; path = "Target Support Files/Pods-LinkMed/Pods-LinkMed.debug.xcconfig"; sourceTree = "<group>"; };
+		F3FFF39E5901B5600DE83B4A /* libPods-LinkMed-LinkMedTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LinkMed-LinkMedTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD16A25D60E343978845E427 /* OpenSans-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-MediumItalic.ttf"; path = "../assets/fonts/OpenSans-MediumItalic.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -105,7 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D0F9E1CCBA2228BD3AFA1993 /* libPods-MedConnect-MedConnectTests.a in Frameworks */,
+				3A7B1437152D8A2D639F3EA6 /* libPods-LinkMed-LinkMedTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,7 +113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF28BDD3716E6530DC5E94F9 /* libPods-MedConnect.a in Frameworks */,
+				1E4C166B8444F943B2F9440C /* libPods-LinkMed.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,20 +121,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5761A191269534233B2B07F5 /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */,
+				71CD40DB8299A08213C6D24C /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* MedConnectTests */ = {
+		00E356EF1AD99517003FC87E /* LinkMedTests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* MedConnectTests.m */,
+				00E356F21AD99517003FC87E /* LinkMedTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = MedConnectTests;
+			path = LinkMedTests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -145,10 +145,10 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* MedConnect */ = {
+		13B07FAE1A68108700A75B9A /* LinkMed */ = {
 			isa = PBXGroup;
 			children = (
-				7B8FB3462975707000A0A4A3 /* MedConnect.entitlements */,
+				7B8FB3462975707000A0A4A3 /* LinkMed.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -156,16 +156,16 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = MedConnect;
+			name = LinkMed;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				E88C84EA24E4F8DB2D22AA47 /* libPods-MedConnect.a */,
-				A59A8B23A32FEDE07E54D3DD /* libPods-MedConnect-MedConnectTests.a */,
-				6756DEA1D80C6DCFF17E0702 /* libPods-OneSignalNotificationServiceExtension.a */,
+				D0EE3006B42DE032FC29B9B8 /* libPods-LinkMed.a */,
+				F3FFF39E5901B5600DE83B4A /* libPods-LinkMed-LinkMedTests.a */,
+				361015DE832441F8CE1519A9 /* libPods-OneSignalNotificationServiceExtension.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -209,9 +209,9 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				13B07FAE1A68108700A75B9A /* MedConnect */,
+				13B07FAE1A68108700A75B9A /* LinkMed */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* MedConnectTests */,
+				00E356EF1AD99517003FC87E /* LinkMedTests */,
 				7B8FB33B29756D6200A0A4A3 /* OneSignalNotificationServiceExtension */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
@@ -236,12 +236,12 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				8F22D8F56DAA550A775BDA19 /* Pods-MedConnect.debug.xcconfig */,
-				988F156C9B1A16FAD09E099D /* Pods-MedConnect.release.xcconfig */,
-				E44FB5C3A4AE24699C21CD0B /* Pods-MedConnect-MedConnectTests.debug.xcconfig */,
-				B8F80D565A1808696F012E64 /* Pods-MedConnect-MedConnectTests.release.xcconfig */,
-				D5234A803A6931A320D02FA9 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */,
-				80503B0F3C0776BB9C724716 /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */,
+				F3534B037BC2C7D2D2D3B84C /* Pods-LinkMed.debug.xcconfig */,
+				55C400C04FC6A8CD87A27AF6 /* Pods-LinkMed.release.xcconfig */,
+				764A81F0A93D24AC962998FF /* Pods-LinkMed-LinkMedTests.debug.xcconfig */,
+				1FCF82F4199F9373729B9D15 /* Pods-LinkMed-LinkMedTests.release.xcconfig */,
+				151F6D4D7C70A395B524F63B /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */,
+				648935B3DC3CED09E07A097F /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -253,12 +253,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "LinkMedTests" */;
 			buildPhases = (
-				EEA65E3B1379BACB260277F8 /* [CP] Check Pods Manifest.lock */,
+				2E76B6E23AF489988CE7EF4B /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				8C233E034F1B174DCBD1445F /* [CP] Embed Pods Frameworks */,
-				1AE5D4F28EA91D9C302A1F63 /* [CP] Copy Pods Resources */,
+				BDEFDD096DCA949C4A38F353 /* [CP] Embed Pods Frameworks */,
+				9C0E15666B391E33BB2E4273 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -266,7 +266,7 @@
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
 			name = LinkMedTests;
-			productName = MedConnectTests;
+			productName = LinkMedTests;
 			productReference = 00E356EE1AD99517003FC87E /* LinkMedTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
@@ -274,15 +274,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "LinkMed" */;
 			buildPhases = (
-				940026FE4649FA0D4181FA52 /* [CP] Check Pods Manifest.lock */,
+				3D945E7B8DB2DD21BECAC3CC /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				8E9FBA539588A4A5A38196D0 /* [CP] Embed Pods Frameworks */,
-				BC4F609C7F57A7C1A1FC59D3 /* [CP] Copy Pods Resources */,
 				7B8FB34229756D6200A0A4A3 /* Embed Foundation Extensions */,
+				C1DF78AB180C473F17084056 /* [CP] Embed Pods Frameworks */,
+				94AB1D9528D01C178F0B2E67 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -290,7 +290,7 @@
 				7B8FB34029756D6200A0A4A3 /* PBXTargetDependency */,
 			);
 			name = LinkMed;
-			productName = MedConnect;
+			productName = LinkMed;
 			productReference = 13B07F961A680F5B00A75B9A /* LinkMed.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -298,7 +298,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7B8FB34529756D6200A0A4A3 /* Build configuration list for PBXNativeTarget "OneSignalNotificationServiceExtension" */;
 			buildPhases = (
-				BF5098967F811366918A7B47 /* [CP] Check Pods Manifest.lock */,
+				5B339820D9BD53A4A5C9F554 /* [CP] Check Pods Manifest.lock */,
 				7B8FB33629756D6100A0A4A3 /* Sources */,
 				7B8FB33729756D6100A0A4A3 /* Frameworks */,
 				7B8FB33829756D6100A0A4A3 /* Resources */,
@@ -407,58 +407,7 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
-		1AE5D4F28EA91D9C302A1F63 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MedConnect-MedConnectTests/Pods-MedConnect-MedConnectTests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MedConnect-MedConnectTests/Pods-MedConnect-MedConnectTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MedConnect-MedConnectTests/Pods-MedConnect-MedConnectTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8C233E034F1B174DCBD1445F /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MedConnect-MedConnectTests/Pods-MedConnect-MedConnectTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MedConnect-MedConnectTests/Pods-MedConnect-MedConnectTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MedConnect-MedConnectTests/Pods-MedConnect-MedConnectTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8E9FBA539588A4A5A38196D0 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MedConnect/Pods-MedConnect-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MedConnect/Pods-MedConnect-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MedConnect/Pods-MedConnect-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		940026FE4649FA0D4181FA52 /* [CP] Check Pods Manifest.lock */ = {
+		2E76B6E23AF489988CE7EF4B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -473,31 +422,36 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MedConnect-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-LinkMed-LinkMedTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		BC4F609C7F57A7C1A1FC59D3 /* [CP] Copy Pods Resources */ = {
+		3D945E7B8DB2DD21BECAC3CC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MedConnect/Pods-MedConnect-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Copy Pods Resources";
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MedConnect/Pods-MedConnect-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-LinkMed-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MedConnect/Pods-MedConnect-resources.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		BF5098967F811366918A7B47 /* [CP] Check Pods Manifest.lock */ = {
+		5B339820D9BD53A4A5C9F554 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -519,26 +473,72 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		EEA65E3B1379BACB260277F8 /* [CP] Check Pods Manifest.lock */ = {
+		94AB1D9528D01C178F0B2E67 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LinkMed/Pods-LinkMed-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MedConnect-MedConnectTests-checkManifestLockResult.txt",
+				"${PODS_ROOT}/Target Support Files/Pods-LinkMed/Pods-LinkMed-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LinkMed/Pods-LinkMed-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9C0E15666B391E33BB2E4273 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LinkMed-LinkMedTests/Pods-LinkMed-LinkMedTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LinkMed-LinkMedTests/Pods-LinkMed-LinkMedTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LinkMed-LinkMedTests/Pods-LinkMed-LinkMedTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BDEFDD096DCA949C4A38F353 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LinkMed-LinkMedTests/Pods-LinkMed-LinkMedTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LinkMed-LinkMedTests/Pods-LinkMed-LinkMedTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LinkMed-LinkMedTests/Pods-LinkMed-LinkMedTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C1DF78AB180C473F17084056 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LinkMed/Pods-LinkMed-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LinkMed/Pods-LinkMed-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LinkMed/Pods-LinkMed-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -567,7 +567,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* MedConnectTests.m in Sources */,
+				00E356F31AD99517003FC87E /* LinkMedTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -606,7 +606,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E44FB5C3A4AE24699C21CD0B /* Pods-MedConnect-MedConnectTests.debug.xcconfig */;
+			baseConfigurationReference = 764A81F0A93D24AC962998FF /* Pods-LinkMed-LinkMedTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -614,7 +614,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = MedConnectTests/Info.plist;
+				INFOPLIST_FILE = LinkMedTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -634,12 +634,12 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B8F80D565A1808696F012E64 /* Pods-MedConnect-MedConnectTests.release.xcconfig */;
+			baseConfigurationReference = 1FCF82F4199F9373729B9D15 /* Pods-LinkMed-LinkMedTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = MedConnectTests/Info.plist;
+				INFOPLIST_FILE = LinkMedTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -659,17 +659,17 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8F22D8F56DAA550A775BDA19 /* Pods-MedConnect.debug.xcconfig */;
+			baseConfigurationReference = F3534B037BC2C7D2D2D3B84C /* Pods-LinkMed.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = MedConnect/MedConnect.entitlements;
+				CODE_SIGN_ENTITLEMENTS = LinkMed/LinkMed.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 287CLJ4RB5;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = MedConnect/Info.plist;
+				INFOPLIST_FILE = LinkMed/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = LinkMed;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.medical";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -692,16 +692,16 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 988F156C9B1A16FAD09E099D /* Pods-MedConnect.release.xcconfig */;
+			baseConfigurationReference = 55C400C04FC6A8CD87A27AF6 /* Pods-LinkMed.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = MedConnect/MedConnect.entitlements;
+				CODE_SIGN_ENTITLEMENTS = LinkMed/LinkMed.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 287CLJ4RB5;
-				INFOPLIST_FILE = MedConnect/Info.plist;
+				INFOPLIST_FILE = LinkMed/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = LinkMed;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.medical";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -723,7 +723,7 @@
 		};
 		7B8FB34329756D6200A0A4A3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D5234A803A6931A320D02FA9 /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */;
+			baseConfigurationReference = 151F6D4D7C70A395B524F63B /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -763,7 +763,7 @@
 		};
 		7B8FB34429756D6200A0A4A3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 80503B0F3C0776BB9C724716 /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */;
+			baseConfigurationReference = 648935B3DC3CED09E07A097F /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -830,8 +830,10 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 287CLJ4RB5;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
@@ -901,8 +903,10 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				DEVELOPMENT_TEAM = 287CLJ4RB5;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;

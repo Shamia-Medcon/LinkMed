@@ -3,6 +3,7 @@ import { View, Text, Appearance, Image, StatusBar, Animated, StyleSheet, Dimensi
 import DBConnect from '../storage/DBConnect';
 import LocalStorage from '../storage/LocalStorage';
 import { Color, Dark } from '../config/global';
+import { Camera } from 'react-native-vision-camera';
 
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
@@ -14,11 +15,12 @@ export default class SplashScreen extends Component {
             opacity: new Animated.Value(0),
         };
     }
+
     prepareDb = async () => {
         await DBConnect.createDB();
         await DBConnect.checkAuth();
         let user = await LocalStorage.getData('user');
-        let timer=setTimeout(async () => {
+        let timer = setTimeout(async () => {
             clearTimeout(timer);
             if (!user) {
                 this.props.navigation.reset({
@@ -26,15 +28,19 @@ export default class SplashScreen extends Component {
                     routes: [{ name: 'Login' }],
                 })
             } else {
-                this.props.navigation.reset({
-                    index: 0,
-                    routes: [{ name: 'Home' }],
-                })
+                if (user.isScanner) {
+                    this.props.navigation.reset({
+                        index: 0,
+                        routes: [{ name: 'Scanner' }],
+                    })
+                } else {
+                    this.props.navigation.reset({
+                        index: 0,
+                        routes: [{ name: 'Home' }],
+                    })
+                }
             }
         }, 2000);
-        // await DBConnect.insertData(1, "Ali", "Shamia", "shamiaali7@gmail.com", "token", true, "2022-02-21 10:20:22");
-        // await DBConnect.getById(1);
-        // await DBConnect.getByEmail('shamiaali7@gmail.com');
     }
     initApp = async () => {
 
@@ -52,6 +58,7 @@ export default class SplashScreen extends Component {
     componentDidMount = () => {
         let init = async () => {
             await this.prepareDb();
+           
         }
         init();
         if (colorScheme === 'dark') {

@@ -18,6 +18,7 @@ import PollingScreen from "../screens/event/pollingScreen";
 import ProgramScreen from "../screens/event/programScreen";
 import EditProfileScreen from "../screens/account/editProfileScreen";
 import forgetPasswordScreen from "../screens/account/forgetPasswordScreen";
+import QrScannerScreen from "../screens/scanner/qrScanner";
 
 const Stack = createNativeStackNavigator();
 export default class StackNavigation extends Component {
@@ -53,12 +54,9 @@ export default class StackNavigation extends Component {
             <Stack.Screen name="EditProfile" component={EditProfileScreen} options={{ headerShown: false, gestureEnabled: false }} />
             <Stack.Screen name="ForgetPassword" component={forgetPasswordScreen} options={{ headerShown: false, gestureEnabled: false }} />
 
-
-
-
-
             {/* Open Camera */}
             <Stack.Screen name="Camera" component={CameraScreen} options={{ headerShown: false, gestureEnabled: false }} />
+            <Stack.Screen name="Scanner" component={QrScannerScreen} options={{ headerShown: false, gestureEnabled: false }} />
           </Stack.Group>
 
         </Stack.Navigator>
