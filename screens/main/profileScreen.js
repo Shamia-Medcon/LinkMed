@@ -67,7 +67,7 @@ export default function ProfileScreen(props) {
         <>
             <StatusBar barStyle={"light-content"} backgroundColor={Colors.main_color} />
             <View style={styles.container}>
-                <ScrollView contentContainerStyle={{ paddingBottom: 40, flex: 1 }} style={styles.scroll}>
+                <ScrollView contentContainerStyle={{ paddingBottom: 40,}} style={styles.scroll}>
                     <View style={styles.header}>
                         <Text style={styles.title}>My Profile</Text>
                     </View>
@@ -141,7 +141,6 @@ const styles = StyleSheet.create({
     container: {
         flex: .98,
         width: Dimensions.get('screen').width,
-        height: Dimensions.get('screen').height,
         backgroundColor: Colors.main_color,
         borderBottomEndRadius: 40,
         borderBottomStartRadius: 40,

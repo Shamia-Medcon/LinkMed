@@ -204,7 +204,8 @@ const styles = StyleSheet.create({
   },
 
   content: {
-    width: aspectRatio > 1.6 ? width * .8 : width,
+    flex:1,
+    width: width,
     height: Dimensions.get('screen').height,
     justifyContent: 'center',
     alignContent: 'center',
