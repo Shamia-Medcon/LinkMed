@@ -58,14 +58,8 @@ const styles = StyleSheet.create({
         height: 30
     },
 
-    center: {
-        justifyContent: 'center',
-        alignContent: 'center',
-        alignItems: 'center'
-    },
-    lists: {
-        marginTop: 20,
-    },
+  
+   
     title: {
         color: Colors.main_color,
         width: Dimensions.get('screen').width,

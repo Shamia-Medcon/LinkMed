@@ -80,6 +80,11 @@ const styles = StyleSheet.create({
         fontFamily: "OpenSans-Bold",
         textTransform: 'uppercase',
     },
+    center: {
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center'
+    },
     content: {
         flex: 1,
         height: Dimensions.get('screen').height * .8,
@@ -96,7 +101,9 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase',
 
     },
-
+    lists: {
+        marginTop: 20,
+    },
     marginItem: {
         marginBottom: 10
     },

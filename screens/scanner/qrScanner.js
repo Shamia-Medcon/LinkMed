@@ -27,14 +27,19 @@ export default function QrScannerScreen(props) {
     const submit = async (value) => {
         isLoading(true);
         setActive(false);
-        let timer = setTimeout(() => {
+        let timer = setTimeout(async () => {
             clearTimeout(timer);
-            alert("Thanks," + value.data);
             if (validation.valid(value.data)) {
                 let data = {
                     email: value.data
                 };
-                let res = await GeneralApiData.EventAttended();
+                let res = await GeneralApiData.EventAttended(1, data);
+                if (res && res.status_code == 200) {
+                    alert("Success");
+                } else {
+                    alert("Error!,Please try again");
+
+                }
             }
             setActive(true);
             isLoading(false)
@@ -68,7 +73,7 @@ export default function QrScannerScreen(props) {
                             }
                             bottomContent={
                                 <View style={styles.center}>
-                                    <Image style={styles.logo} source={require('../../assets/img/medcon_dark.png')} />
+                                    <Image style={styles.logo} resizeMode="contain" source={require('../../assets/img/medcon_dark.png')} />
                                 </View>
                             }
 
@@ -83,7 +88,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        borderWidth: 1,
         flex: .2,
     },
     centerText: {

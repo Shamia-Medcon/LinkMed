@@ -25,6 +25,7 @@ export default class {
     static _eventRoute = _prefix + "/events";
     static _eventActivityRoute = _prefix + "/eventActivity";
     static _eventAgendaRoute = _prefix + "/agendaByEvent";
+    static _eventAttendedRoute = _prefix + "/event/";
     static _eventSpeakerRoute = _prefix + "/speakersByEvent";
     static _eventFeedbackRoute = _prefix + "/eventFeedback";
     static _eventQuestionByUser = _prefix + "/questionByEvent";

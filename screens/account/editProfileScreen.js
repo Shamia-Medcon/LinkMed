@@ -129,7 +129,7 @@ export default function EditProfileScreen(props) {
             first_name: info.first_name,
             last_name: info.last_name,
             country: info.country,
-            speciality_id: speciality,
+            speciality_id: speciality.value,
 
         };
 
@@ -275,7 +275,7 @@ export default function EditProfileScreen(props) {
 
                                 <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
 
-                                    <TextInput style={{ ...styles.input, color: Colors.main_color, backgroundColor: Colors.dark_grey_color }}
+                                    <TextInput style={{ ...styles.input, color: Colors.main_color, backgroundColor: '#e8e8e8' }}
                                         onChangeText={(email) => { handleOnChangeText(email, 'email') }}
                                         placeholderTextColor={Colors.white}
                                         cursorColor={Colors.white}
