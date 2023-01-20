@@ -12,6 +12,8 @@ import ModalImage from '../../components/common/modal';
 import Toast from 'react-native-toast-message';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import OneSignal from 'react-native-onesignal';
+const { height, width } = Dimensions.get('window');
+const aspectRatio = height / width;
 
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
@@ -40,7 +42,7 @@ export default function GalleryScreen(props) {
     const [gallery, setGallery] = useState([]);
     const [page, setPage] = useState(1);
     const [show, setShow] = useState(false);
-    const [refreshing,setRefreshing]=useState(false);
+    const [refreshing, setRefreshing] = useState(false);
     useEffect(() => {
         setEvent(props.route.params.event);
         let time = setTimeout(async () => {
@@ -241,8 +243,8 @@ export default function GalleryScreen(props) {
                             <ActivityIndicator />
                         </View>
                     </>) : (<>
-                    
-                        <GridImageView heightOfGridImage={100} data={gallery}
+
+                        <GridImageView heightOfGridImage={aspectRatio > 1.6 ? 100 : 200} data={gallery}
                             renderModalImage={(item, defaultStyle) =>
                                 (<ModalImage defaultStyle={defaultStyle} url={item.url} />)
                             }

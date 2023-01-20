@@ -3,6 +3,8 @@ import { Appearance, Dimensions, Image, StyleSheet, Text, View } from 'react-nat
 import { Color, Dark } from '../../../config/global';
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
+const { height, width } = Dimensions.get('window');
+const aspectRatio = height / width;
 
 export default function FacultyItem({ item }) {
     return (
@@ -33,8 +35,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     profile: {
-        width: 80,
-        height: 80,
+        width: aspectRatio > 1.6 ? 80 : 120,
+        height: aspectRatio > 1.6 ? 80 : 120,
         borderRadius: 100,
         borderWidth: 2,
         borderColor: Colors.dark_blue_color
@@ -49,11 +51,12 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
     },
     name: {
-        fontSize: 16,
+        fontSize: aspectRatio > 1.6 ? 16 : 20,
+
         color: Colors.main_color
     },
     details: {
-        fontSize: 12,
+        fontSize: aspectRatio > 1.6 ? 12 : 16,
         color:Colors.grey_color,
     }
 

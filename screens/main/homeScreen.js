@@ -7,7 +7,8 @@ import { Color, Dark } from '../../config/global';
 import LocalStorage from '../../storage/LocalStorage';
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
-
+const { height, width } = Dimensions.get('window');
+const aspectRatio = height / width;
 export default function HomeScreen(props) {
     const navigation = useNavigation();
 
@@ -35,7 +36,7 @@ export default function HomeScreen(props) {
         <View style={styles.container}>
             <ListOfEvents navigation={props.navigation} />
 
-            
+
         </View>
 
     </>
@@ -53,22 +54,5 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.white,
 
     },
-
-    logoCompany: {
-        height: 30
-    },
-
-  
-   
-    title: {
-        color: Colors.main_color,
-        width: Dimensions.get('screen').width,
-        textAlign: 'center',
-        marginVertical: 5,
-        fontSize: 20,
-        fontFamily: "OpenSans-Bold",
-        textTransform: 'uppercase',
-    },
-
 
 });

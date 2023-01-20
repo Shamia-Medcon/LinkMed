@@ -7,6 +7,8 @@ import { Color, Dark } from '../../config/global';
 import GeneralApiData from '../../Data/GeneralApiData';
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
+const { height, width } = Dimensions.get('window');
+const aspectRatio = height / width;
 
 export default function FacultyScreen(props) {
     const [loading, isLoading] = useState(false);
@@ -87,7 +89,7 @@ const styles = StyleSheet.create({
     },
     facultyTitle: {
         color: Colors.main_color,
-        fontSize: 25,
+        fontSize: aspectRatio > 1.6 ? 25 : 28,
         fontFamily: "OpenSans-Bold",
         textTransform: "uppercase",
         marginVertical: 10,

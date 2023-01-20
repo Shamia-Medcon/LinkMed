@@ -8,6 +8,8 @@ import EventItem from './item';
 import LocalStorage from '../../storage/LocalStorage';
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
+const { height, width } = Dimensions.get('window');
+const aspectRatio = height / width;
 
 export default function ListOfEvents(props) {
     const [loading, isLoading] = useState(false);
@@ -50,7 +52,7 @@ export default function ListOfEvents(props) {
                         {events && events.length > 0 ? (<>
                             {events.length > 0 && events.map((item, key) => {
                                 return (<View key={key} style={styles.item}>
-                                    <EventItem event={item} navigation={props.navigation} user={user} />
+                                    <EventItem event={item} user={user} navigation={props.navigation} user={user} />
                                 </View>
                                 )
                             })}
@@ -80,7 +82,7 @@ const styles = StyleSheet.create({
         width: Dimensions.get('screen').width,
         textAlign: 'center',
         marginVertical: 5,
-        fontSize: 20,
+        fontSize: aspectRatio > 1.6 ? 20 : 24,
         fontFamily: "OpenSans-Bold",
         textTransform: 'uppercase',
     },
@@ -100,7 +102,7 @@ const styles = StyleSheet.create({
         width: Dimensions.get('screen').width,
         textAlign: 'center',
         marginVertical: 5,
-        fontSize: 14,
+        fontSize: aspectRatio > 1.6 ? 14 : 18,
         fontFamily: "OpenSans-Bold",
         textTransform: 'uppercase',
 

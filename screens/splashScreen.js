@@ -8,6 +8,7 @@ import { Camera } from 'react-native-vision-camera';
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
 
+
 export default class SplashScreen extends Component {
     constructor(props) {
         super(props);

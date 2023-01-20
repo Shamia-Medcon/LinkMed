@@ -4,6 +4,8 @@ import { Color, Dark } from '../../config/global';
 import GalleryImage from '../common/image';
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
+const { height, width } = Dimensions.get('window');
+const aspectRatio = height / width;
 
 export default function EventItem(props) {
 
@@ -15,7 +17,7 @@ export default function EventItem(props) {
                         props.navigation.navigate("Scanner", {
                             event: props.event.id
                         })
-                     } else {
+                    } else {
                         props.navigation.navigate("EventDetails", {
                             event: props.event.id
                         })
@@ -51,7 +53,7 @@ export default function EventItem(props) {
                                     </View>
                                     <View style={styles.textContent}>
                                         <Text style={{ ...styles._font10, ...styles._center }}>{props.event.address}</Text>
-                                       
+
                                     </View>
                                 </View>
 
@@ -63,7 +65,7 @@ export default function EventItem(props) {
                                 ...styles.thumb,
                             }} url={props.event.cover} size={"stretch"} />
                         </View>
-                    
+
                     </View>
                 </TouchableOpacity>
 
@@ -154,54 +156,54 @@ const styles = StyleSheet.create({
         marginVertical: 15
     },
     _font8: {
-        fontSize: 8,
+        fontSize: aspectRatio > 1.6 ? 8 : 10,
         color: Colors.main_color,
         fontFamily: "OpenSans-Regular",
         textTransform: 'capitalize',
-        lineHeight: 8,
+        lineHeight: aspectRatio > 1.6 ? 8 : 10,
         width: "100%",
 
     },
     _font10: {
-        fontSize: 10,
+        fontSize: aspectRatio > 1.6 ? 10 : 15,
         color: Colors.main_color,
         fontFamily: "OpenSans-Bold",
-        lineHeight: 10,
+        lineHeight: aspectRatio > 1.6 ? 10 : 15,
         width: "100%",
 
     },
     _font12: {
-        fontSize: 12,
+        fontSize: aspectRatio > 1.6 ? 12 : 14,
         color: Colors.main_color,
         fontFamily: "OpenSans-Bold",
         textTransform: 'uppercase',
-        lineHeight: 12,
+        lineHeight: aspectRatio > 1.6 ? 12 : 14,
         width: "100%",
 
     },
     _font15: {
-        fontSize: 15,
+        fontSize: aspectRatio > 1.6 ? 15 : 17,
         color: Colors.main_color,
         fontFamily: "OpenSans-Bold",
         textTransform: 'capitalize',
-        lineHeight: 15,
+        lineHeight: aspectRatio > 1.6 ? 15 : 17,
         width: "100%",
     },
     _font20: {
-        fontSize: 20,
+        fontSize: aspectRatio > 1.6 ? 20 : 25,
         color: Colors.main_color,
         fontFamily: "OpenSans-Bold",
         textTransform: 'uppercase',
-        lineHeight: 20,
+        lineHeight: aspectRatio > 1.6 ? 20 : 25,
         width: "100%",
 
     },
     _font50: {
-        fontSize: 50,
+        fontSize: aspectRatio > 1.6 ? 50 : 52,
         color: Colors.main_color,
         fontFamily: "OpenSans-Bold",
         textTransform: 'capitalize',
-        lineHeight: 52,
+        lineHeight: aspectRatio > 1.6 ? 50 : 52,
         width: "100%",
 
     },

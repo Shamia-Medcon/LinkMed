@@ -11,7 +11,8 @@ import LocalStorage from '../../storage/LocalStorage';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
-
+const { height, width } = Dimensions.get('window');
+const aspectRatio = height / width;
 export default LoginScreen = (props) => {
   const navigation = useNavigation();
   const _scrollRef = useRef();
@@ -203,8 +204,7 @@ const styles = StyleSheet.create({
   },
 
   content: {
-    flex: 1,
-    width: Dimensions.get('screen').width,
+    width: aspectRatio > 1.6 ? width * .8 : width,
     height: Dimensions.get('screen').height,
     justifyContent: 'center',
     alignContent: 'center',
@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 50,
     height: 60,
-    width: Dimensions.get('screen').width * .8,
+    width: width * .8,
     textAlign: 'center',
     color: Color.main_color,
     flexDirection: 'row',
@@ -254,8 +254,8 @@ const styles = StyleSheet.create({
   },
   input: {
 
-    width: Dimensions.get('screen').width * .55,
-    fontSize: 16,
+    width: width * .55,
+    fontSize: aspectRatio > 1.6 ? 16 : 20,
     color: Colors.main_color,
     fontFamily: "OpenSans-Regular",
 
@@ -272,7 +272,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   buttonText: {
-    fontSize: 18,
+    fontSize: aspectRatio > 1.6 ? 18 : 20,
     color: Colors.white,
     fontFamily: "OpenSans-Bold",
   },
@@ -285,7 +285,7 @@ const styles = StyleSheet.create({
   },
   linkTitle: {
     color: Colors.main_color,
-    fontSize: 13,
+    fontSize: aspectRatio > 1.6 ? 13 : 18,
     fontFamily: "OpenSans-Regular",
     justifyContent: 'flex-end',
     alignContent: 'flex-end',
@@ -301,7 +301,7 @@ const styles = StyleSheet.create({
 
   },
   registerTitle: {
-    fontSize: 13,
+    fontSize: aspectRatio > 1.6 ? 18 : 22,
     fontFamily: "OpenSans-Regular",
     paddingHorizontal: 2,
     color: Colors.main_color
@@ -325,8 +325,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   footerTitle: {
-    fontSize: 12,
+    fontSize: aspectRatio > 1.6 ? 12 : 18,
     color: Colors.main_color,
+    marginTop:20
   },
   logoCompany: {
     width: Dimensions.get('screen').width,
@@ -334,12 +335,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
     alignItems: 'center',
-    height: 25,
+    height: aspectRatio > 1.6 ? 25 : 40,
     marginTop: 8
   },
   medconLogo: {
-    position: 'absolute',
-    bottom: 80,
+    marginTop: 20,
     justifyContent: 'center',
     alignItems: 'center',
     width: Dimensions.get('screen').width,

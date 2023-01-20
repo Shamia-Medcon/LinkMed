@@ -10,6 +10,8 @@ import Toast from 'react-native-toast-message';
 
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
+const { height, width } = Dimensions.get('window');
+const aspectRatio = height / width;
 
 
 export default function EventDetails(props) {
@@ -194,13 +196,13 @@ export default function EventDetails(props) {
                                                             event: event
                                                         })
                                                     } else {
-                                                        
-                                                            Toast.show({
-                                                                type: "info",
-                                                                text1: "Warning",
-                                                                text2: event.title + (!item.hasEnded?" will be coming soon":" has ended")
-                                                            })
-                                                        
+
+                                                        Toast.show({
+                                                            type: "info",
+                                                            text1: "Warning",
+                                                            text2: event.title + (!item.hasEnded ? " will be coming soon" : " has ended")
+                                                        })
+
                                                     }
                                                 }} activeOpacity={1} style={styles.col}>
                                                     <Image source={item.icon}
@@ -239,27 +241,27 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     description: {
-        fontSize: 14,
+        fontSize: aspectRatio > 1.6 ? 14 : 18,
         marginHorizontal: 15,
         marginVertical: 10,
         fontFamily: "OpenSans-Regular",
         color: Colors.grey_color
     },
     title: {
-        fontSize: 20,
+        fontSize: aspectRatio > 1.6 ? 20 : 25,
         marginHorizontal: 15,
         fontFamily: "OpenSans-ExtraBold",
         color: Colors.main_color
     },
     time: {
-        fontSize: 12,
+        fontSize: aspectRatio > 1.6 ? 12 : 16,
         paddingLeft: 5,
         paddingRight: 10,
         fontFamily: "OpenSans-BoldItalic",
         color: Colors.grey_color
     },
     location: {
-        fontSize: 12,
+        fontSize: aspectRatio > 1.6 ? 12 : 16,
         paddingLeft: 5,
         paddingRight: 10,
         fontFamily: "OpenSans-BoldItalic",
@@ -331,7 +333,9 @@ const styles = StyleSheet.create({
         fontFamily: "OpenSans-ExtraBold",
         justifyContent: 'center',
         alignItems: 'center',
-        textAlign: 'center'
+        textAlign: 'center',
+        fontSize: aspectRatio > 1.6 ? 16 : 20,
+
     },
     rowItem: {
         flexDirection: 'row',

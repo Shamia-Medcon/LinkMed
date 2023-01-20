@@ -9,6 +9,8 @@ import DBConnect from '../../storage/DBConnect';
 import LocalStorage from '../../storage/LocalStorage';
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
+const { height, width } = Dimensions.get('window');
+const aspectRatio = height / width;
 
 export default function ProfileScreen(props) {
     const navigation = useNavigation();
@@ -77,7 +79,7 @@ export default function ProfileScreen(props) {
                                 quietZone={12}
                                 color={Colors.black}
                                 backgroundColor={Colors.white}
-                                size={150}
+                                size={aspectRatio > 1.6 ? 150 : 250}
                                 value={info ? info.email : ""} />
                         </View>
                         <View style={styles.details}>
@@ -173,12 +175,12 @@ const styles = StyleSheet.create({
     itemTitle: {
         color: Colors.white,
         fontFamily: "OpenSans-SemiBold",
-        fontSize: 15,
+        fontSize: aspectRatio > 1.6 ? 15 : 20,
     },
     itemValue: {
         color: Colors.white,
         fontFamily: "OpenSans-Regular",
-        fontSize: 14,
+        fontSize: aspectRatio > 1.6 ? 15 : 20,
         marginStart: 10,
         marginEnd: 20,
     },
@@ -191,7 +193,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderRadius: 50,
         padding: 10,
-        height: 45,
+        height: aspectRatio > 1.6 ? 50 : 70,
         backgroundColor: Colors.white,
         width: Dimensions.get('screen').width * .8,
         justifyContent: 'center',
@@ -199,7 +201,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     buttonText: {
-        fontSize: 16,
+        fontSize: aspectRatio > 1.6 ? 16 : 23,
         color: Colors.main_color,
         fontFamily: "OpenSans-Bold",
         textTransform: 'uppercase'

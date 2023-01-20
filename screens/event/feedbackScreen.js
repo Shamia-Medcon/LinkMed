@@ -6,6 +6,8 @@ import { Color, Dark } from '../../config/global';
 import GeneralApiData from '../../Data/GeneralApiData';
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
+const { height, width } = Dimensions.get('window');
+const aspectRatio = height / width;
 
 export default function FeedBackScreen(props) {
     const [loading, isLoading] = useState(true);
@@ -200,14 +202,14 @@ const styles = StyleSheet.create({
     },
     feedbackTitle: {
         color: Colors.main_color,
-        fontSize: 25,
+        fontSize: aspectRatio > 1.6 ? 25 : 30,
         fontFamily: "OpenSans-Bold",
         textTransform: "uppercase",
         marginVertical: 7,
     },
     feedbackSubTitle: {
         color: Colors.main_color,
-        fontSize: 13,
+        fontSize: aspectRatio > 1.6 ? 13 : 18,
         fontFamily: "OpenSans-Bold",
         textTransform: "capitalize",
         marginVertical: 10,
@@ -217,7 +219,7 @@ const styles = StyleSheet.create({
 
     },
     question: {
-        fontSize: 15,
+        fontSize: aspectRatio > 1.6 ? 15 : 20,
         fontFamily: "OpenSans-ExtraBold",
         color: Colors.grey_color
 
@@ -234,8 +236,8 @@ const styles = StyleSheet.create({
 
     },
     item: {
-        width: 50,
-        height: 50,
+        width: aspectRatio > 1.6 ? 50 : 90,
+        height: aspectRatio > 1.6 ? 50 : 90,
         borderRadius: 100,
         borderColor: Colors.main_color,
         borderWidth: 4,
@@ -248,13 +250,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     answer: {
-        fontSize: 16,
+        fontSize: aspectRatio > 1.6 ? 15 : 20,
         color: Colors.main_color,
         fontFamily: "OpenSans-Bold",
 
     },
     hint: {
-        fontSize: 10,
+        fontSize: aspectRatio > 1.6 ? 10 : 16,
         justifyContent: 'center',
         alignContent: 'center',
         alignItems: 'center',
@@ -273,9 +275,11 @@ const styles = StyleSheet.create({
     white: {
         color: Colors.white,
         fontFamily: "OpenSans-Bold",
+        fontSize: aspectRatio > 1.6 ? 18 : 22,
+
     },
     error: {
-        fontSize: 15,
+        fontSize: aspectRatio > 1.6 ? 15 : 20,
         justifyContent: 'center',
         alignContent: 'center',
         alignItems: 'center',

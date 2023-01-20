@@ -9,7 +9,7 @@ export default function GalleryImage({ defaultStyle, url, size }) {
 
     return (
         <>
-            <Image style={defaultStyle}
+            <Image style={{...defaultStyle}}
                 resizeMode={size ? size : "cover"}
                 resizeMethod={"resize"}
                 onLoadStart={() => {
@@ -38,4 +38,5 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.placeHolder,
         borderRadius: 20
     },
+   
 });

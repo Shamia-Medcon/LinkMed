@@ -11,11 +11,12 @@ import data from "../../Data/countries.json"
 import GeneralApiData from '../../Data/GeneralApiData';
 import validation from '../../config/validation';
 import { Dropdown } from 'react-native-element-dropdown';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
-
+const { height, width } = Dimensions.get('window');
+const aspectRatio = height / width;
 export default function RegisterScreen() {
   const navigation = useNavigation();
 
@@ -409,7 +410,7 @@ export default function RegisterScreen() {
                             text="I agree to the Terms of Service and Privacy Policy"
                             iconStyle={{ borderColor: Colors.white }}
                             innerIconStyle={{ borderWidth: 2, borderRadius: 0, }}
-                            textStyle={{ fontFamily: "OpenSans-Bold", color: Colors.white, fontSize: 15 }}
+                            textStyle={{ fontFamily: "OpenSans-Bold", color: Colors.white, fontSize: aspectRatio > 1.6 ? 15 : 18 }}
                             onPress={(isChecked) => { handleOnChangeText(isChecked, 'term') }}
                           />
                         </View>
@@ -451,9 +452,8 @@ const styles = StyleSheet.create({
 
   },
   content: {
-    flex: 1,
     flexDirection: 'column',
-    height: Dimensions.get('screen').height * .8,
+    height: Dimensions.get('screen').height * .95,
     backgroundColor: Colors.main_color,
     borderBottomLeftRadius: 50,
     borderBottomRightRadius: 50,
@@ -498,20 +498,20 @@ const styles = StyleSheet.create({
   },
   input: {
     width: Dimensions.get('screen').width * .8,
-    fontSize: 16,
+    fontSize: aspectRatio > 1.6 ? 16 : 20,
     color: Colors.white,
     fontFamily: "OpenSans-Regular",
     borderWidth: 3,
     borderColor: Colors.white,
     borderRadius: 50,
-    height: 50,
+    height: aspectRatio > 1.6 ? 50 : 70,
     paddingHorizontal: 20
   },
   bordered: {
     borderColor: Colors.white,
     borderWidth: 3,
     borderRadius: 50,
-    height: 50,
+    height: aspectRatio > 1.6 ? 50 : 70,
   },
   signupTitle: {
     flex: .9,
@@ -527,7 +527,7 @@ const styles = StyleSheet.create({
   title: {
     width: Dimensions.get('screen').width * .8,
     color: Colors.white,
-    fontSize: 20,
+    fontSize: aspectRatio > 1.6 ? 20 : 24,
     justifyContent: 'center',
     alignContent: 'center',
     alignItems: 'center',
@@ -540,6 +540,8 @@ const styles = StyleSheet.create({
     width: Dimensions.get('screen').width * .8,
     color: Colors.white,
     fontFamily: "OpenSans-Regular",
+    marginBottom:20
+
   },
   button: {
     borderColor: Colors.white,
@@ -551,10 +553,9 @@ const styles = StyleSheet.create({
     width: Dimensions.get('screen').width * .8,
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 20
   },
   buttonText: {
-    fontSize: 18,
+    fontSize: aspectRatio > 1.6 ? 18 : 22,
     color: Colors.main_color,
     fontFamily: "OpenSans-Bold",
   },
@@ -578,7 +579,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column'
   },
   loginTitle: {
-    fontSize: 20,
+    fontSize: aspectRatio > 1.6 ? 20 : 24,
     fontFamily: "OpenSans-Regular",
     paddingHorizontal: 2,
     color: Colors.white,
@@ -601,12 +602,12 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   buttonText: {
-    fontSize: 18,
+    fontSize: aspectRatio > 1.6 ? 18 : 22,
     color: Colors.white,
     fontFamily: "OpenSans-Bold",
   },
   dropdown: {
-    height: 50,
+    height: aspectRatio > 1.6 ? 50 : 70,
     width: Dimensions.get('screen').width * .8,
     borderColor: Colors.white,
     borderWidth: 2,
@@ -615,12 +616,12 @@ const styles = StyleSheet.create({
     color: Colors.white
   },
   placeholderStyle: {
-    fontSize: 16,
+    fontSize: aspectRatio > 1.6 ? 16 : 20,
     color: Colors.white
 
   },
   selectedTextStyle: {
-    fontSize: 16,
+    fontSize: aspectRatio > 1.6 ? 16 : 20,
     color: Colors.white
   },
   iconStyle: {
@@ -631,7 +632,7 @@ const styles = StyleSheet.create({
   },
   inputSearchStyle: {
     height: 40,
-    fontSize: 16,
+    fontSize: aspectRatio > 1.6 ? 16 : 20,
     color: Colors.white
   },
 

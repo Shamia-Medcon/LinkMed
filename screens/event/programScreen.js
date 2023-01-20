@@ -7,6 +7,8 @@ import GeneralApiData from '../../Data/GeneralApiData';
 
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
+const { height, width } = Dimensions.get('window');
+const aspectRatio = height / width;
 
 export default function ProgramScreen(props) {
     const [loading, isLoading] = useState(false);
@@ -68,7 +70,7 @@ export default function ProgramScreen(props) {
                 <View style={styles.program}>
                     {days.map((item, key) => {
                         return <View style={styles.split} key={key} >
-                            <View style={{ ...styles.inline, }}>
+                            <View style={{ ...styles.inline,marginVertical:20 }}>
 
                                 <View style={{ ...styles.time, ...styles.center }}>
                                     <Text style={styles.timeTitle}>Day {key + 1}</Text>
@@ -115,7 +117,7 @@ const styles = StyleSheet.create({
     },
     programTitle: {
         color: Colors.main_color,
-        fontSize: 30,
+        fontSize: aspectRatio > 1.6 ? 30 : 35,
         fontFamily: "OpenSans-Bold",
         textTransform: "uppercase",
         marginVertical: 15,
@@ -142,20 +144,20 @@ const styles = StyleSheet.create({
         width: Dimensions.get('screen').width,
     },
     top: {
-        fontSize: 12,
+        fontSize: aspectRatio > 1.6 ? 12 : 16,
         lineHeight: 20,
         color: Colors.grey_color,
         fontFamily: "OpenSans-Bold",
     },
     prefix: {
-        fontSize: 15,
+        fontSize: aspectRatio > 1.6 ? 15 : 20,
         lineHeight: 30,
         color: Colors.grey_color,
         fontFamily: "OpenSans-ExtraBold",
 
     },
     postfix: {
-        fontSize: 15,
+        fontSize: aspectRatio > 1.6 ? 15 : 20,
         lineHeight: 30,
         color: Colors.grey_color,
         fontFamily: "OpenSans-ExtraBold",
@@ -169,29 +171,29 @@ const styles = StyleSheet.create({
         width: Dimensions.get('screen').width * .35,
     },
     timeTitle: {
-        fontSize: 15,
+        fontSize: aspectRatio > 1.6 ? 15 : 20,
         color: Colors.grey_color,
         fontFamily: "OpenSans-Bold",
     },
     agendaTimeTitle: {
-        fontSize: 11,
+        fontSize: aspectRatio > 1.6 ? 11 : 16,
         color: Colors.grey_color,
         fontFamily: "OpenSans-Bold",
         paddingHorizontal: 2
     },
     title: {
-        fontSize: 14,
+        fontSize: aspectRatio > 1.6 ? 14 : 18,
         fontFamily: "OpenSans-Bold",
-        color:Color.grey_color,
+        color: Color.grey_color,
     },
     item: {
         paddingVertical: 10,
     },
     subtitle: {
-        fontSize: 12,
+        fontSize: aspectRatio > 1.6 ? 12 : 16,
         fontFamily: "OpenSans-Bold",
         color: Colors.main_color,
-        marginBottom:10
+        marginBottom: 10
 
     },
 });

@@ -12,6 +12,8 @@ import LocalStorage from '../../storage/LocalStorage';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import OneSignal from 'react-native-onesignal';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+const { height, width } = Dimensions.get('window');
+const aspectRatio = height / width;
 
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
@@ -457,7 +459,7 @@ const styles = StyleSheet.create({
     headerTitle: {
         color: Colors.white,
         fontFamily: "OpenSans-SemiBold",
-        fontSize: 18,
+        fontSize: aspectRatio > 1.6 ? 18 : 25,
     },
     inputContent: {
 
@@ -470,13 +472,13 @@ const styles = StyleSheet.create({
     },
     input: {
         width: Dimensions.get('screen').width * .8,
-        fontSize: 16,
+        fontSize: aspectRatio > 1.6 ? 16 : 23,
         color: Colors.white,
         fontFamily: "OpenSans-Regular",
         borderWidth: 3,
         borderColor: Colors.white,
         borderRadius: 50,
-        height: 50,
+        height: aspectRatio > 1.6 ? 50 : 70,
         paddingHorizontal: 20,
         justifyContent: 'center',
         alignItems: 'center',
@@ -492,7 +494,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     dropdown: {
-        height: 50,
+        height: aspectRatio > 1.6 ? 50 : 70,
         width: Dimensions.get('screen').width * .8,
         borderColor: Colors.white,
         borderWidth: 2,
@@ -501,12 +503,12 @@ const styles = StyleSheet.create({
         color: Colors.white
     },
     placeholderStyle: {
-        fontSize: 16,
+        fontSize: aspectRatio > 1.6 ? 16 : 23,
         color: Colors.white
 
     },
     selectedTextStyle: {
-        fontSize: 16,
+        fontSize: aspectRatio > 1.6 ? 16 : 23,
         color: Colors.white
     },
     iconStyle: {
@@ -525,7 +527,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderRadius: 50,
         padding: 10,
-        height: 45,
+        height: aspectRatio > 1.6 ? 50 : 70,
         backgroundColor: Colors.white,
         width: Dimensions.get('screen').width * .8,
         justifyContent: 'center',
@@ -533,7 +535,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     buttonText: {
-        fontSize: 16,
+        fontSize: aspectRatio > 1.6 ? 16 : 23,
         color: Colors.main_color,
         fontFamily: "OpenSans-Bold",
         textTransform: 'uppercase'
