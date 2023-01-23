@@ -48,8 +48,6 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>${PRODUCT_NAME} needs access to your Camera.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>${PRODUCT_NAME} needs access to you Microphone.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -89,5 +87,46 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+
+
+
+
+	<!-- <key>NSAppleMusicUsageDescription</key> -->
+	<!-- <string>${PRODUCT_NAME} needs access.</string> -->
+	<!-- <key>NSBluetoothAlwaysUsageDescription</key>
+	<string>${PRODUCT_NAME} needs access.</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>${PRODUCT_NAME} needs access.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>${PRODUCT_NAME} needs access.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>${PRODUCT_NAME} needs access.</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>${PRODUCT_NAME} needs access.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>${PRODUCT_NAME} needs access.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>${PRODUCT_NAME} needs access.</string>
+	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
+	<dict>
+	<key>YOUR-PURPOSE-KEY</key>
+	<string>${PRODUCT_NAME} needs access.</string>
+	</dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>${PRODUCT_NAME} needs access.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>${PRODUCT_NAME} needs access.</string> -->
+	<!-- <key>NSPhotoLibraryUsageDescription</key>
+	<string>${PRODUCT_NAME} needs access.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>${PRODUCT_NAME} needs access.</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>${PRODUCT_NAME} needs access.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>${PRODUCT_NAME} needs access.</string>
+	<key>NSSiriUsageDescription</key>
+	<string>${PRODUCT_NAME} needs access.</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>${PRODUCT_NAME} needs access.</string> -->
 </dict>
 </plist>
