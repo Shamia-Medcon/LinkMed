@@ -17,11 +17,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.0.2</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>1.0.2</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>whatsapp</string>
@@ -47,7 +47,7 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>${PRODUCT_NAME} needs access to your Camera.</string>
+	<string>Allow ${PRODUCT_NAME} to access your camera to capture moments from your event and post it in gallery </string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>${PRODUCT_NAME} needs access to you Microphone.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

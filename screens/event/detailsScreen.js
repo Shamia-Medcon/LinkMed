@@ -113,7 +113,7 @@ export default function EventDetails(props) {
     }, [])
     return (
         <>
-            <Layout back={true} >
+        <Layout back={true} onRefresh={init} refreshing={loading}>
 
                 {loading ? (<>
                     <ActivityIndicator />
@@ -251,7 +251,8 @@ const styles = StyleSheet.create({
         fontSize: aspectRatio > 1.6 ? 20 : 25,
         marginHorizontal: 15,
         fontFamily: "OpenSans-ExtraBold",
-        color: Colors.main_color
+        color: Colors.main_color,
+        textAlign:'center'
     },
     time: {
         fontSize: aspectRatio > 1.6 ? 12 : 16,

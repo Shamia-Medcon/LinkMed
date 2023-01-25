@@ -15,7 +15,7 @@ export default function FacultyScreen(props) {
     const [eventFaculty, setEventFaculty] = useState([]);
     const [event, setEvent] = useState(null);
 
-    init = async () => {
+    const init = async () => {
         isLoading(true);
         let time = setTimeout(async () => {
             clearTimeout(time);
@@ -27,8 +27,11 @@ export default function FacultyScreen(props) {
                 } else {
                     setEventFaculty([]);
                 }
+                isLoading(false);
+            } else {
+                isLoading(false);
+
             }
-            isLoading(false);
         }, 2000);
 
     }
@@ -56,7 +59,7 @@ export default function FacultyScreen(props) {
     }, [])
     return (
         <>
-            <Layout back={true}>
+            <Layout back={true} onRefresh={init} refreshing={loading}>
                 <View style={styles.center}>
                     <Text style={styles.facultyTitle}>Faculty</Text>
                 </View>

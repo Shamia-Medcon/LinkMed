@@ -12,6 +12,7 @@ import ModalImage from '../../components/common/modal';
 import Toast from 'react-native-toast-message';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import OneSignal from 'react-native-onesignal';
+import Layout from '../../components/common/layout';
 const { height, width } = Dimensions.get('window');
 const aspectRatio = height / width;
 
@@ -54,6 +55,10 @@ export default function GalleryScreen(props) {
         };
     }, [event]);
 
+    const refresh = async () => {
+        setPage(1);
+        loadGallery();
+    }
     const loadGallery = async () => {
         isLoading(true);
         setShow(false);
@@ -67,6 +72,7 @@ export default function GalleryScreen(props) {
             if (res && res.status_code == 200) {
 
                 setGallery(res.data);
+                setPage(page + 1)
 
             }
             isLoading(false);
@@ -233,16 +239,11 @@ export default function GalleryScreen(props) {
 
     return (
         <>
-            <StatusBar barStyle={"light-content"} backgroundColor={Colors.main_color} />
-
-            <View style={styles.scroll}>
-                <Header back={true} />
-                <View style={styles.container}>
-                    {loading ? (<>
-                        <View style={{ flex: 1, justifyContent: "center" }}>
-                            <ActivityIndicator />
-                        </View>
-                    </>) : (<>
+            {gallery.length > 0 ? (<>
+                <StatusBar barStyle={"light-content"} backgroundColor={Colors.main_color} />
+                <View style={styles.scroll}>
+                    <Header back={true} />
+                    <View style={styles.container}>
 
                         <GridImageView heightOfGridImage={aspectRatio > 1.6 ? 100 : 200} data={gallery}
                             renderModalImage={(item, defaultStyle) =>
@@ -251,9 +252,31 @@ export default function GalleryScreen(props) {
                             renderGridImage={(item, defaultStyle) =>
                                 (<GalleryImage defaultStyle={defaultStyle} url={item.url} />)
                             } />
-                    </>)}
+                        {/* {loading ? (<>
+                        <View style={{ justifyContent: "center" }}>
+                            <ActivityIndicator />
+                        </View>
+                    </>) : (<> */}
+                        {/* <View style={{ justifyContent: "center", alignItems: 'center', borderWidth: 1 }}>
+
+                            <TouchableOpacity style={{ ...styles.button, ...styles.center }} onPress={() => { loadGallery() }} activeOpacity={.9}>
+                                <Text style={styles.white}>Load More</Text>
+                            </TouchableOpacity>
+                        </View> */}
+                        {/* </>)} */}
+                    </View>
                 </View>
-            </View>
+            </>) : (<>
+                <Layout back={true} onRefresh={refresh} refreshing={loading}>
+                    {loading ? (<>
+                        <View style={{ flex: 1, justifyContent: "center" }}>
+                            <ActivityIndicator />
+                        </View>
+                    </>) : (<>
+                        <Text style={styles.noItems}>No Images Found</Text>
+                    </>)}
+                </Layout>
+            </>)}
             <FloatingAction
                 buttonSize={70}
                 iconHeight={30}
@@ -315,6 +338,30 @@ const styles = StyleSheet.create({
         flex: 1,
         borderWidth: 1
     },
+    noItems: {
+        color: Colors.grey_color,
+        fontFamily: "OpenSans-Bold",
+        textAlign: 'center',
 
+    },
+    button: {
+        backgroundColor: Colors.main_color,
+        width: 200,
+        height: 50,
+        borderRadius: 20,
+        marginTop: 20
+    },
+    center: {
+
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center'
+    },
+    white: {
+        color: Colors.white,
+        fontFamily: "OpenSans-Bold",
+        fontSize: aspectRatio > 1.6 ? 18 : 22,
+
+    },
 });
 

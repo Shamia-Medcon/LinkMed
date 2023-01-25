@@ -28,9 +28,14 @@ export default function EventItem(props) {
 
                         <View style={styles.details}>
                             <View style={styles.col}>
-                                <Text style={{ ...styles._font20, ...styles._center }}>{props.event.day}</Text>
-                                <Text style={{ ...styles._font50, ...styles._center }}>{props.event.day_numeric}</Text>
-                                <Text style={{ ...styles._font20, ...styles._center }}>{props.event.month}</Text>
+                                <View style={styles.rowFlex}>
+                                    <View>
+                                        <Text style={{ ...styles._font20, ...styles._center }}>{props.event.day}</Text>
+                                        <Text style={{ ...styles._font50, ...styles._center }}>{props.event.day_numeric}</Text>
+                                        <Text style={{ ...styles._font20, ...styles._center }}>{props.event.month}</Text>
+                                    </View>
+                                    
+                                </View>
                                 <View style={styles.rowFlex}>
                                     <View style={styles.iconContent}>
                                         <Image source={require('../../assets/img/time.png')}
@@ -103,7 +108,7 @@ const styles = StyleSheet.create({
     },
     details: {
         width: Dimensions.get('screen').width * .35,
-        height: aspectRatio > 1.6 ? 200:Dimensions.get('screen').height*.25,
+        height: aspectRatio > 1.6 ? 200 : Dimensions.get('screen').height * .25,
         borderRadius: 2,
         elevation: 5,
         borderTopLeftRadius: 20,
@@ -139,7 +144,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     thumb: {
-        height: aspectRatio > 1.6 ? 200:Dimensions.get('screen').height*.25,
+        height: aspectRatio > 1.6 ? 200 : Dimensions.get('screen').height * .25,
         width: Dimensions.get('screen').width * .59,
         backgroundColor: Colors.white,
         borderBottomRightRadius: 20,

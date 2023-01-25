@@ -18,7 +18,7 @@ export default function FeedBackScreen(props) {
     const [clicked, setClicked] = useState(false);
     const [alert, setAlert] = useState({});
 
-    init = async () => {
+    const init = async () => {
         isLoading(true);
 
         if (event && event.id > 0) {
@@ -76,7 +76,7 @@ export default function FeedBackScreen(props) {
 
             if (item.id === id) {
                 exists = true;
-                return { ...item, answer_id: answer_id };
+                item.answer_id = answer_id;
             }
             return item;
         });
@@ -95,7 +95,6 @@ export default function FeedBackScreen(props) {
     const checkSelected = (id, answer_id) => {
         let exist = false;
         answers.map((item) => {
-
             if (item.id === id && item.answer_id === answer_id) {
                 exist = true
             }
@@ -106,8 +105,8 @@ export default function FeedBackScreen(props) {
     const submit = async () => {
         setAlert({});
         isSubmitLoading(true);
+
         if (eventFeedback.length == answers.length) {
-            console.log(answers);
             let data = {
                 'answers': answers,
                 'event_id': event ? event.id : 0
@@ -136,7 +135,7 @@ export default function FeedBackScreen(props) {
 
     }
     return (
-        <Layout back={true}>
+        <Layout back={true} onRefresh={init} refreshing={loading}>
             <View style={styles.center}>
                 <Text style={styles.feedbackTitle}>EVALUATION FEEDBACK</Text>
             </View>
@@ -144,8 +143,6 @@ export default function FeedBackScreen(props) {
                 <ActivityIndicator />
             </>) : (<>
                 <View style={styles.feedback}>
-                    <Text style={styles.feedbackSubTitle}>Please rate the effectiveness of the speakers:</Text>
-
                     {eventFeedback.map((item, key) => {
 
                         return <View style={styles.questionContent} key={key}>

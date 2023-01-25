@@ -17,7 +17,7 @@ export default function ProgramScreen(props) {
     const [eventAgenda, setEventAgenda] = useState([]);
     const [event, setEvent] = useState(null);
 
-    init = async () => {
+    const init = async () => {
         isLoading(true);
         let time = setTimeout(async () => {
             clearTimeout(time);
@@ -59,7 +59,7 @@ export default function ProgramScreen(props) {
 
     }, [])
     return (
-        <Layout back={true}>
+        <Layout back={true} onRefresh={init} refreshing={loading}>
 
             <View style={styles.center}>
                 <Text style={styles.programTitle}>Program</Text>
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         width: Dimensions.get('screen').width,
-        height: Dimensions.get('screen').height,
+       
     },
     programTitle: {
         color: Colors.main_color,
