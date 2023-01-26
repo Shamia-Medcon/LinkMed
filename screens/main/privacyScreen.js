@@ -44,7 +44,7 @@ export default function PrivacyScreen(props) {
         <>
             <StatusBar barStyle={"light-content"} backgroundColor={Colors.main_color} />
             <View style={styles.container}>
-                <Layout contentContainerStyle={{ paddingBottom: 100 }} style={styles.scroll} >
+                <Layout back={true} onRefresh={init} refreshing={loading} contentContainerStyle={{ paddingBottom: 100 }} style={styles.scroll} >
                     <Text style={styles.title}>MEDLINK</Text>
                     {loading && !data ? (<>
                         <ActivityIndicator />
@@ -61,7 +61,7 @@ export default function PrivacyScreen(props) {
                                 <Image resizeMode='contain' style={styles.icon} source={require("../../assets/img/vission.png")} />
                                 <View style={{ ...styles.bordered }}>
                                     <Text style={styles.subtitle}>Vision</Text>
-                                    <Text style={styles.description}>{data.mission ? data.mission : ""}</Text>
+                                    <Text style={styles.description}>{data.vission ? data.vission : ""}</Text>
                                 </View>
                             </View>
                         </View>
