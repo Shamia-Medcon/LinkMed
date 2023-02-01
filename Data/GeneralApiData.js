@@ -137,5 +137,9 @@ export default class {
         return AxiosApi.post(routerAPI._eventAttendedRoute + "/" + id+"/attended", data);
 
     }
+    static async UpdateRSVP(id,data){
+        return AxiosApi.post(routerAPI._eventAttendedRoute + "/" + id+"/RSVP", data);
+
+    }
 
 }

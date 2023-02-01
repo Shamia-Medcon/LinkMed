@@ -252,18 +252,7 @@ export default function GalleryScreen(props) {
                             renderGridImage={(item, defaultStyle) =>
                                 (<GalleryImage defaultStyle={defaultStyle} url={item.url} />)
                             } />
-                        {/* {loading ? (<>
-                        <View style={{ justifyContent: "center" }}>
-                            <ActivityIndicator />
-                        </View>
-                    </>) : (<> */}
-                        {/* <View style={{ justifyContent: "center", alignItems: 'center', borderWidth: 1 }}>
-
-                            <TouchableOpacity style={{ ...styles.button, ...styles.center }} onPress={() => { loadGallery() }} activeOpacity={.9}>
-                                <Text style={styles.white}>Load More</Text>
-                            </TouchableOpacity>
-                        </View> */}
-                        {/* </>)} */}
+                      
                     </View>
                 </View>
             </>) : (<>
