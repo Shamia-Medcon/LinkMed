@@ -6,44 +6,28 @@ import { FloatingAction } from "react-native-floating-action";
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import GeneralApiData from '../../Data/GeneralApiData';
 import GalleryImage from '../../components/common/image';
-import GridImageView from 'react-native-grid-image-viewer';
 import Header from '../../components/common/header';
 import ModalImage from '../../components/common/modal';
 import Toast from 'react-native-toast-message';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import OneSignal from 'react-native-onesignal';
 import Layout from '../../components/common/layout';
+import { FlatGrid } from 'react-native-super-grid';
+import LinearGradient from 'react-native-linear-gradient';
+import CarouselImage from '../../components/common/carousel';
 const { height, width } = Dimensions.get('window');
 const aspectRatio = height / width;
-
-const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
 
-const actions = [
-    {
-        text: "Camera",
-        icon: require("../../assets/img/camera.png"),
-        color: Colors.main_color,
-        name: "camera",
-        buttonSize: 45,
-        position: 2
-    },
-    {
-        text: "Gallery",
-        icon: require("../../assets/img/file.png"),
-        name: "gallery",
-        color: Colors.main_color,
-        buttonSize: 45,
-        position: 1
-    },
-];
 export default function GalleryScreen(props) {
     const [loading, isLoading] = useState(true);
+    const [loadMore, isLoadMore] = useState(false);
     const [event, setEvent] = useState(null);
     const [gallery, setGallery] = useState([]);
     const [page, setPage] = useState(1);
     const [show, setShow] = useState(false);
-    const [refreshing, setRefreshing] = useState(false);
+    const [selectedImg, setSelectedImg] = useState(null);
+    const [open, setOpen] = useState(false);
     useEffect(() => {
         setEvent(props.route.params.event);
         let time = setTimeout(async () => {
@@ -54,13 +38,19 @@ export default function GalleryScreen(props) {
             setGallery([]); // This worked for me
         };
     }, [event]);
-
+    useEffect(() => {
+        Colors = props.route.params.colors
+    }, []);
     const refresh = async () => {
         setPage(1);
         loadGallery();
     }
-    const loadGallery = async () => {
-        isLoading(true);
+    const loadGallery = async (more) => {
+        if (more) {
+            isLoadMore(true);
+        } else {
+            isLoading(true);
+        }
         setShow(false);
 
         if (event && event.id > 0) {
@@ -75,7 +65,11 @@ export default function GalleryScreen(props) {
                 setPage(page + 1)
 
             }
-            isLoading(false);
+            if (more) {
+                isLoadMore(false);
+            } else {
+                isLoading(false);
+            }
 
         }
 
@@ -242,21 +236,61 @@ export default function GalleryScreen(props) {
             {gallery.length > 0 ? (<>
                 <StatusBar barStyle={"light-content"} backgroundColor={Colors.main_color} />
                 <View style={styles.scroll}>
-                    <Header back={true} />
-                    <View style={styles.container}>
+                    <Header back={true}
+                        headerColor={props.headerColor ? props.headerColor : Colors.main_color}
+                        secondColor={props.secondColor ? props.secondColor : Colors.main_color}
+                        textColor={Colors.white}
 
-                        <GridImageView heightOfGridImage={aspectRatio > 1.6 ? 100 : 200} data={gallery}
-                            renderModalImage={(item, defaultStyle) =>
-                                (<ModalImage defaultStyle={defaultStyle} url={item.url} />)
-                            }
-                            renderGridImage={(item, defaultStyle) =>
-                                (<GalleryImage defaultStyle={defaultStyle} url={item.url} />)
-                            } />
-                      
+                    />
+                    <View style={styles.container}>
+                        {loading ? (<>
+                            <View style={{ flex: 1, justifyContent: "center" }}>
+                                <ActivityIndicator />
+                            </View>
+                        </>) : (<>
+                            <LinearGradient style={{ flex: 1 }} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} colors={[Colors.linear_main_color, Colors.linear_main_color, Colors.linear_secondary_color, Colors.white]}>
+
+                                <FlatGrid
+
+                                    style={{ flex: 1, }}
+                                    spacing={5}
+                                    itemDimension={120}
+                                    onRefresh={refresh}
+                                    refreshing={loading}
+                                    initialNumToRender={15}
+                                    keyExtractor={(item, index) => index.toString()}
+                                    onEndReached={(distanceFromEnd) => {
+                                        if (distanceFromEnd > -50) {
+                                            loadGallery(true);
+                                        }
+                                    }}
+                                    data={gallery}
+                                    renderItem={(({ item, index }) => {
+                                        return <TouchableOpacity onPress={() => {
+                                            setSelectedImg(index);
+                                            setOpen(true)
+                                        }}>
+                                            <GalleryImage defaultStyle={{ height: 130, }} url={item.url} />
+                                        </TouchableOpacity>
+                                    })}
+                                />
+                                {loadMore ? (<>
+                                    <View style={{ marginVertical: 50, justifyContent: "center" }}>
+                                        <ActivityIndicator size={'large'} />
+                                    </View>
+                                </>) : (<></>)}
+                            </LinearGradient>
+                        </>)}
+
                     </View>
                 </View>
+                <CarouselImage data={gallery} index={selectedImg ? selectedImg : 1} open={open} setOpen={setOpen} />
             </>) : (<>
-                <Layout back={true} onRefresh={refresh} refreshing={loading}>
+                <Layout back={true}
+                    headerColor={props.headerColor ? props.headerColor : Colors.main_color}
+                    secondColor={props.secondColor ? props.secondColor : Colors.main_color}
+                    textColor={Colors.white}
+                    onRefresh={refresh} refreshing={loading}>
                     {loading ? (<>
                         <View style={{ flex: 1, justifyContent: "center" }}>
                             <ActivityIndicator />
@@ -270,7 +304,22 @@ export default function GalleryScreen(props) {
                 buttonSize={70}
                 iconHeight={30}
                 iconWidth={30}
-                actions={actions}
+                actions={[{
+                    text: "Camera",
+                    icon: require("../../assets/img/camera.png"),
+                    color: Colors.main_color,
+                    name: "camera",
+                    buttonSize: 45,
+                    position: 2
+                },
+                {
+                    text: "Gallery",
+                    icon: require("../../assets/img/file.png"),
+                    name: "gallery",
+                    color: Colors.main_color,
+                    buttonSize: 45,
+                    position: 1
+                },]}
                 color={Colors.main_color}
                 dismissKeyboardOnPress={true}
                 style={styles.flatbtn}

@@ -20,36 +20,37 @@ export default function FeedBackScreen(props) {
 
     const init = async () => {
         isLoading(true);
-
-        if (event && event.id > 0) {
-            const res = await GeneralApiData.EventFeedbackEvaluation(event ? event.id : 0);
-            if (res && res.status_code == 200) {
-                setEventFeedback(res.data);
-                let data = res.data;
-                for (var i = 0; i < data.length; i++) {
-                    let answersList = data[i].answers;
-                    for (var j = 0; j < answersList.length; j++) {
-                        if (answersList[j].selected) {
-                            answers.push({
-                                'id': data[i].id,
-                                'answer_id': answersList[j].id
-                            });
+        let time = setTimeout(async () => {
+            clearTimeout(time);
+            if (event && event.id > 0) {
+                const res = await GeneralApiData.EventFeedbackEvaluation(event ? event.id : 0);
+                if (res && res.status_code == 200) {
+                    setEventFeedback(res.data);
+                    let data = res.data;
+                    for (var i = 0; i < data.length; i++) {
+                        let answersList = data[i].answers;
+                        for (var j = 0; j < answersList.length; j++) {
+                            if (answersList[j].selected) {
+                                answers.push({
+                                    'id': data[i].id,
+                                    'answer_id': answersList[j].id
+                                });
+                            }
                         }
                     }
+                } else {
+                    setEventFeedback([]);
                 }
-            } else {
-                setEventFeedback([]);
             }
-        }
-        isLoading(false);
+            isLoading(false);
+        }, 2000);
 
     }
     useEffect(() => {
         setEvent(props.route.params.event);
-        let time = setTimeout(async () => {
-            clearTimeout(time);
-            init();
-        }, 2000);
+        Colors = props.route.params.colors
+        init()
+
 
     }, [event]);
     useEffect(() => {
@@ -135,9 +136,9 @@ export default function FeedBackScreen(props) {
 
     }
     return (
-        <Layout back={true} onRefresh={init} refreshing={loading}>
+        <Layout back={true} headerColor={Colors.main_color}  secondColor={Colors.linear_main_color}  onRefresh={init} refreshing={loading}>
             <View style={styles.center}>
-                <Text style={styles.feedbackTitle}>EVALUATION FEEDBACK</Text>
+                <Text style={{...styles.feedbackTitle,color:Colors.main_color}}>EVALUATION FEEDBACK</Text>
             </View>
             {loading ? (<>
                 <ActivityIndicator />
@@ -155,11 +156,12 @@ export default function FeedBackScreen(props) {
                                         <View style={{
                                             ...styles.item,
                                             backgroundColor: (checkSelected(item.id, answer.id)) ? Colors.main_color : Colors.white,
+                                            borderColor:Colors.main_color
 
                                         }}>
                                             <Text style={{ ...styles.answer, color: (checkSelected(item.id, answer.id)) ? Colors.white : Colors.main_color }}>{answer.title}</Text>
                                         </View>
-                                        <Text style={styles.hint}>{answer.hint}</Text>
+                                        <Text style={{ ...styles.hint, color: Colors.main_color }}>{answer.hint}</Text>
                                     </TouchableOpacity>
 
                                 })}
@@ -173,7 +175,7 @@ export default function FeedBackScreen(props) {
                         {submitLoading ? (<>
                             <ActivityIndicator />
                         </>) : (<>
-                            <TouchableOpacity style={{ ...styles.button, ...styles.center }} onPress={() => { submit() }} activeOpacity={.9}>
+                            <TouchableOpacity style={{ ...styles.button, ...styles.center,backgroundColor:Colors.main_color }} onPress={() => { submit() }} activeOpacity={.9}>
                                 <Text style={styles.white}>Send</Text>
                             </TouchableOpacity>
                         </>)}

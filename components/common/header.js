@@ -4,15 +4,16 @@ import { Appearance, Dimensions, Image, StyleSheet, Text, TouchableOpacity, View
 import { Color, Dark } from '../../config/global';
 import LocalStorage from '../../storage/LocalStorage';
 import DBConnect from '../../storage/DBConnect';
+import LinearGradient from 'react-native-linear-gradient';
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
 
-export default function Header({ back }) {
+export default function Header({ back, headerColor, secondColor, textColor }) {
     const navigation = useNavigation();
     const [name, setName] = useState("");
     const [loading, setLoading] = useState(false);
     const loadAuth = async () => {
-        let check=await LocalStorage.checkExist("user")
+        let check = await LocalStorage.checkExist("user")
         if (check) {
             let user = await LocalStorage.getData('user');
             if (user) {
@@ -33,39 +34,41 @@ export default function Header({ back }) {
     }
     useEffect(() => {
         loadAuth();
-    }, []);
+
+
+    }, [name]);
     return (
         <>
-            <View style={{ ...styles.header }}>
+            <LinearGradient style={{ ...styles.header, }} start={{ x: 0, y: 0 }} end={{ x: 1, y: 2 }} colors={[headerColor, secondColor ? secondColor : headerColor]}>
                 {back ? (<>
                     <View style={styles.icon}>
                         <TouchableOpacity onPress={() => navigation.goBack()}>
                             <Image source={require('../../assets/img/back.png')}
                                 resizeMode='contain'
                                 style={{
-                                    ...styles.backIcon
+                                    ...styles.backIcon,
+                                    tintColor: Colors.white
                                 }} />
                         </TouchableOpacity>
                     </View>
                 </>) : (<></>)}
                 <View style={styles.name}>
                     {loading ? <>
-                        <Text style={styles.title}>Hi {name}!</Text></>
+                        <Text style={{ ...styles.title, color: (textColor ? textColor : Colors.white) }}>Hi {name}!</Text></>
                         : <></>
                     }
                 </View>
-            </View>
+            </LinearGradient>
         </>
     );
 }
 
 const styles = StyleSheet.create({
     header: {
-        backgroundColor: Colors.main_color,
-        height: 100,
+        height: 90,
         width: Dimensions.get('screen').width,
-        borderBottomLeftRadius: 30,
-        borderBottomRightRadius: 30,
+        // borderBottomLeftRadius: 15,
+        // borderBottomRightRadius: 15,
         position: 'relative',
 
         alignItems: 'center',

@@ -7,7 +7,6 @@ import QRCode from 'react-native-qrcode-svg';
 import { Color, Dark } from '../../config/global';
 import DBConnect from '../../storage/DBConnect';
 import LocalStorage from '../../storage/LocalStorage';
-const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
 const { height, width } = Dimensions.get('window');
 const aspectRatio = height / width;

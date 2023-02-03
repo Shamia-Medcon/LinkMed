@@ -15,10 +15,11 @@ export const Color = {
     transparent: 'transparent',
     borderColor: '#A8A8A8',
     placeHolder: '#00000022',
-    modal: '#00000088',
+    modal: '#000000aa',
     textColor: '#033572',
     statusBar: 'white',
-
+    linear_main_color: "white",
+    linear_secondary_color: "white"
 };
 
 export const Dark = {
@@ -40,6 +41,8 @@ export const Dark = {
     textColor: '#033572',
     statusBar: 'black',
     modal: '#00000088',
+    linear_main_color: "white",
+    linear_secondary_color: "white"
 
 };
 
