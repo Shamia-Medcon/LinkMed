@@ -4,14 +4,13 @@ import StackNavigation from '../MedConnect/navigation/stackNavigation';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import OneSignal from 'react-native-onesignal';
-import LocalStorage from './storage/LocalStorage';
 
 const App = () => {
   const [loading, isLoading] = useState(true);
 
   useEffect(() => {
     OneSignal.setLogLevel(6, 0)
-    OneSignal.setAppId("b3b4fbdf-baf8-428c-bdd2-668fb0c79617");
+    OneSignal.setAppId("3e57771d-f287-4eee-be24-e305172d1942");
     OneSignal.promptForPushNotificationsWithUserResponse();
     OneSignal.setNotificationWillShowInForegroundHandler(async (notificationReceivedEvent) => {
       let notification = notificationReceivedEvent.getNotification();

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Appearance, Dimensions, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import { Color, Dark } from '../../config/global';
 import GalleryImage from '../common/image';
 const colorScheme = Appearance.getColorScheme();
@@ -8,6 +9,11 @@ const { height, width } = Dimensions.get('window');
 const aspectRatio = height / width;
 
 export default function EventItem(props) {
+
+
+    useEffect(() => {
+        Colors = JSON.parse(props.event.company?.colors)
+    }, [])
 
     return (
         <>
@@ -24,46 +30,53 @@ export default function EventItem(props) {
                     }
 
                 }}>
-                    <View style={{ ...styles.row, ...styles.item }}>
 
-                        <View style={styles.details}>
-                            <View style={styles.col}>
-                                <View style={styles.rowFlex}>
-                                    <View>
-                                        <Text style={{ ...styles._font20, ...styles._center }}>{props.event.day}</Text>
-                                        <Text style={{ ...styles._font50, ...styles._center }}>{props.event.day_numeric}</Text>
-                                        <Text style={{ ...styles._font20, ...styles._center }}>{props.event.month}</Text>
-                                    </View>
-                                    
-                                </View>
-                                <View style={styles.rowFlex}>
-                                    <View style={styles.iconContent}>
-                                        <Image source={require('../../assets/img/time.png')}
-                                            resizeMode='contain'
-                                            style={{
-                                                ...styles.icon
-                                            }} />
-                                    </View>
-                                    <View style={styles.textContent}>
-                                        <Text style={{ ...styles._font10, ...styles._center }}>{props.event.time}</Text>
-                                    </View>
-                                </View>
-                                <View style={styles.rowFlex}>
-                                    <View style={styles.iconContent}>
-                                        <Image source={require('../../assets/img/location.png')}
-                                            resizeMode='contain'
-                                            style={{
-                                                ...styles.icon
-                                            }} />
-                                    </View>
-                                    <View style={styles.textContent}>
-                                        <Text style={{ ...styles._font10, ...styles._center }}>{props.event.address}</Text>
+                    <View style={{ ...styles.row, ...styles.item, backgroundColor: Colors.linear_main_color, borderColor: Colors.linear_main_color }}>
+                        <LinearGradient style={{ ...styles.details, }} start={{ x: 1, y: 0 }} end={{ x: .5, y: 1 }} angleCenter={{ x: 0, y: 0 }} colors={[Colors.linear_main_color,  Colors.white]}>
 
+                            <View>
+
+                                <View style={styles.col}>
+                                    <View style={styles.rowFlex}>
+                                        <View>
+                                            <Text style={{ ...styles._font20, ...styles._center, color: Colors.textColor }}>{props.event.day}</Text>
+                                            <Text style={{ ...styles._font50, ...styles._center, color: Colors.textColor }}>{props.event.day_numeric}</Text>
+                                            <Text style={{ ...styles._font20, ...styles._center, color: Colors.textColor }}>{props.event.month}</Text>
+                                        </View>
                                     </View>
+                                    <View style={styles.rowFlex}>
+                                        <View style={styles.iconContent}>
+                                            <Image source={require('../../assets/img/time.png')}
+                                                resizeMode='contain'
+                                                style={{
+                                                    ...styles.icon,
+                                                    tintColor: Colors.textColor
+                                                }} />
+                                        </View>
+                                        <View style={styles.textContent}>
+                                            <Text style={{ ...styles._font10, ...styles._center, color: Colors.textColor }}>{props.event.time}</Text>
+                                        </View>
+                                    </View>
+                                    <View style={styles.rowFlex}>
+                                        <View style={styles.iconContent}>
+                                            <Image source={require('../../assets/img/location.png')}
+                                                resizeMode='contain'
+                                                style={{
+                                                    ...styles.icon,
+                                                    tintColor: Colors.textColor
+
+                                                }} />
+                                        </View>
+                                        <View style={styles.textContent}>
+                                            <Text style={{ ...styles._font10, ...styles._center, color: Colors.textColor }}>{props.event.address}</Text>
+
+                                        </View>
+                                    </View>
+
                                 </View>
 
                             </View>
-                        </View>
+                        </LinearGradient>
                         <View>
 
                             <GalleryImage defaultStyle={{
@@ -72,6 +85,7 @@ export default function EventItem(props) {
                         </View>
 
                     </View>
+
                 </TouchableOpacity>
 
             </View>
@@ -113,8 +127,7 @@ const styles = StyleSheet.create({
         elevation: 5,
         borderTopLeftRadius: 20,
         borderBottomLeftRadius: 20,
-        borderTopRightRadius: 20,
-        borderBottomRightRadius: 20,
+
         shadowColor: "#000000",
         justifyContent: 'center',
         position: 'relative',

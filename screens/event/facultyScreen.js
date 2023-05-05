@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Appearance, Dimensions, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import OneSignal from 'react-native-onesignal';
 import Layout from '../../components/common/layout';
 import FacultyItem from '../../components/events/faculty/item';
@@ -37,6 +38,7 @@ export default function FacultyScreen(props) {
     }
     useEffect(() => {
         setEvent(props.route.params.event);
+        Colors = props.route.params.colors
         init();
     }, [event]);
     useEffect(() => {
@@ -59,22 +61,32 @@ export default function FacultyScreen(props) {
     }, [])
     return (
         <>
-            <Layout back={true} onRefresh={init} refreshing={loading}>
-                <View style={styles.center}>
-                    <Text style={styles.facultyTitle}>Faculty</Text>
-                </View>
+            <Layout
+                back={true}
+                headerColor={Colors.main_color}
+                secondColor={Colors.main_color}
+                textColor={Colors.white}
+                onRefresh={init}
+                refreshing={loading}>
                 {loading ? (<>
-                    <ActivityIndicator />
+                    {/* <ActivityIndicator /> */}
                 </>) : (<>
-                    <View style={styles.faculty}>
-                        {eventFaculty.map((item, key) => {
-                            return <View key={key}>
-                                <FacultyItem item={item} />
-                            </View>
-                        })}
-                    </View>
-                </>
-                )}
+                    <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} colors={[Colors.linear_secondary_color, Colors.white]}>
+                        <View style={styles.center}>
+                            <Text style={{ ...styles.facultyTitle, color: Colors.main_color }}>Faculty</Text>
+                        </View>
+
+                        <View style={styles.faculty}>
+                            {eventFaculty.map((item, key) => {
+                                return <View key={key}>
+                                    <FacultyItem colors={Colors} item={item} />
+                                </View>
+                            })}
+                        </View>
+
+                    </LinearGradient>
+                </>)}
+
             </Layout>
         </>
     );

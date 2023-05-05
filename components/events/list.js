@@ -52,7 +52,7 @@ export default function ListOfEvents(props) {
                         {events && events.length > 0 ? (<>
                             {events.length > 0 && events.map((item, key) => {
                                 return (<View key={key} style={styles.item}>
-                                    <EventItem event={item} user={user} navigation={props.navigation} user={user} />
+                                    <EventItem colors={item.company.colors} event={item} user={user} navigation={props.navigation} user={user} />
                                 </View>
                                 )
                             })}

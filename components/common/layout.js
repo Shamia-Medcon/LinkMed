@@ -13,7 +13,11 @@ export default function Layout(props) {
         <>
             <StatusBar barStyle={"light-content"} backgroundColor={Colors.main_color} />
             <View style={{ backgroundColor: Colors.white, flex: 1 }}>
-                <Header back={props.back} />
+                <Header
+                    textColor={props.textColor}
+                    back={props.back}
+                    headerColor={props.headerColor ? props.headerColor : Colors.main_color}
+                    secondColor={props.secondColor ? props.secondColor : Colors.main_color} />
                 <ScrollView
                     refreshControl={
                         <RefreshControl refreshing={props.refreshing} onRefresh={props.onRefresh} />
@@ -37,7 +41,7 @@ const styles = StyleSheet.create({
         backgroundColor: Color.white,
         flexDirection: 'column',
         width: Dimensions.get('screen').width,
-        marginTop: 10,
+        // marginTop: 10,
         backgroundColor: Colors.white
     },
 });

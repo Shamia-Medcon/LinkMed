@@ -8,7 +8,6 @@ let Colors = Color;
 export default function NotificationItem({ item }) {
     //url , id for kind of notification
     const onPress = async () => {
-        console.log(item);
     }
     return (
         <TouchableOpacity

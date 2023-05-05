@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Appearance, Dimensions, Image, StyleSheet, Text, View } from 'react-native';
 import { Color, Dark } from '../../../config/global';
 const colorScheme = Appearance.getColorScheme();
@@ -6,16 +6,24 @@ let Colors = Color;
 const { height, width } = Dimensions.get('window');
 const aspectRatio = height / width;
 
-export default function FacultyItem({ item }) {
+export default function FacultyItem({ item, colors }) {
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        Colors = colors
+        setLoading(false);
+    }, [])
+
     return (
         <View style={styles.content}>
-            <View style={styles.profileContent}>
-                <Image resizeMode='contain' source={{ uri: item.profile }} style={styles.profile} />
-            </View>
-            <View style={styles.col}>
-                <Text style={styles.name}>{item.first_name + " " + item.last_name}</Text>
-                <Text style={styles.details}>{item.profession}</Text>
-            </View>
+            {loading ? (<></>) : (<>
+                <View style={styles.profileContent}>
+                    <Image resizeMode='contain' source={{ uri: item.profile }} style={{ ...styles.profile, borderColor: Colors.main_color }} />
+                </View>
+                <View style={styles.col}>
+                    <Text style={{ ...styles.name, color: Colors.main_color }}>{item.first_name + " " + item.last_name}</Text>
+                    <Text style={styles.details}>{item.profession}</Text>
+                </View>
+            </>)}
         </View>
     );
 }
@@ -39,7 +47,7 @@ const styles = StyleSheet.create({
         height: aspectRatio > 1.6 ? 80 : 120,
         borderRadius: 100,
         borderWidth: 2,
-        borderColor: Colors.dark_blue_color
+        borderColor: Colors.main_color
     },
     row: {
         flexDirection: 'row',
@@ -47,7 +55,7 @@ const styles = StyleSheet.create({
     },
     col: {
         width: Dimensions.get('screen').width * .7,
-        paddingEnd:10,
+        paddingEnd: 10,
         flexDirection: 'column',
     },
     name: {
@@ -57,7 +65,7 @@ const styles = StyleSheet.create({
     },
     details: {
         fontSize: aspectRatio > 1.6 ? 12 : 16,
-        color:Colors.grey_color,
+        color: Colors.grey_color,
     }
 
 });

@@ -52,24 +52,29 @@ export default function PollingScreen(props) {
 
     }, [])
     return (
-        <Layout back={true}>
+        <Layout back={true}
+    
+            onRefresh={init}
+            refreshing={loading}>
             {loading ? (<>
                 <ActivityIndicator />
             </>) : (<>
-                {eventPolling ? (<>
-                    <WebView
-                        source={{ uri: eventPolling.url }}
-                        style={styles.frame}
-                    />
-                </>) : (<></>)}
+
+                    {eventPolling ? (<>
+                        <WebView
+                            source={{ uri: eventPolling.url }}
+                            style={styles.frame}
+                        />
+                    </>) : (<></>)}
 
             </>)}
+
         </Layout>
     );
 }
 
 const styles = StyleSheet.create({
     frame: {
-        marginTop: -50, width: Dimensions.get('screen').width, height: Dimensions.get('screen').height
+        marginTop: 10,marginBottom: 50, width: Dimensions.get('screen').width, minHeight: Dimensions.get('screen').height
     }
 });

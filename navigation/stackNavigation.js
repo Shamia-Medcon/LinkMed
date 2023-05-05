@@ -1,24 +1,20 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from "../screens/main/homeScreen";
 import SplashScreen from "../screens/splashScreen";
 import LoginScreen from "../screens/account/loginScreen";
 import RegisterScreen from "../screens/account/registerScreen";
-import DBConnect from "../storage/DBConnect";
-import LocalStorage from "../storage/LocalStorage";
-import BottomNavigation from "./bottomNavigation";
 import GalleryScreen from "../screens/event/galleryScreen";
 import { CameraScreen } from "react-native-camera-kit";
 import EventDetails from "../screens/event/detailsScreen";
 import FacultyScreen from "../screens/event/facultyScreen";
 import FeedBackScreen from "../screens/event/feedbackScreen";
-import SendingQuestionScreen from "../screens/event/sendingQuestionScreen";
+import SendingQuestionScreen from "../screens/event/questionScreen";
 import PollingScreen from "../screens/event/pollingScreen";
 import ProgramScreen from "../screens/event/programScreen";
 import EditProfileScreen from "../screens/account/editProfileScreen";
 import forgetPasswordScreen from "../screens/account/forgetPasswordScreen";
 import QrScannerScreen from "../screens/scanner/qrScanner";
+import CurvedBottomNavigation from "./curvedBottomNavigation";
 
 const Stack = createNativeStackNavigator();
 export default class StackNavigation extends Component {
@@ -43,7 +39,7 @@ export default class StackNavigation extends Component {
           <Stack.Group>
             <Stack.Screen name="Scanner" component={QrScannerScreen} options={{ headerShown: false, gestureEnabled: false }} />
 
-            <Stack.Screen name="Home" component={BottomNavigation} options={{ headerShown: false, gestureEnabled: false }} />
+            <Stack.Screen name="Home" component={CurvedBottomNavigation} options={{ headerShown: false, gestureEnabled: false }} />
 
             {/* Event Route */}
             <Stack.Screen name="EventDetails" component={EventDetails} options={{ headerShown: false, gestureEnabled: false }} />
