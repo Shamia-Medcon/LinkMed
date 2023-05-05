@@ -32,7 +32,7 @@ export default function EventItem(props) {
                 }}>
 
                     <View style={{ ...styles.row, ...styles.item, backgroundColor: Colors.linear_main_color, borderColor: Colors.linear_main_color }}>
-                        <LinearGradient style={{ ...styles.details, }} start={{ x: 1, y: 0 }} end={{ x: .5, y: 1 }} angleCenter={{ x: 0, y: 0 }} colors={[Colors.linear_main_color, Colors.linear_secondary_color, Colors.linear_secondary_color, Colors.white]}>
+                        <LinearGradient style={{ ...styles.details, }} start={{ x: 1, y: 0 }} end={{ x: .5, y: 1 }} angleCenter={{ x: 0, y: 0 }} colors={[Colors.linear_main_color,  Colors.white]}>
 
                             <View>
 

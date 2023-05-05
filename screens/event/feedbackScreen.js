@@ -136,13 +136,14 @@ export default function FeedBackScreen(props) {
 
     }
     return (
-        <Layout back={true} headerColor={Colors.main_color}  secondColor={Colors.linear_main_color}  onRefresh={init} refreshing={loading}>
-            <View style={styles.center}>
-                <Text style={{...styles.feedbackTitle,color:Colors.main_color}}>EVALUATION FEEDBACK</Text>
-            </View>
+        <Layout back={true} headerColor={Colors.main_color} secondColor={Colors.main_color} onRefresh={init} refreshing={loading}>
             {loading ? (<>
-                <ActivityIndicator />
+                {/* <ActivityIndicator /> */}
             </>) : (<>
+                <View style={styles.center}>
+                    <Text style={{ ...styles.feedbackTitle, color: Colors.main_color }}>EVALUATION FEEDBACK</Text>
+                </View>
+
                 <View style={styles.feedback}>
                     {eventFeedback.map((item, key) => {
 
@@ -156,7 +157,7 @@ export default function FeedBackScreen(props) {
                                         <View style={{
                                             ...styles.item,
                                             backgroundColor: (checkSelected(item.id, answer.id)) ? Colors.main_color : Colors.white,
-                                            borderColor:Colors.main_color
+                                            borderColor: Colors.main_color
 
                                         }}>
                                             <Text style={{ ...styles.answer, color: (checkSelected(item.id, answer.id)) ? Colors.white : Colors.main_color }}>{answer.title}</Text>
@@ -175,7 +176,7 @@ export default function FeedBackScreen(props) {
                         {submitLoading ? (<>
                             <ActivityIndicator />
                         </>) : (<>
-                            <TouchableOpacity style={{ ...styles.button, ...styles.center,backgroundColor:Colors.main_color }} onPress={() => { submit() }} activeOpacity={.9}>
+                            <TouchableOpacity style={{ ...styles.button, ...styles.center, backgroundColor: Colors.main_color }} onPress={() => { submit() }} activeOpacity={.9}>
                                 <Text style={styles.white}>Send</Text>
                             </TouchableOpacity>
                         </>)}

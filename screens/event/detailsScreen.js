@@ -214,7 +214,7 @@ export default function EventDetails(props) {
                     <>
 
                         {event ? (<>
-                            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} colors={[Colors.linear_main_color, Colors.linear_main_color, Colors.linear_secondary_color, Colors.white]}>
+                            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} colors={[Colors.linear_main_color,  Colors.white]}>
                                 <View style={styles.center}>
                                     <Text style={{ ...styles.title, ...styles._margin, color: Colors.grey_color }}>
                                         {event.title}
@@ -331,16 +331,18 @@ export default function EventDetails(props) {
                                                 <TouchableOpacity onPressIn={() => {
 
                                                 }} key={key1} onPress={() => {
+                                                    console.log(item.available)
                                                     if (item.available) {
                                                         navigation.navigate(item.route, {
                                                             event: event,
                                                             colors: Colors
                                                         })
                                                     } else {
+                                                      
                                                         Toast.show({
                                                             type: "info",
                                                             text1: "Warning",
-                                                            text2: (!item.hasEnded ? "The Event will be coming soon" : "The Event has ended")
+                                                            text2: (!event.hasEnded ? "The Event will be coming soon" : "The Event has ended")
                                                         })
                                                     }
                                                 }} activeOpacity={1} style={{ ...styles.col, borderColor: Colors.transparent }}>
@@ -408,7 +410,7 @@ const styles = StyleSheet.create({
     location: {
         fontSize: aspectRatio > 1.6 ? 12 : 16,
         paddingLeft: 5,
-        paddingRight: 10,
+        paddingRight: 30,
         fontFamily: "OpenSans-BoldItalic",
         color: Colors.grey_color,
     },

@@ -1,5 +1,5 @@
-import { Dimensions, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useRef } from 'react'
+import { ActivityIndicator, Dimensions, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useRef, useState } from 'react'
 import VideoPlayer from 'react-native-video-player'
 import { Color } from '../../config/global';
 const { width, height } = Dimensions.get('screen')
@@ -7,6 +7,7 @@ let Colors = Color;
 
 export default function Preview({ url, open, setOpen }) {
     const ref = useRef();
+    const [loading, setLoading] = useState(true);
     return (
         <Modal animationType='fade'
             transparent={true}
@@ -29,11 +30,24 @@ export default function Preview({ url, open, setOpen }) {
                 fullscreen={false}
                 loop={false}
                 disableSeek={true}
+                onLoadStart={() => {
+                    setLoading(true);
+                }}
+                onLoad={() => {
+                   setLoading(false);
+                }}
                 onEnd={() => {
                     console.log("Ended")
                     setOpen(false)
                 }}
             />
+            {loading ? (<>
+                <View style={styles.loading}>
+                    <ActivityIndicator />
+                </View>
+
+            </>) : (null)}
+
             <TouchableOpacity style={styles.close} onPress={() => {
                 setOpen(false)
                 ref.current.stop()
@@ -56,6 +70,15 @@ const styles = StyleSheet.create({
     closeText: {
         paddingHorizontal: 12,
         paddingVertical: 8,
+    },
+    loading: {
+        position: 'absolute',
+        width: width,
+        height: height,
+        flex:1,
+        justifyContent:'center',
+        alignItems:'center',
+        backgroundColor: Colors.white,
 
     }
 })

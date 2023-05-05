@@ -68,26 +68,24 @@ export default function FacultyScreen(props) {
                 textColor={Colors.white}
                 onRefresh={init}
                 refreshing={loading}>
-                <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} colors={[Colors.linear_main_color, Colors.linear_main_color, Colors.linear_secondary_color, Colors.white]}>
-                    <View style={styles.center}>
-                        <Text style={{ ...styles.facultyTitle, color: Colors.main_color }}>Faculty</Text>
-                    </View>
-                    {loading ? (<>
-                        <ActivityIndicator />
-                    </>) : (<>
+                {loading ? (<>
+                    {/* <ActivityIndicator /> */}
+                </>) : (<>
+                    <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} colors={[Colors.linear_secondary_color, Colors.white]}>
+                        <View style={styles.center}>
+                            <Text style={{ ...styles.facultyTitle, color: Colors.main_color }}>Faculty</Text>
+                        </View>
 
-                        {event ? (<>
-                            <View style={styles.faculty}>
-                                {eventFaculty.map((item, key) => {
-                                    return <View key={key}>
-                                        <FacultyItem colors={Colors} item={item} />
-                                    </View>
-                                })}
-                            </View>
-                        </>) : (<></>)}
-                    </>
-                    )}
-                </LinearGradient>
+                        <View style={styles.faculty}>
+                            {eventFaculty.map((item, key) => {
+                                return <View key={key}>
+                                    <FacultyItem colors={Colors} item={item} />
+                                </View>
+                            })}
+                        </View>
+
+                    </LinearGradient>
+                </>)}
 
             </Layout>
         </>

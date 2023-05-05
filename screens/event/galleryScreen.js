@@ -147,7 +147,7 @@ export default function GalleryScreen(props) {
             } else {
                 // if get here, the user did NOT accepted the permissions
                 Toast.show({
-                    type: "warning",
+                    type: "error",
                     text1: "Warning!",
                     text2: "Something wrong, Access Denied"
                 });
@@ -245,7 +245,7 @@ export default function GalleryScreen(props) {
                     <View style={styles.container}>
                         {loading ? (<>
                             <View style={{ flex: 1, justifyContent: "center" }}>
-                                <ActivityIndicator />
+                                {/* <ActivityIndicator /> */}
                             </View>
                         </>) : (<>
                             <LinearGradient style={{ flex: 1 }} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} colors={[Colors.linear_main_color, Colors.linear_main_color, Colors.linear_secondary_color, Colors.white]}>

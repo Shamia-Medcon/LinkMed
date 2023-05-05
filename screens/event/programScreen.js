@@ -63,14 +63,15 @@ export default function ProgramScreen(props) {
     }, [])
     return (
         <Layout back={true} headerColor={Colors.main_color} secondColor={Colors.main_color} onRefresh={init} refreshing={loading}>
-            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} colors={[Colors.linear_main_color, Colors.linear_main_color, Colors.linear_secondary_color, Colors.white]}>
+            {loading ? (<>
+                {/* <ActivityIndicator /> */}
+            </>) : (<>
+                <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} colors={[Colors.linear_main_color, Colors.linear_main_color, Colors.linear_secondary_color, Colors.white]}>
 
-                <View style={styles.center}>
-                    <Text style={{ ...styles.programTitle, color: Colors.main_color }}>Program</Text>
-                </View>
-                {loading ? (<>
-                    <ActivityIndicator />
-                </>) : (<>
+                    <View style={styles.center}>
+                        <Text style={{ ...styles.programTitle, color: Colors.main_color }}>Program</Text>
+                    </View>
+
                     <View style={styles.program}>
                         {days.map((item, key) => {
                             return <View style={styles.split} key={key} >
@@ -106,8 +107,9 @@ export default function ProgramScreen(props) {
                             </View>
                         })}
                     </View>
-                </>)}
-            </LinearGradient>
+                </LinearGradient>
+            </>)}
+
         </Layout>
     );
 }
