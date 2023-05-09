@@ -6,7 +6,6 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import OneSignal from 'react-native-onesignal';
 
 const App = () => {
-  const [loading, isLoading] = useState(true);
 
   useEffect(() => {
     OneSignal.setLogLevel(6, 0)

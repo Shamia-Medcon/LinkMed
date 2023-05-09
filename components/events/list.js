@@ -19,7 +19,14 @@ export default function ListOfEvents(props) {
     useEffect(() => {
 
         init();
+        return () => {
+            setEvents([]);
+            setPage(0);
+            isLoading(false);
+        };
+
     }, []);
+
     const init = async () => {
         isLoading(true);
         let time = setTimeout(async () => {
@@ -39,7 +46,6 @@ export default function ListOfEvents(props) {
             }
         }, 2000);
     }
-
     return (
         <>
             <Layout onRefresh={init} refreshing={loading}>
@@ -52,7 +58,7 @@ export default function ListOfEvents(props) {
                         {events && events.length > 0 ? (<>
                             {events.length > 0 && events.map((item, key) => {
                                 return (<View key={key} style={styles.item}>
-                                    <EventItem colors={item.company.colors} event={item} user={user} navigation={props.navigation} user={user} />
+                                    <EventItem colors={item.company.colors} event={item} user={user} navigation={props.navigation} />
                                 </View>
                                 )
                             })}

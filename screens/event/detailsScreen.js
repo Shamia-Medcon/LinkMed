@@ -48,7 +48,7 @@ export default function EventDetails(props) {
                             title: "Faculty",
                             icon: require('../../assets/img/faculty.png'),
                             color: Colors.white,
-                            backgroundColor: Colors.linear_secondary_color,
+                            backgroundColor: Colors.linear_main_color,
                             route: "EventFacultyScreen",
                             available: true
                         },
@@ -58,7 +58,6 @@ export default function EventDetails(props) {
                             icon: require('../../assets/img/program.png'),
                             color: Colors.white,
                             backgroundColor: Colors.linear_main_color,
-
                             route: "EventProgramScreen",
                             available: true
 
@@ -79,7 +78,7 @@ export default function EventDetails(props) {
                             title: "Polling Questions",
                             icon: require('../../assets/img/polling.png'),
                             color: Colors.white,
-                            backgroundColor: Colors.linear_secondary_color,
+                            backgroundColor: Colors.linear_main_color,
 
                             route: "EventPollingQuestionScreen",
                             available: res.data.isLive
@@ -91,7 +90,7 @@ export default function EventDetails(props) {
                             title: "Evaluation Feedback",
                             icon: require('../../assets/img/evaluation.png'),
                             color: Colors.white,
-                            backgroundColor: Colors.linear_secondary_color,
+                            backgroundColor: Colors.linear_main_color,
                             route: "EventEvaluationFeedbackScreen",
                             available: res.data.isLive
 
@@ -214,7 +213,7 @@ export default function EventDetails(props) {
                     <>
 
                         {event ? (<>
-                            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} colors={[Colors.linear_main_color,  Colors.white]}>
+                            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} colors={[Colors.white, Colors.white]}>
                                 <View style={styles.center}>
                                     <Text style={{ ...styles.title, ...styles._margin, color: Colors.grey_color }}>
                                         {event.title}
@@ -308,12 +307,12 @@ export default function EventDetails(props) {
                                         </>)))}
                                 </View>
                                 {rsvp != -1 ?
-                                    <Text style={{ ...styles.rsvpChange, color: Colors.main_color, borderColor: Colors.main_color }}>
+                                    <Text style={{ ...styles.rsvpChange, color: Colors.white, borderColor: Colors.white, backgroundColor: Colors.main_color }}>
                                         Change
                                     </Text>
                                     : <>
 
-                                        <Text style={{ ...styles.rsvpChange, color: Colors.main_color, borderColor: Colors.main_color }}>
+                                        <Text style={{ ...styles.rsvpChange, color: Colors.white, borderColor: Colors.white, backgroundColor: Colors.main_color }}>
                                             RSVP
                                         </Text>
 
@@ -326,37 +325,37 @@ export default function EventDetails(props) {
                                 return (<View key={key}>
                                     <View style={styles.row}>
                                         {row.map((item, key1) => {
-                                            return <LinearGradient angleCenter={{ x: 0, y: 1 }} key={key1} colors={[Colors.white, item.backgroundColor, item.backgroundColor]}>
+                                            return <View key={key1} style={{ borderWidth: 1, borderColor: item.color }}>
+                                                <LinearGradient angleCenter={{ x: 0, y: 1 }} colors={[item.white]}>
 
-                                                <TouchableOpacity onPressIn={() => {
+                                                    <TouchableOpacity onPressIn={() => {
 
-                                                }} key={key1} onPress={() => {
-                                                    console.log(item.available)
-                                                    if (item.available) {
-                                                        navigation.navigate(item.route, {
-                                                            event: event,
-                                                            colors: Colors
-                                                        })
-                                                    } else {
-                                                      
-                                                        Toast.show({
-                                                            type: "info",
-                                                            text1: "Warning",
-                                                            text2: (!event.hasEnded ? "The Event will be coming soon" : "The Event has ended")
-                                                        })
-                                                    }
-                                                }} activeOpacity={1} style={{ ...styles.col, borderColor: Colors.transparent }}>
-                                                    <Image source={item.icon}
-                                                        resizeMode='contain'
-                                                        style={{
-                                                            ...styles.icon,
-                                                            tintColor: Colors.dark_grey_color
+                                                    }} key={key1} onPress={() => {
+                                                        if (item.available) {
+                                                            navigation.navigate(item.route, {
+                                                                event: event,
+                                                                colors: Colors
+                                                            })
+                                                        } else {
 
-                                                        }} />
-                                                    <Text style={{ ...styles._margin, ...styles.text, color: Colors.dark_grey_color }}>{item.title}</Text>
-                                                </TouchableOpacity>
+                                                            Toast.show({
+                                                                type: "info",
+                                                                text1: "Warning",
+                                                                text2: (!event.hasEnded ? "The Event will be coming soon" : "The Event has ended")
+                                                            })
+                                                        }
+                                                    }} activeOpacity={1} style={{ ...styles.col, borderColor: Colors.main_color }}>
+                                                        <Image source={item.icon}
+                                                            resizeMode='contain'
+                                                            style={{
+                                                                ...styles.icon,
+                                                                tintColor: Colors.main_color
 
-                                            </LinearGradient>
+                                                            }} />
+                                                        <Text style={{ ...styles._margin, ...styles.text, color: Colors.main_color }}>{item.title}</Text>
+                                                    </TouchableOpacity>
+                                                </LinearGradient>
+                                            </View>
                                         })}
                                     </View>
                                 </View>)

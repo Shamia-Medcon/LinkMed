@@ -32,16 +32,16 @@ export default function EventItem(props) {
                 }}>
 
                     <View style={{ ...styles.row, ...styles.item, backgroundColor: Colors.linear_main_color, borderColor: Colors.linear_main_color }}>
-                        <LinearGradient style={{ ...styles.details, }} start={{ x: 1, y: 0 }} end={{ x: .5, y: 1 }} angleCenter={{ x: 0, y: 0 }} colors={[Colors.linear_main_color,  Colors.white]}>
+                        <LinearGradient style={{ ...styles.details, }} start={{ x: 1, y: 0 }} end={{ x: .5, y: 1 }} angleCenter={{ x: 0, y: 0 }} colors={[Colors.main_color, Colors.linear_main_color]}>
 
                             <View>
 
                                 <View style={styles.col}>
                                     <View style={styles.rowFlex}>
                                         <View>
-                                            <Text style={{ ...styles._font20, ...styles._center, color: Colors.textColor }}>{props.event.day}</Text>
-                                            <Text style={{ ...styles._font50, ...styles._center, color: Colors.textColor }}>{props.event.day_numeric}</Text>
-                                            <Text style={{ ...styles._font20, ...styles._center, color: Colors.textColor }}>{props.event.month}</Text>
+                                            <Text style={{ ...styles._font18, ...styles._center, color: Colors.white }}>{props.event.day}</Text>
+                                            <Text style={{ ...styles._font50, ...styles._center, color: Colors.white }}>{props.event.day_numeric}</Text>
+                                            <Text style={{ ...styles._font18, ...styles._center, color: Colors.white }}>{props.event.month}</Text>
                                         </View>
                                     </View>
                                     <View style={styles.rowFlex}>
@@ -50,11 +50,11 @@ export default function EventItem(props) {
                                                 resizeMode='contain'
                                                 style={{
                                                     ...styles.icon,
-                                                    tintColor: Colors.textColor
+                                                    tintColor: Colors.white
                                                 }} />
                                         </View>
                                         <View style={styles.textContent}>
-                                            <Text style={{ ...styles._font10, ...styles._center, color: Colors.textColor }}>{props.event.time}</Text>
+                                            <Text style={{ ...styles._font10, ...styles._center, color: Colors.white }}>{props.event.time}</Text>
                                         </View>
                                     </View>
                                     <View style={styles.rowFlex}>
@@ -63,18 +63,16 @@ export default function EventItem(props) {
                                                 resizeMode='contain'
                                                 style={{
                                                     ...styles.icon,
-                                                    tintColor: Colors.textColor
+                                                    tintColor: Colors.white
 
                                                 }} />
                                         </View>
                                         <View style={styles.textContent}>
-                                            <Text style={{ ...styles._font10, ...styles._center, color: Colors.textColor }}>{props.event.address}</Text>
+                                            <Text style={{ ...styles._font10, ...styles._center, color: Colors.white }}>{props.event.address}</Text>
 
                                         </View>
                                     </View>
-
                                 </View>
-
                             </View>
                         </LinearGradient>
                         <View>
@@ -142,7 +140,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     icon: {
-        width: 25,
+        width: 20,
     },
     textContent: {
         width: "75%",
@@ -205,6 +203,14 @@ const styles = StyleSheet.create({
         fontFamily: "OpenSans-Bold",
         textTransform: 'capitalize',
         lineHeight: aspectRatio > 1.6 ? 15 : 17,
+        width: "100%",
+    },
+    _font18: {
+        fontSize: aspectRatio > 1.6 ? 18 : 20,
+        color: Colors.main_color,
+        fontFamily: "OpenSans-Bold",
+        textTransform: 'capitalize',
+        lineHeight: aspectRatio > 1.6 ? 18 : 20,
         width: "100%",
     },
     _font20: {
