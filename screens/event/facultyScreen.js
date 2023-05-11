@@ -69,9 +69,8 @@ export default function FacultyScreen(props) {
                 onRefresh={init}
                 refreshing={loading}>
                 {loading ? (<>
-                    {/* <ActivityIndicator /> */}
+                    <ActivityIndicator />
                 </>) : (<>
-                    <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} colors={[Colors.linear_secondary_color, Colors.white]}>
                         <View style={styles.center}>
                             <Text style={{ ...styles.facultyTitle, color: Colors.main_color }}>Faculty</Text>
                         </View>
@@ -83,8 +82,6 @@ export default function FacultyScreen(props) {
                                 </View>
                             })}
                         </View>
-
-                    </LinearGradient>
                 </>)}
 
             </Layout>

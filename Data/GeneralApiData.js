@@ -66,10 +66,16 @@ export default class {
 
 
     //-----------
-    //Event Function
+    //Events list Function
     //--------------------
     static async EventList(data) {
         return AxiosApi.get(routerAPI._eventRoute, data);
+    }
+    //-----------
+    //Event by code Function
+    //--------------------
+    static async EventByCode(event_code) {
+        return AxiosApi.get(routerAPI._eventByCode + "/" + event_code);
     }
     //-----------
     //Event Details Function
@@ -133,12 +139,12 @@ export default class {
         return AxiosApi.get(routerAPI._eventGalleryRoute + "/" + id, data);
     }
 
-    static async EventAttended(id,data){
-        return AxiosApi.post(routerAPI._eventAttendedRoute + "/" + id+"/attended", data);
+    static async EventAttended(id, data) {
+        return AxiosApi.post(routerAPI._eventAttendedRoute + "/" + id + "/attended", data);
 
     }
-    static async UpdateRSVP(id,data){
-        return AxiosApi.post(routerAPI._eventAttendedRoute + "/" + id+"/RSVP", data);
+    static async UpdateRSVP(id, data) {
+        return AxiosApi.post(routerAPI._eventAttendedRoute + "/" + id + "/RSVP", data);
 
     }
 

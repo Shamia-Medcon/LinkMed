@@ -43,7 +43,7 @@ export default LoginScreen = (props) => {
       //hide loading
       isLoading(false);
       //processing response
-      if (res.status_code == 200) {
+      if (res&&res.status_code == 200) {
         let data = res.data;
         if (data.isScanner) {
           await DBConnect.insertData(data.id, data.first_name, data.last_name, data.email, "", "", "", data.token, true, true, data.created_at);
@@ -58,6 +58,7 @@ export default LoginScreen = (props) => {
 
 
       } else {
+        console.log(res)
         setError("Error in request, please check the credentials");
       }
     } else {

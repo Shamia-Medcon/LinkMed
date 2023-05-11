@@ -10,6 +10,7 @@ import Toast from 'react-native-toast-message';
 import BottomSheet from 'react-native-gesture-bottom-sheet';
 import LinearGradient from 'react-native-linear-gradient'
 import Preview from '../../components/common/preview';
+import RSVP from '../../components/common/rsvp';
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
 const { height, width } = Dimensions.get('window');
@@ -23,94 +24,142 @@ export default function EventDetails(props) {
     const [event, setEvent] = useState(null);
     const [event_id, setEventID] = useState(null);
     const [items, setItems] = useState([]);
-    const [rsvp, setRsvp] = useState(null);
+    const [rsvp, setRsvp] = useState(-1);
     const [open, setOpen] = useState(true);
     const bottomRef = useRef();
 
     const init = async () => {
-        isLoading(true);
-        if (event_id) {
-            let res = await GeneralApiData.EventDetails(event_id);
-            if (res.status_code == 200) {
-                setEvent(res.data);
-                if (res.data.company) {
-                    Colors = JSON.parse(res.data.company?.colors)
+        try {
+            isLoading(true);
+            if (event_id) {
+                let res = await GeneralApiData.EventDetails(event_id);
+                if (res && res.status_code == 200) {
+                    setEvent(res.data);
+                    if (res.data.company) {
+                        Colors = JSON.parse(res.data.company?.colors)
+                    }
+                    setRsvp(res.data.rsvp);
+                    if (res.data.rsvp == -1) {
+                        bottomRef?.current?.show();
+                    }
+                    let features=([
+                        [
+                            {
+                                key: 0,
+                                title: "Faculty",
+                                icon: require('../../assets/img/faculty.png'),
+                                color: Colors.white,
+                                backgroundColor: Colors.linear_main_color,
+                                route: "EventFacultyScreen",
+                                available: true
+                            },
+                            {
+                                key: 1,
+                                title: "Program",
+                                icon: require('../../assets/img/program.png'),
+                                color: Colors.white,
+                                backgroundColor: Colors.linear_main_color,
+                                route: "EventProgramScreen",
+                                available: true
+
+                            },
+                        ],
+                    ]);
+                    switch (res.data?.plan) {
+                        case "silver":
+                            features=[
+                                ...features,
+                                [
+                                    {
+                                        key: 2,
+                                        title: "Sending Questions",
+                                        icon: require('../../assets/img/question.png'),
+                                        color: Colors.white,
+                                        backgroundColor: Colors.linear_main_color,
+                                        route: "EventSendingQuestionScreen",
+                                        available: res.data.isLive
+
+                                    },
+                                    {
+                                        key: 3,
+                                        title: "Polling Questions",
+                                        icon: require('../../assets/img/polling.png'),
+                                        color: Colors.white,
+                                        backgroundColor: Colors.linear_main_color,
+
+                                        route: "EventPollingQuestionScreen",
+                                        available: res.data.isLive
+
+                                    },
+                                ],
+
+                            ];
+                            break;
+                        case "gold", "platinum":
+                            features=[
+                                ...features,
+                                [
+                                    {
+                                        key: 2,
+                                        title: "Sending Questions",
+                                        icon: require('../../assets/img/question.png'),
+                                        color: Colors.white,
+                                        backgroundColor: Colors.linear_main_color,
+                                        route: "EventSendingQuestionScreen",
+                                        available: res.data.isLive
+
+                                    },
+                                    {
+                                        key: 3,
+                                        title: "Polling Questions",
+                                        icon: require('../../assets/img/polling.png'),
+                                        color: Colors.white,
+                                        backgroundColor: Colors.linear_main_color,
+
+                                        route: "EventPollingQuestionScreen",
+                                        available: res.data.isLive
+
+                                    },
+                                ], [
+                                    {
+                                        key: 4,
+                                        title: "Evaluation Feedback",
+                                        icon: require('../../assets/img/evaluation.png'),
+                                        color: Colors.white,
+                                        backgroundColor: Colors.linear_main_color,
+                                        route: "EventEvaluationFeedbackScreen",
+                                        available: res.data.isLive
+
+                                    },
+                                    {
+                                        key: 5,
+                                        title: "Gallery",
+                                        icon: require('../../assets/img/gallery.png'),
+                                        color: Colors.white,
+                                        backgroundColor: Colors.linear_main_color,
+                                        route: "EventGalleryScreen",
+                                        available: res.data.isLive
+
+                                    },
+                                ]
+
+                            ];
+                            break;
+                        default:
+                            break;
+                    }
+                    setItems(features)
                 }
-                setRsvp(res.data.rsvp);
-                if (res.data.rsvp == -1) {
-                    bottomRef?.current?.show();
-                }
 
-                setItems([
-                    [
-                        {
-                            key: 0,
-                            title: "Faculty",
-                            icon: require('../../assets/img/faculty.png'),
-                            color: Colors.white,
-                            backgroundColor: Colors.linear_main_color,
-                            route: "EventFacultyScreen",
-                            available: true
-                        },
-                        {
-                            key: 1,
-                            title: "Program",
-                            icon: require('../../assets/img/program.png'),
-                            color: Colors.white,
-                            backgroundColor: Colors.linear_main_color,
-                            route: "EventProgramScreen",
-                            available: true
+                isLoading(false);
 
-                        },
-                    ], [
-                        {
-                            key: 2,
-                            title: "Sending Questions",
-                            icon: require('../../assets/img/question.png'),
-                            color: Colors.white,
-                            backgroundColor: Colors.linear_main_color,
-                            route: "EventSendingQuestionScreen",
-                            available: res.data.isLive
-
-                        },
-                        {
-                            key: 3,
-                            title: "Polling Questions",
-                            icon: require('../../assets/img/polling.png'),
-                            color: Colors.white,
-                            backgroundColor: Colors.linear_main_color,
-
-                            route: "EventPollingQuestionScreen",
-                            available: res.data.isLive
-
-                        },
-                    ], [
-                        {
-                            key: 4,
-                            title: "Evaluation Feedback",
-                            icon: require('../../assets/img/evaluation.png'),
-                            color: Colors.white,
-                            backgroundColor: Colors.linear_main_color,
-                            route: "EventEvaluationFeedbackScreen",
-                            available: res.data.isLive
-
-                        },
-                        {
-                            key: 5,
-                            title: "Gallery",
-                            icon: require('../../assets/img/gallery.png'),
-                            color: Colors.white,
-                            backgroundColor: Colors.linear_main_color,
-                            route: "EventGalleryScreen",
-                            available: res.data.isLive
-
-                        },
-                    ]
-
-                ]);
             }
-            isLoading(false);
+
+        } catch (e) {
+            console.log(e);
         }
+        return () => {
+        };
     }
     const updateRSVP = async (status) => {
         setRsvp(status);
@@ -144,7 +193,14 @@ export default function EventDetails(props) {
         setEventID(props.route.params.event);
         init();
 
-        return () => { }
+        return () => {
+            setEventID(-1);
+            isLoading(false);
+            setEvent(null);
+            setRsvp(-1);
+            setItems([]);
+
+        }
     }, [event_id]);
     useEffect(() => {
         OneSignal.setNotificationOpenedHandler(async (openedEvent) => {
@@ -183,193 +239,158 @@ export default function EventDetails(props) {
                     onRefresh={init}
                     refreshing={loading}
                 >
-                    <BottomSheet hasDraggableIcon ref={bottomRef} height={200} >
-                        <Text style={styles.bottomTitle}>Please confirm</Text>
-                        {rsvp_loading ? (<>
-                            <ActivityIndicator />
-                        </>) : (<>
+                    <RSVP rsvp={rsvp} bottomRef={bottomRef} updateRSVP={updateRSVP} rsvp_loading={rsvp_loading} />
 
 
-                            <View style={styles.actions}>
-                                <TouchableOpacity style={rsvp != 1 ? { ...styles.option, borderColor: Colors.main_color } : { ...styles.selected, backgroundColor: Colors.main_color, borderColor: Colors.main_color }} onPress={() => {
-                                    updateRSVP(1);
-                                }}>
-                                    <Text style={rsvp != 1 ? { ...styles.rsvpTitle, color: Colors.main_color } : styles.rsvpTitleColored}>Attending</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={rsvp != 0 ? { ...styles.option, borderColor: Colors.main_color } : { ...styles.selected, backgroundColor: Colors.main_color, borderColor: Colors.main_color }} onPress={() => {
-                                    updateRSVP(0);
-                                }}>
-                                    <Text style={rsvp != 0 ? { ...styles.rsvpTitle, color: Colors.main_color } : styles.rsvpTitleColored}>Not Attending</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={rsvp != 2 ? { ...styles.option, borderColor: Colors.main_color } : { ...styles.selected, backgroundColor: Colors.main_color, borderColor: Colors.main_color }} onPress={() => {
-                                    updateRSVP(2);
-                                }}>
-                                    <Text style={rsvp != 2 ? { ...styles.rsvpTitle, color: Colors.main_color } : styles.rsvpTitleColored}>Not Sure</Text>
-                                </TouchableOpacity>
+                    {event ? (<>
+                        <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} colors={[Colors.white, Colors.white]}>
+                            <View style={styles.center}>
+                                <Text style={{ ...styles.title, ...styles._margin, color: Colors.grey_color }}>
+                                    {event.title}
+                                </Text>
                             </View>
-                        </>)}
-                    </BottomSheet>
-
-                    <>
-
-                        {event ? (<>
-                            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} colors={[Colors.white, Colors.white]}>
-                                <View style={styles.center}>
-                                    <Text style={{ ...styles.title, ...styles._margin, color: Colors.grey_color }}>
-                                        {event.title}
-                                    </Text>
+                            <View style={styles.rowItem}>
+                                <View style={styles.colItem}>
+                                    <GalleryImage defaultStyle={{
+                                        ...styles.logo,
+                                        ...styles.center,
+                                    }} url={event.logo} size={"contain"} />
                                 </View>
+                                <View style={styles.colItem}>
+                                    <View style={{ ...styles.rowItem }}>
+                                        <Image source={require('../../assets/img/date.png')}
+                                            resizeMode='contain'
+                                            style={{
+                                                ...styles.smallIcon,
+                                                tintColor: Colors.main_color
+                                            }} />
+                                        <View style={{ ...styles.split, backgroundColor: Colors.main_color }}>
+                                        </View>
+                                        <Text style={{ ...styles.time }}>
+                                            {event ? event.event_start : ""}
+                                        </Text>
 
-                                <View style={styles.rowItem}>
-                                    <View style={styles.colItem}>
-                                        <GalleryImage defaultStyle={{
-                                            ...styles.logo,
-                                            ...styles.center,
-                                        }} url={event.logo} size={"contain"} />
                                     </View>
-                                    <View style={styles.colItem}>
-                                        <View style={{ ...styles.rowItem }}>
-                                            <Image source={require('../../assets/img/date.png')}
-                                                resizeMode='contain'
-                                                style={{
-                                                    ...styles.smallIcon,
-                                                    tintColor: Colors.main_color
-                                                }} />
-                                            <View style={{ ...styles.split, backgroundColor: Colors.main_color }}>
-                                            </View>
-                                            <Text style={{ ...styles.time }}>
-                                                {event ? event.event_start : ""}
-                                            </Text>
 
+                                    <View style={{ ...styles.rowItem }}>
+                                        <Image source={require('../../assets/img/time.png')}
+                                            resizeMode='contain'
+                                            style={{
+                                                ...styles.smallIcon,
+                                                tintColor: Colors.main_color
+
+                                            }} />
+                                        <View style={{ ...styles.split, backgroundColor: Colors.main_color }}>
                                         </View>
+                                        <Text style={{ ...styles.time }}>
+                                            {event ? event.time : ""}
+                                        </Text>
+                                    </View>
+                                    <View style={{ ...styles.rowItem }}>
+                                        <Image source={require('../../assets/img/location.png')}
+                                            resizeMode='contain'
+                                            style={{
+                                                ...styles.smallIcon,
+                                                tintColor: Colors.main_color
 
-                                        <View style={{ ...styles.rowItem }}>
-                                            <Image source={require('../../assets/img/time.png')}
-                                                resizeMode='contain'
-                                                style={{
-                                                    ...styles.smallIcon,
-                                                    tintColor: Colors.main_color
-
-                                                }} />
-                                            <View style={{ ...styles.split, backgroundColor: Colors.main_color }}>
-                                            </View>
-                                            <Text style={{ ...styles.time }}>
-                                                {event ? event.time : ""}
-                                            </Text>
+                                            }} />
+                                        <View style={{ ...styles.split, backgroundColor: Colors.main_color }}>
                                         </View>
-                                        <View style={{ ...styles.rowItem }}>
-                                            <Image source={require('../../assets/img/location.png')}
-                                                resizeMode='contain'
-                                                style={{
-                                                    ...styles.smallIcon,
-                                                    tintColor: Colors.main_color
+                                        <TouchableOpacity activeOpacity={.9} onPress={() => {
+                                            Linking.openURL(event.location);
 
-                                                }} />
-                                            <View style={{ ...styles.split, backgroundColor: Colors.main_color }}>
-                                            </View>
-                                            <TouchableOpacity activeOpacity={.9} onPress={() => {
-                                                Linking.openURL(event.location);
+                                        }}>
+                                            <Text style={{ ...styles.location }}>
+                                                {event ? event.address : ""}
+                                            </Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </View>
+                        </LinearGradient>
 
-                                            }}>
-                                                <Text style={{ ...styles.location }}>
-                                                    {event ? event.address : ""}
-                                                </Text>
+                        <Text style={styles.description}>
+                            {event ? event.description : ""}
+                        </Text>
+                        <TouchableOpacity style={styles.flex} activeOpacity={.9} onPress={() => {
+                            bottomRef.current.show()
+                        }}>
+                            <View>
+                                {rsvp == 1 ? (<>
+                                    <Text style={styles.rsvp}>
+                                        I will attend this event
+                                    </Text>
+                                </>) : (rsvp == 0 ? (<>
+                                    <Text style={styles.rsvp}>
+                                        I will not attend this event
+                                    </Text>
+                                </>) : (
+                                    rsvp == 2 ? <>
+                                        <Text style={styles.rsvp}>
+                                            I am not sure
+                                        </Text>
+                                    </> : (<>
+                                        <Text style={styles.rsvp}>
+
+                                        </Text>
+                                    </>)))}
+                            </View>
+                            {rsvp != -1 ?
+                                <Text style={{ ...styles.rsvpChange, color: Colors.main_color, borderColor: Colors.main_color, backgroundColor: Colors.white }}>
+                                    Change
+                                </Text>
+                                : <>
+
+                                    <Text style={{ ...styles.rsvpChange, color: Colors.main_color, borderColor: Colors.main_color, backgroundColor: Colors.white }}>
+                                        RSVP
+                                    </Text>
+
+                                </>
+                            }
+                        </TouchableOpacity>
+
+
+                        {items && items.map((row, key) => {
+                            return (<View key={key}>
+                                <View style={styles.row}>
+                                    {row.map((item, key1) => {
+                                        return <View key={key1} style={{ borderWidth: 1, borderColor: item.color }}>
+
+                                            <TouchableOpacity onPressIn={() => {
+
+                                            }} key={key1} onPress={() => {
+                                                if (item.available) {
+                                                    navigation.navigate(item.route, {
+                                                        event: event,
+                                                        colors: Colors
+                                                    })
+                                                } else {
+
+                                                    Toast.show({
+                                                        type: "info",
+                                                        text1: "Warning",
+                                                        text2: (!event.hasEnded ? "The Event will be coming soon" : "The Event has ended")
+                                                    })
+                                                }
+                                            }} activeOpacity={1} style={{ ...styles.col, borderColor: Colors.main_color }}>
+                                                <Image source={item.icon}
+                                                    resizeMode='contain'
+                                                    style={{
+                                                        ...styles.icon,
+                                                        tintColor: Colors.main_color
+
+                                                    }} />
+                                                <Text style={{ ...styles._margin, ...styles.text, color: Colors.main_color }}>{item.title}</Text>
                                             </TouchableOpacity>
                                         </View>
-                                    </View>
+                                    })}
                                 </View>
-                            </LinearGradient>
-
-                            <Text style={styles.description}>
-                                {event ? event.description : ""}
-                            </Text>
-                            <TouchableOpacity style={styles.flex} activeOpacity={.9} onPress={() => {
-                                bottomRef.current.show()
-                            }}>
-                                <View>
-                                    {rsvp == 1 ? (<>
-                                        <Text style={styles.rsvp}>
-                                            I will attend this event
-                                        </Text>
-                                    </>) : (rsvp == 0 ? (<>
-                                        <Text style={styles.rsvp}>
-                                            I will not attend this event
-                                        </Text>
-                                    </>) : (
-                                        rsvp == 2 ? <>
-                                            <Text style={styles.rsvp}>
-                                                I am not sure
-                                            </Text>
-                                        </> : (<>
-                                            <Text style={styles.rsvp}>
-
-                                            </Text>
-                                        </>)))}
-                                </View>
-                                {rsvp != -1 ?
-                                    <Text style={{ ...styles.rsvpChange, color: Colors.white, borderColor: Colors.white, backgroundColor: Colors.main_color }}>
-                                        Change
-                                    </Text>
-                                    : <>
-
-                                        <Text style={{ ...styles.rsvpChange, color: Colors.white, borderColor: Colors.white, backgroundColor: Colors.main_color }}>
-                                            RSVP
-                                        </Text>
-
-                                    </>
-                                }
-                            </TouchableOpacity>
-
-
-                            {items && items.map((row, key) => {
-                                return (<View key={key}>
-                                    <View style={styles.row}>
-                                        {row.map((item, key1) => {
-                                            return <View key={key1} style={{ borderWidth: 1, borderColor: item.color }}>
-                                                <LinearGradient angleCenter={{ x: 0, y: 1 }} colors={[item.white]}>
-
-                                                    <TouchableOpacity onPressIn={() => {
-
-                                                    }} key={key1} onPress={() => {
-                                                        if (item.available) {
-                                                            navigation.navigate(item.route, {
-                                                                event: event,
-                                                                colors: Colors
-                                                            })
-                                                        } else {
-
-                                                            Toast.show({
-                                                                type: "info",
-                                                                text1: "Warning",
-                                                                text2: (!event.hasEnded ? "The Event will be coming soon" : "The Event has ended")
-                                                            })
-                                                        }
-                                                    }} activeOpacity={1} style={{ ...styles.col, borderColor: Colors.main_color }}>
-                                                        <Image source={item.icon}
-                                                            resizeMode='contain'
-                                                            style={{
-                                                                ...styles.icon,
-                                                                tintColor: Colors.main_color
-
-                                                            }} />
-                                                        <Text style={{ ...styles._margin, ...styles.text, color: Colors.main_color }}>{item.title}</Text>
-                                                    </TouchableOpacity>
-                                                </LinearGradient>
-                                            </View>
-                                        })}
-                                    </View>
-                                </View>)
-                            })}
-                            {event && event.promo ? (<>
-                                <Preview url={event.promo} open={open} setOpen={setOpen} />
-                            </>) : (<></>)}
-                        </>) : (<>
-
-                        </>)}
-
-                    </>
-
-
+                            </View>)
+                        })}
+                        {event && event.promo ? (<>
+                            <Preview url={event.promo} open={open} setOpen={setOpen} />
+                        </>) : (<></>)}
+                    </>) : (null)}
                 </Layout>
             </>)
             }
@@ -527,13 +548,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
-    actions: {
-        marginTop: 20,
-        flexDirection: 'row',
-        alignContent: 'center',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
+
     bottomTitle: {
         marginTop: 20,
         fontSize: 18,
@@ -545,30 +560,6 @@ const styles = StyleSheet.create({
 
     },
 
-    option: {
-        padding: 10,
-        marginHorizontal: 5,
-        borderRadius: 20,
-        color: Colors.main_color,
-        borderWidth: 1,
-        borderColor: Colors.main_color,
-        fontFamily: "OpenSans-BoldItalic",
-    },
-    selected: {
-        padding: 10,
-        backgroundColor: Colors.main_color,
-        marginHorizontal: 5,
-        borderRadius: 20,
-        color: Colors.white,
-        borderWidth: 1,
-        borderColor: Colors.main_color,
-        fontFamily: "OpenSans-BoldItalic",
-    },
-    rsvpTitle: {
-        color: Colors.main_color,
-    },
-    rsvpTitleColored: {
-        color: Colors.white
-    },
+
 
 });

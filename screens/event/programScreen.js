@@ -64,50 +64,51 @@ export default function ProgramScreen(props) {
     return (
         <Layout back={true} headerColor={Colors.main_color} secondColor={Colors.main_color} onRefresh={init} refreshing={loading}>
             {loading ? (<>
-                {/* <ActivityIndicator /> */}
+                <ActivityIndicator />
             </>) : (<>
-                <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} colors={[Colors.linear_main_color, Colors.linear_main_color, Colors.linear_secondary_color, Colors.white]}>
 
-                    <View style={styles.center}>
-                        <Text style={{ ...styles.programTitle, color: Colors.main_color }}>Program</Text>
-                    </View>
+                <View style={styles.center}>
+                    <Text style={{ ...styles.programTitle, color: Colors.main_color }}>Program</Text>
+                </View>
 
-                    <View style={styles.program}>
-                        {days.map((item, key) => {
-                            return <View style={styles.split} key={key} >
-                                <View style={{ ...styles.inline, marginVertical: 20 }}>
+                <View style={styles.program}>
+                    {days.map((item, key) => {
+                        return <View style={styles.split} key={key} >
+                            <View style={{ ...styles.inline, marginVertical: 20 }}>
 
-                                    <View style={{ ...styles.time, ...styles.center }}>
-                                        <Text style={styles.timeTitle}>Day {key + 1}</Text>
-                                    </View>
-                                    <View style={{ ...styles.inline, ...styles.details }}>
-                                        <Text style={styles.prefix}>{item.prefix}</Text>
-                                        <Text style={styles.top}>{item.top}</Text>
-                                        <Text style={styles.postfix}>{item.postfix}</Text>
-                                    </View>
+                                <View style={{ ...styles.time, ...styles.center }}>
+                                    <Text style={styles.timeTitle}>Day {key + 1}</Text>
                                 </View>
-                                {eventAgenda[key] && eventAgenda[key].map((agenda, key1) => {
-                                    return <View key={key1}>
-                                        <View style={{ ...styles.inline, ...styles.item }}>
+                                <View style={{ ...styles.inline, ...styles.details }}>
+                                    <Text style={styles.prefix}>{item.prefix}</Text>
+                                    <Text style={styles.top}>{item.top}</Text>
+                                    <Text style={styles.postfix}>{item.postfix}</Text>
+                                </View>
+                            </View>
+                            {eventAgenda[key] && eventAgenda[key].map((agenda, key1) => {
+                                return <View key={key1}>
+                                    <View style={{ ...styles.inline, ...styles.item }}>
 
-                                            <View style={{ ...styles.time, ...styles.center }}>
-                                                <Text style={styles.agendaTimeTitle}>{time[key] && time[key][key1] ? time[key][key1] : ""}</Text>
-                                            </View>
-                                            <View style={{ ...styles.details, }}>
-                                                {agenda && agenda.map((item, key2) => {
-                                                    return <View style={{ ...styles.verticalBorder, borderLeftColor: Colors.main_color }} key={key2}>
-                                                        <Text style={styles.title}>{item.title}</Text>
-                                                        <Text style={{ ...styles.subtitle, color: Colors.main_color }}>{item.subtitle}</Text>
-                                                    </View>
-                                                })}
-                                            </View>
+                                        <View style={{ ...styles.time, ...styles.center }}>
+                                            <Text style={styles.agendaTimeTitle}>{time[key] && time[key][key1] ? time[key][key1] : ""}</Text>
+                                        </View>
+                                        <View style={{ ...styles.details, }}>
+                                            {agenda && agenda.map((item, key2) => {
+                                                return <View style={{
+                                                    ...styles.verticalBorder, borderLeftColor: Colors.main_color,
+                                                    paddingHorizontal: 8,
+                                                }} key={key2}>
+                                                    <Text style={styles.title}>{item.title}</Text>
+                                                    <Text style={{ ...styles.subtitle, color: Colors.main_color }}>{item.subtitle}</Text>
+                                                </View>
+                                            })}
                                         </View>
                                     </View>
-                                })}
-                            </View>
-                        })}
-                    </View>
-                </LinearGradient>
+                                </View>
+                            })}
+                        </View>
+                    })}
+                </View>
             </>)}
 
         </Layout>
@@ -200,7 +201,8 @@ const styles = StyleSheet.create({
         fontSize: aspectRatio > 1.6 ? 12 : 16,
         fontFamily: "OpenSans-Bold",
         color: Colors.main_color,
-        marginBottom: 10
+        marginBottom: 10,
+
 
     },
 });

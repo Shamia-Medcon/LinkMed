@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     },
     col: {
         width: Dimensions.get('screen').width * .7,
-        paddingEnd: 10,
+        paddingEnd: 20,
         flexDirection: 'column',
     },
     name: {

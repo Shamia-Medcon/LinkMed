@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { ActivityIndicator, Appearance, Dimensions, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import OneSignal from 'react-native-onesignal';
 import Layout from '../../components/common/layout';
@@ -26,23 +26,14 @@ export default function FeedBackScreen(props) {
                 const res = await GeneralApiData.EventFeedbackEvaluation(event ? event.id : 0);
                 if (res && res.status_code == 200) {
                     setEventFeedback(res.data);
-                    let data = res.data;
-                    for (var i = 0; i < data.length; i++) {
-                        let answersList = data[i].answers;
-                        for (var j = 0; j < answersList.length; j++) {
-                            if (answersList[j].selected) {
-                                answers.push({
-                                    'id': data[i].id,
-                                    'answer_id': answersList[j].id
-                                });
-                            }
-                        }
-                    }
+                    isLoading(false);
+
                 } else {
                     setEventFeedback([]);
                 }
+            } else {
+                isLoading(false);
             }
-            isLoading(false);
         }, 2000);
 
     }
@@ -51,8 +42,22 @@ export default function FeedBackScreen(props) {
         Colors = props.route.params.colors
         init()
 
-
     }, [event]);
+    useLayoutEffect(() => {
+        let data = eventFeedback;
+        for (var i = 0; i < data.length; i++) {
+            let answersList = data[i].answers;
+            for (var j = 0; j < answersList.length; j++) {
+                if (answersList[j].selected) {
+                    answers.push({
+                        'id': data[i].id,
+                        'answer_id': answersList[j].id,
+                        'selected': checkSelected(data[i].id, answersList[j].id)
+                    });
+                }
+            }
+        }
+    });
     useEffect(() => {
         OneSignal.setNotificationOpenedHandler(async (openedEvent) => {
             const { action, notification } = openedEvent;
@@ -123,52 +128,53 @@ export default function FeedBackScreen(props) {
                     "message": "Please try again",
                     "color": Colors.red,
                 });
-
             }
+            isSubmitLoading(false);
 
         } else {
+            isSubmitLoading(false);
             setAlert({
                 "message": "Please answer all questions",
                 "color": Colors.red,
             });
         }
-        isSubmitLoading(false);
-
     }
+    const renderItems = (
+        eventFeedback.map((item, key) => {
+            return <View style={styles.questionContent} key={key}>
+                <Text style={styles.question}>{item.title}</Text>
+                <View style={styles.inline}>
+                    {item.answers && item.answers.map((answer, key1) => {
+                        return <TouchableOpacity activeOpacity={.9} onPress={() => {
+                            selectAnswers(item.id, answer.id);
+                        }} style={styles.col} key={key1}>
+                            <View style={{
+                                ...styles.item,
+                                backgroundColor: answer.selected ? Colors.main_color : Colors.white,
+                                borderColor: Colors.main_color
+
+                            }}>
+                                <Text style={{ ...styles.answer, color: answer.selected ? Colors.white : Colors.main_color }}>{answer.title}</Text>
+                            </View>
+                            <Text style={{ ...styles.hint, color: Colors.main_color }}>{answer.hint}</Text>
+                        </TouchableOpacity>
+                    })}
+                </View>
+            </View>
+        })
+    )
+
     return (
         <Layout back={true} headerColor={Colors.main_color} secondColor={Colors.main_color} onRefresh={init} refreshing={loading}>
             {loading ? (<>
-                {/* <ActivityIndicator /> */}
+                <ActivityIndicator />
             </>) : (<>
                 <View style={styles.center}>
                     <Text style={{ ...styles.feedbackTitle, color: Colors.main_color }}>EVALUATION FEEDBACK</Text>
                 </View>
 
                 <View style={styles.feedback}>
-                    {eventFeedback.map((item, key) => {
-
-                        return <View style={styles.questionContent} key={key}>
-                            <Text style={styles.question}>{item.title}</Text>
-                            <View style={styles.inline}>
-                                {item.answers && item.answers.map((answer, key1) => {
-                                    return <TouchableOpacity activeOpacity={.9} onPress={() => {
-                                        selectAnswers(item.id, answer.id);
-                                    }} style={styles.col} key={key1}>
-                                        <View style={{
-                                            ...styles.item,
-                                            backgroundColor: (checkSelected(item.id, answer.id)) ? Colors.main_color : Colors.white,
-                                            borderColor: Colors.main_color
-
-                                        }}>
-                                            <Text style={{ ...styles.answer, color: (checkSelected(item.id, answer.id)) ? Colors.white : Colors.main_color }}>{answer.title}</Text>
-                                        </View>
-                                        <Text style={{ ...styles.hint, color: Colors.main_color }}>{answer.hint}</Text>
-                                    </TouchableOpacity>
-
-                                })}
-                            </View>
-                        </View>
-                    })}
+                    {renderItems}
                     {alert.message ? <>
                         <View><Text style={{ ...styles.error, color: alert.color }}>{alert.message}</Text></View>
                     </> : <></>}

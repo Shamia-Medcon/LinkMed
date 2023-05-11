@@ -45,7 +45,7 @@ export default function PrivacyScreen(props) {
             <StatusBar barStyle={"light-content"} backgroundColor={Colors.main_color} />
             <View style={styles.container}>
                 <Layout back={false} onRefresh={init} refreshing={loading} contentContainerStyle={{ paddingBottom: 100 }} style={styles.scroll} >
-                    <Text style={styles.title}>MEDLINK</Text>
+                    <Text style={styles.title}>LinkMed</Text>
                     {loading && !data ? (<>
                         <ActivityIndicator />
                     </>) : (<>

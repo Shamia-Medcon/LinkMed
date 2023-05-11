@@ -24,6 +24,7 @@ import LocalStorage from '../storage/LocalStorage';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 const { height, width } = Dimensions.get('window');
 const aspectRatio = height / width;
+import Lottie from 'lottie-react-native';
 
 let Colors = Color;
 export default function CurvedBottomNavigation() {
@@ -144,7 +145,6 @@ export default function CurvedBottomNavigation() {
                 renderCircle={({ selectedTab, navigate }) => (
                     <Animated.View style={{
                         ...styles.btnCircle,
-
                     }}>
                         <TouchableOpacity
                             style={{
@@ -180,14 +180,17 @@ export default function CurvedBottomNavigation() {
                     component={NotificationScreen}
 
                 />
+
                 <CurvedBottomBar.Screen
                     name="ProfileScreen"
                     position="RIGHT"
                     options={{ headerShown: false }}
                     component={ProfileScreen}
                 >
+
                 </CurvedBottomBar.Screen>
             </CurvedBottomBar.Navigator>
+
         </View>
     )
 }

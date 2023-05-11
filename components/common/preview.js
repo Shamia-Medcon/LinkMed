@@ -1,13 +1,21 @@
 import { ActivityIndicator, Dimensions, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useRef, useState } from 'react'
-import VideoPlayer from 'react-native-video-player'
+import React, { useEffect, useRef, useState } from 'react'
+import Video from 'react-native-video'
 import { Color } from '../../config/global';
+import DBConnect from '../../storage/DBConnect';
 const { width, height } = Dimensions.get('screen')
 let Colors = Color;
 
-export default function Preview({ url, open, setOpen }) {
+export default function Preview({ event, url, open, setOpen }) {
     const ref = useRef();
     const [loading, setLoading] = useState(true);
+    const eventRecord = async () => {
+        await DBConnect.insertTrackingInfo(event.id, event.title, true);
+    }
+    useEffect(() => {
+        eventRecord();
+    }, [])
+
     return (
         <Modal animationType='fade'
             transparent={true}
@@ -15,12 +23,14 @@ export default function Preview({ url, open, setOpen }) {
             onRequestClose={() => {
                 setOpen(false)
             }} >
-            <VideoPlayer
+            <Video
                 ref={ref}
-                video={{ uri: url }}
-                videoHeight={height}
+                style={{
+                    height: height,
+                    width: width
+                }}
+                source={{ uri: url }}
                 resizeMode={'stretch'}
-                videoWidth={width}
                 controls={false}
                 pauseOnPress={false}
                 disableFullscreen={true}
@@ -34,7 +44,7 @@ export default function Preview({ url, open, setOpen }) {
                     setLoading(true);
                 }}
                 onLoad={() => {
-                   setLoading(false);
+                    setLoading(false);
                 }}
                 onEnd={() => {
                     console.log("Ended")
@@ -50,7 +60,6 @@ export default function Preview({ url, open, setOpen }) {
 
             <TouchableOpacity style={styles.close} onPress={() => {
                 setOpen(false)
-                ref.current.stop()
             }}>
                 <Text style={styles.closeText}>Close</Text>
             </TouchableOpacity>
@@ -75,9 +84,9 @@ const styles = StyleSheet.create({
         position: 'absolute',
         width: width,
         height: height,
-        flex:1,
-        justifyContent:'center',
-        alignItems:'center',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
         backgroundColor: Colors.white,
 
     }

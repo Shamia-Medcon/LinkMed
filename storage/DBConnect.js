@@ -15,6 +15,10 @@ export default class {
                 'CREATE TABLE IF NOT EXISTS Setting(id BIGINT PRIMARY KEY NOT NULL, url VARCHAR(255), type INTEGER DEFAULT 1)',
                 []
             )
+            txn.executeSql(
+                'CREATE TABLE IF NOT EXISTS Events(id BIGINT PRIMARY KEY NOT NULL,title VARCHAR(100), status Boolean DEFAULT true,createdAt DATETIME DEFAULT (CURRENT_TIMESTAMP))',
+                []
+            )
         });
     }
     static getById = async (id) => {
@@ -68,6 +72,25 @@ export default class {
                 [id, first_name, last_name, email, country, speciaity, profession, token, isActivated, isScanner, createdAt], function (tx, res) {
                     console.log(`Record ${id} was Inserterd`);
                 })
+        });
+    }
+    static insertTrackingInfo = async (id, title, status) => {
+        console.log(id)
+        console.log(event_code)
+        console.log(title)
+        console.log(status)
+        db.transaction(function (txn) {
+            txn.executeSql('SELECT * FROM `Events` where event_id=:id limit 1', [id], function (tx, res) {
+                if (res.rows.length == 0) {
+                    txn.executeSql('INSERT INTO Events (id,title,status,createdAt) VALUES (:id,:title,:status)',
+                        [id, title, status], function (tx, res) {
+                            console.log(`Record ${id} was Inserterd`);
+                        })
+                } else {
+                    res.rows
+                }
+            });
+
         });
     }
     static updateData = async (id, first_name, last_name, email, country, speciaity, profession, token, isActivated) => {

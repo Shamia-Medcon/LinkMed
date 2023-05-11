@@ -13,29 +13,37 @@ export default function Header({ back, headerColor, secondColor, textColor }) {
     const [name, setName] = useState("");
     const [loading, setLoading] = useState(false);
     const loadAuth = async () => {
-        let check = await LocalStorage.checkExist("user")
-        if (check) {
-            let user = await LocalStorage.getData('user');
-            if (user) {
-                setName(user.first_name);
-                setLoading(true);
-            }
-        } else {
-            DBConnect.checkAuth();
-            const time = setTimeout(async () => {
+        try {
+            let check = await LocalStorage.checkExist("user")
+            if (check) {
                 let user = await LocalStorage.getData('user');
-                clearTimeout(time);
                 if (user) {
-                    setName(user.first_name);
+                    setName(user?.first_name);
                     setLoading(true);
                 }
-            }, 2000);
+            } else {
+                DBConnect.checkAuth();
+                const time = setTimeout(async () => {
+                    let user = await LocalStorage.getData('user');
+                    clearTimeout(time);
+                    if (user) {
+                        setName(user.first_name);
+                        setLoading(true);
+                    }
+                }, 2000);
+            }
+            return () => {
+                user = "";
+                name = ""
+            }
+        } catch (e) {
+            console.log(e);
         }
     }
     useEffect(() => {
         loadAuth();
-
-
+        return () => {
+        }
     }, [name]);
     return (
         <>

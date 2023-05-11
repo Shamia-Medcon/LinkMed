@@ -15,6 +15,7 @@ import EditProfileScreen from "../screens/account/editProfileScreen";
 import forgetPasswordScreen from "../screens/account/forgetPasswordScreen";
 import QrScannerScreen from "../screens/scanner/qrScanner";
 import CurvedBottomNavigation from "./curvedBottomNavigation";
+import SearchScreen from "../screens/main/searchScreen";
 
 const Stack = createNativeStackNavigator();
 export default class StackNavigation extends Component {
@@ -42,6 +43,7 @@ export default class StackNavigation extends Component {
             <Stack.Screen name="Home" component={CurvedBottomNavigation} options={{ headerShown: false, gestureEnabled: false }} />
 
             {/* Event Route */}
+            <Stack.Screen name="SearchDetails" component={SearchScreen} options={{ headerShown: false, gestureEnabled: false }} />
             <Stack.Screen name="EventDetails" component={EventDetails} options={{ headerShown: false, gestureEnabled: false }} />
             <Stack.Screen name="EventFacultyScreen" component={FacultyScreen} options={{ headerShown: false, gestureEnabled: false }} />
             <Stack.Screen name="EventProgramScreen" component={ProgramScreen} options={{ headerShown: false, gestureEnabled: false }} />

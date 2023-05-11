@@ -24,6 +24,9 @@ export default class {
             })
             .catch(function (error) {
                 // handle error
+                console.log("------------------")
+                console.log(JSON.stringify(error))
+                console.log("------------------")
                 return null;
             })
     }
@@ -33,6 +36,7 @@ export default class {
         if (user) {
             token = user.token;
         }
+
         let config = {
             headers: {
                 Authorization: "Bearer " + token,
@@ -40,11 +44,13 @@ export default class {
                 'Accept': "application/json"
             },
         };
+      
         return await axios.post(url, formdata, config)
             .then(function (response) {
                 return response.data;
             })
             .catch(function (error) {
+              
                 return error.response.data;
             });
     }

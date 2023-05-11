@@ -1,4 +1,4 @@
-const _prefix = "https://www.event.medcon.ae/public/api/v1";
+const _prefix = "http://phplaravel-996751-3506342.cloudwaysapps.com/api/v1";
 export default class {
     //Init Route
     static _initRoute = _prefix + "/init";
@@ -22,6 +22,7 @@ export default class {
 
     // Resources Route
     static _companyRoute = _prefix + "/company";
+    static _eventByCode = _prefix + "/eventByCode";
     static _eventRoute = _prefix + "/events";
     static _eventActivityRoute = _prefix + "/eventActivity";
     static _eventAgendaRoute = _prefix + "/agendaByEvent";

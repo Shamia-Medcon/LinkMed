@@ -7,7 +7,6 @@ const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
 
 export default function Layout(props) {
-    const navigation = useNavigation();
 
     return (
         <>
@@ -19,9 +18,9 @@ export default function Layout(props) {
                     headerColor={props.headerColor ? props.headerColor : Colors.main_color}
                     secondColor={props.secondColor ? props.secondColor : Colors.main_color} />
                 <ScrollView
-                    refreshControl={
-                        <RefreshControl refreshing={props.refreshing} onRefresh={props.onRefresh} />
-                    }
+                   refreshControl={
+                       <RefreshControl refreshing={props.refreshing} onRefresh={props.onRefresh} />
+                   }
                     contentContainerStyle={{ paddingBottom: 40 }} style={styles.scroll} >
                     <View style={styles.container}>
                         {props.children}
@@ -33,11 +32,9 @@ export default function Layout(props) {
 }
 const styles = StyleSheet.create({
     scroll: {
-        flex: 1,
         backgroundColor: Colors.white,
     },
     container: {
-        flex: 1,
         backgroundColor: Color.white,
         flexDirection: 'column',
         width: Dimensions.get('screen').width,
