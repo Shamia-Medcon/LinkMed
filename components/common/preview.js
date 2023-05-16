@@ -3,19 +3,15 @@ import React, { useEffect, useRef, useState } from 'react'
 import Video from 'react-native-video'
 import { Color } from '../../config/global';
 import DBConnect from '../../storage/DBConnect';
+import LocalStorage from '../../storage/LocalStorage';
 const { width, height } = Dimensions.get('screen')
 let Colors = Color;
 
 export default function Preview({ event, url, open, setOpen }) {
     const ref = useRef();
     const [loading, setLoading] = useState(true);
-    const eventRecord = async () => {
-        await DBConnect.insertTrackingInfo(event.id, event.title, true);
-    }
-    useEffect(() => {
-        eventRecord();
-    }, [])
 
+    
     return (
         <Modal animationType='fade'
             transparent={true}

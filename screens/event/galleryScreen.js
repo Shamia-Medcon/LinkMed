@@ -244,8 +244,8 @@ export default function GalleryScreen(props) {
                     />
                     <View style={styles.container}>
                         {loading ? (<>
-                            <View style={{ flex: 1, justifyContent: "center" }}>
-                                {/* <ActivityIndicator /> */}
+                            <View style={styles.center}>
+                                <ActivityIndicator />
                             </View>
                         </>) : (<>
                             <LinearGradient style={{ flex: 1 }} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} colors={[Colors.linear_main_color, Colors.linear_main_color, Colors.linear_secondary_color, Colors.white]}>
@@ -292,11 +292,13 @@ export default function GalleryScreen(props) {
                     textColor={Colors.white}
                     onRefresh={refresh} refreshing={loading}>
                     {loading ? (<>
-                        <View style={{ flex: 1, justifyContent: "center" }}>
+                        <View style={styles.container}>
                             <ActivityIndicator />
                         </View>
                     </>) : (<>
-                        <Text style={styles.noItems}>No Images Found</Text>
+                        <View style={styles.container}>
+                            <Text style={styles.noItems}>No Images Found</Text>
+                        </View>
                     </>)}
                 </Layout>
             </>)}
@@ -357,8 +359,11 @@ export default function GalleryScreen(props) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.white,
-
+        // backgroundColor: Colors.white,
+        height: height,
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center'
     },
     scroll: {
         flex: 1,
@@ -380,6 +385,7 @@ const styles = StyleSheet.create({
         color: Colors.grey_color,
         fontFamily: "OpenSans-Bold",
         textAlign: 'center',
+        fontSize: 16,
 
     },
     button: {

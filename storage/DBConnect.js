@@ -19,12 +19,16 @@ export default class {
                 'CREATE TABLE IF NOT EXISTS Events(id BIGINT PRIMARY KEY NOT NULL,title VARCHAR(100), status Boolean DEFAULT true,createdAt DATETIME DEFAULT (CURRENT_TIMESTAMP))',
                 []
             )
+            txn.executeSql(
+                'CREATE TABLE IF NOT EXISTS RSVP(id BIGINT PRIMARY KEY NOT NULL,rsvp_id VARCHAR(200), createdAt DATETIME DEFAULT (CURRENT_TIMESTAMP))',
+                []
+            )
         });
     }
     static getById = async (id) => {
         db.transaction(function (txn) {
             return txn.executeSql('SELECT * FROM `Users` where id=:id limit 1', [id], function (tx, res) {
-                if (res.rows.length > 0) {
+                if (res.rows['_array'].length > 0) {
                     let store = async () => {
                         await LocalStorage.storeData("user", res.rows['_array'][0]);
                     }
@@ -36,7 +40,7 @@ export default class {
     static getByEmail = async (email) => {
         db.transaction(function (txn) {
             return txn.executeSql('SELECT * FROM `Users` where email=:email', [email], function (tx, res) {
-                if (res.rows.length > 0) {
+                if (res.rows['_array'].length > 0) {
                     let store = async () => {
                         await LocalStorage.storeData("user", res.rows['_array'][0]);
                     }
@@ -48,18 +52,13 @@ export default class {
     static checkAuth = async () => {
         db.transaction(function (txn) {
             return txn.executeSql('SELECT * FROM `Users` order by created_at desc limit 1', [], function (tx, res) {
-                if (res.rows.length > 0) {
-                    let store = async () => {
-                        await LocalStorage.storeData("auth", true);
-                        await LocalStorage.storeData("user", res.rows['_array'][0]);
-                    }
-                    store();
+                if (res.rows['_array'].length > 0) {
+
+                    store("auth", true);
+                    store("user", res.rows['_array'][0]);
                 } else {
-                    let store = async () => {
-                        await LocalStorage.storeData("auth", false);
-                        await LocalStorage.storeData("user", null);
-                    }
-                    store();
+                    store("auth", false);
+                    store("user", null);
                 }
             })
         });
@@ -75,24 +74,86 @@ export default class {
         });
     }
     static insertTrackingInfo = async (id, title, status) => {
-        console.log(id)
-        console.log(event_code)
-        console.log(title)
-        console.log(status)
         db.transaction(function (txn) {
-            txn.executeSql('SELECT * FROM `Events` where event_id=:id limit 1', [id], function (tx, res) {
-                if (res.rows.length == 0) {
-                    txn.executeSql('INSERT INTO Events (id,title,status,createdAt) VALUES (:id,:title,:status)',
+            txn.executeSql('SELECT * FROM `Events` where id=:id limit 1', [id], function (tx, res) {
+                if (res.rows['_array'].length == 0) {
+                    txn.executeSql('INSERT INTO `Events` (id,title,status) VALUES (:id,:title,:status)',
                         [id, title, status], function (tx, res) {
                             console.log(`Record ${id} was Inserterd`);
                         })
-                } else {
-                    res.rows
+
                 }
             });
 
         });
     }
+
+    static checkEvent = async (id) => {
+        db.transaction(function (txn) {
+            return txn.executeSql('SELECT * FROM `Events` where id=:id', [id], function (tx, res) {
+                const store = async (key, event) => {
+                    await LocalStorage.storeData(key, event);
+                }
+                if (res.rows['_array'].length > 0) {
+
+                    store('event', res.rows['_array'][0]);
+                }
+            })
+        });
+    };
+
+    static insertRSVPInfo = async (id, rsvp_id) => {
+
+        db.transaction(function (txn) {
+            txn.executeSql('SELECT * FROM `RSVP` where id=:id limit 1', [id], function (tx, res) {
+                if (res.rows['_array'].length == 0) {
+                    txn.executeSql('INSERT INTO RSVP (id,rsvp_id) VALUES (:id,:rsvp_id)',
+                        [id, rsvp_id], function (tx, res) {
+                            console.log(`Record ${id} was Inserterd`);
+                        })
+                } else {
+                    console.log("Old RSVP")
+
+                    console.log(res.rows['_array'][0])
+                    console.log("New RSVP")
+                    console.log(rsvp_id)
+                    txn.executeSql('Update RSVP set rsvp_id=:rsvp_id where id=:id',
+                        [rsvp_id, id], function (tx, res) {
+                            console.log(`Record ${id} was Updated`);
+                        })
+
+                }
+            });
+
+
+
+        });
+    }
+
+    static checkRSVP = async (id) => {
+        db.transaction(function (txn) {
+            return txn.executeSql('SELECT * FROM `RSVP` where id=:id', [id], function (tx, res) {
+                const store = async (key, event) => {
+
+                    await LocalStorage.storeData(key, event);
+                }
+                if (res.rows['_array'].length > 0) {
+                    store('rsvp', res.rows['_array'][0]);
+                }
+            })
+        });
+    }
+    static deleteRSVP = async (id) => {
+        db.transaction(function (txn) {
+            txn.executeSql('delete from RSVP where id =:id', [id], function (tx, res) {
+                console.log(`Record ${id} was deleted`);
+               
+            });
+
+        })
+    }
+
+
     static updateData = async (id, first_name, last_name, email, country, speciaity, profession, token, isActivated) => {
         db.transaction(function (txn) {
             txn.executeSql('UPDATE Users set first_name=:first_name,last_name=:last_name,email=:email,country=:country,speciaity=:speciaity,profession=:profession,token=:token,isActivated=:isActivated where id=:id',
@@ -101,7 +162,9 @@ export default class {
     }
     static deleteData = async () => {
         db.transaction(function (txn) {
-            txn.executeSql('delete * from Users');
+            txn.executeSql('delete from Users');
+            txn.executeSql('delete from RSVP');
+            txn.executeSql('delete from Events');
 
         })
     }

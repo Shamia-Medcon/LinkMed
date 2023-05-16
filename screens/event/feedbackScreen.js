@@ -43,13 +43,15 @@ export default function FeedBackScreen(props) {
         init()
 
     }, [event]);
-    useLayoutEffect(() => {
+    const rebuildAnswer = () => {
         let data = eventFeedback;
+        let tempAnswers = [];
+
         for (var i = 0; i < data.length; i++) {
             let answersList = data[i].answers;
             for (var j = 0; j < answersList.length; j++) {
                 if (answersList[j].selected) {
-                    answers.push({
+                    tempAnswers.push({
                         'id': data[i].id,
                         'answer_id': answersList[j].id,
                         'selected': checkSelected(data[i].id, answersList[j].id)
@@ -57,7 +59,11 @@ export default function FeedBackScreen(props) {
                 }
             }
         }
-    });
+        setAnswers(tempAnswers)
+    }
+    useLayoutEffect(() => {
+        rebuildAnswer();
+    }, []);
     useEffect(() => {
         OneSignal.setNotificationOpenedHandler(async (openedEvent) => {
             const { action, notification } = openedEvent;
@@ -76,10 +82,9 @@ export default function FeedBackScreen(props) {
         })
 
     }, [])
-    const selectAnswers = (id, answer_id) => {
+    const selectAnswers = async (id, answer_id) => {
         let exists = false;
         let newAnswers = answers.map((item) => {
-
             if (item.id === id) {
                 exists = true;
                 item.answer_id = answer_id;
@@ -93,7 +98,9 @@ export default function FeedBackScreen(props) {
             });
 
         } else {
+
             setAnswers(newAnswers);
+            rebuildAnswer();
         }
         setClicked(!clicked);
 
@@ -150,11 +157,11 @@ export default function FeedBackScreen(props) {
                         }} style={styles.col} key={key1}>
                             <View style={{
                                 ...styles.item,
-                                backgroundColor: answer.selected ? Colors.main_color : Colors.white,
+                                backgroundColor: checkSelected(item.id, answer.id) ? Colors.main_color : Colors.white,
                                 borderColor: Colors.main_color
 
                             }}>
-                                <Text style={{ ...styles.answer, color: answer.selected ? Colors.white : Colors.main_color }}>{answer.title}</Text>
+                                <Text style={{ ...styles.answer, color: checkSelected(item.id, answer.id) ? Colors.white : Colors.main_color }}>{answer.title}</Text>
                             </View>
                             <Text style={{ ...styles.hint, color: Colors.main_color }}>{answer.hint}</Text>
                         </TouchableOpacity>
@@ -167,7 +174,9 @@ export default function FeedBackScreen(props) {
     return (
         <Layout back={true} headerColor={Colors.main_color} secondColor={Colors.main_color} onRefresh={init} refreshing={loading}>
             {loading ? (<>
-                <ActivityIndicator />
+                <View style={styles.container}>
+                    <ActivityIndicator size={"large"} />
+                </View>
             </>) : (<>
                 <View style={styles.center}>
                     <Text style={{ ...styles.feedbackTitle, color: Colors.main_color }}>EVALUATION FEEDBACK</Text>
@@ -196,6 +205,13 @@ export default function FeedBackScreen(props) {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        height: height,
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center'
+    },
     center: {
         justifyContent: 'center',
         alignContent: 'center',

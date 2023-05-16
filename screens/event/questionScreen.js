@@ -42,7 +42,6 @@ export default function SendingQuestionScreen(props) {
             }
             const res = await GeneralApiData.PostEventQuestionByUser(data);
             isSubmitLoading(false);
-            console.log(res)
             if (res && res.status_code == 200) {
                 // setAlert("Your question has sent successfully");
                 Toast.show({
@@ -151,8 +150,8 @@ export default function SendingQuestionScreen(props) {
                                             padding: 5,
                                             // backgroundColor: item.status == 0 ? Colors.light_grey_color : Colors.main_color,
                                             fontSize: 12,
-                                            color: item.status == 0 ? Colors.light_grey_color : Colors.main_color,
-                                            borderColor: item.status == 0 ? Colors.light_grey_color : Colors.main_color,
+                                            color: item.status_value == 0 ? Colors.red : Colors.main_color,
+                                            borderColor: item.status_value== 0 ? Colors.red : Colors.main_color,
                                             borderWidth: 1,
                                             borderRadius: 5,
 

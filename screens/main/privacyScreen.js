@@ -58,7 +58,7 @@ export default function PrivacyScreen(props) {
                                 </View>
                             </View>
                             <View style={{ ...styles.col }}>
-                                <Image resizeMode='contain' style={styles.icon} source={require("../../assets/img/vission.png")} />
+                                <Image resizeMode='contain' style={styles.icon} source={require("../../assets/img/vision.png")} />
                                 <View style={{ ...styles.bordered }}>
                                     <Text style={styles.subtitle}>Vision</Text>
                                     <Text style={styles.description}>{data.vission ? data.vission : ""}</Text>
@@ -143,6 +143,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: Colors.white,
+        marginBottom:30
     },
     title: {
         color: Colors.main_color,

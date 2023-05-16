@@ -1,5 +1,5 @@
-import React from 'react';
-import { Appearance, Dimensions, RefreshControl, ScrollView, StatusBar, StyleSheet, View } from 'react-native';
+import React, { useRef } from 'react';
+import { Animated, Appearance, Dimensions, RefreshControl, ScrollView, StatusBar, StyleSheet, View } from 'react-native';
 import Header from './header';
 import { Color, Dark } from '../../config/global';
 import { useNavigation } from '@react-navigation/native';
@@ -7,6 +7,8 @@ const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
 
 export default function Layout(props) {
+
+    const scrollX = useRef(new Animated.Value(0)).current;
 
     return (
         <>
@@ -18,11 +20,23 @@ export default function Layout(props) {
                     headerColor={props.headerColor ? props.headerColor : Colors.main_color}
                     secondColor={props.secondColor ? props.secondColor : Colors.main_color} />
                 <ScrollView
-                   refreshControl={
-                       <RefreshControl refreshing={props.refreshing} onRefresh={props.onRefresh} />
-                   }
+                    pagingEnabled={false}
+                    onScroll={Animated.event([
+                        {
+                            nativeEvent: {
+                                contentOffset: {
+                                    x: scrollX
+                                }
+                            }
+                        }
+                    ], { useNativeDriver: false })}
+                    scrollEventThrottle={0}
+                    refreshControl={
+                        <RefreshControl refreshing={props.refreshing} onRefresh={props.onRefresh} />
+                    }
                     contentContainerStyle={{ paddingBottom: 40 }} style={styles.scroll} >
                     <View style={styles.container}>
+
                         {props.children}
                     </View>
                 </ScrollView>

@@ -7,6 +7,7 @@ export default class {
             await AsyncStorage.setItem(key, jsonValue)
             return true;
         } catch (e) {
+            console.log(e)
             return false;
         }
     }
@@ -15,6 +16,7 @@ export default class {
             const jsonValue = await AsyncStorage.getItem(key)
             return jsonValue != null ? JSON.parse(jsonValue) : null;
         } catch (e) {
+            console.log(e)
             return null;
         }
     }
@@ -23,6 +25,7 @@ export default class {
             const jsonValue = await AsyncStorage.getItem(key)
             return jsonValue != null ? true : false;
         } catch (e) {
+            console.log(e)
             return false;
         }
     }
@@ -31,6 +34,7 @@ export default class {
             await AsyncStorage.removeItem(key)
             return true;
         } catch (e) {
+            console.log(e)
             return false;
         }
     }
@@ -39,6 +43,7 @@ export default class {
             await AsyncStorage.clear()
             return true;
         } catch (e) {
+            console.log(e)
             return false;
         }
     }

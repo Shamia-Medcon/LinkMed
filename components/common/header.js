@@ -32,18 +32,20 @@ export default function Header({ back, headerColor, secondColor, textColor }) {
                     }
                 }, 2000);
             }
-            return () => {
-                user = "";
-                name = ""
-            }
+
         } catch (e) {
             console.log(e);
+        }
+        return () => {
+            user = "";
+            name = "";
+
         }
     }
     useEffect(() => {
         loadAuth();
-        return () => {
-        }
+
+
     }, [name]);
     return (
         <>

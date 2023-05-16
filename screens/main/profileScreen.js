@@ -29,6 +29,8 @@ export default function ProfileScreen(props) {
     const signout = async () => {
         DBConnect.deleteData();
         await LocalStorage.trancateData('user');
+        await LocalStorage.trancateData('rsvp');
+        await LocalStorage.trancateData('events');
         navigation.reset({
             index: 0,
             routes: [{ name: 'Login' }],

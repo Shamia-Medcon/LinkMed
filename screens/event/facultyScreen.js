@@ -69,19 +69,21 @@ export default function FacultyScreen(props) {
                 onRefresh={init}
                 refreshing={loading}>
                 {loading ? (<>
-                    <ActivityIndicator />
+                    <View style={styles.container}>
+                        <ActivityIndicator size={"large"} />
+                    </View>
                 </>) : (<>
-                        <View style={styles.center}>
-                            <Text style={{ ...styles.facultyTitle, color: Colors.main_color }}>Faculty</Text>
-                        </View>
+                    <View style={styles.center}>
+                        <Text style={{ ...styles.facultyTitle, color: Colors.main_color }}>Faculty</Text>
+                    </View>
 
-                        <View style={styles.faculty}>
-                            {eventFaculty.map((item, key) => {
-                                return <View key={key}>
-                                    <FacultyItem colors={Colors} item={item} />
-                                </View>
-                            })}
-                        </View>
+                    <View style={styles.faculty}>
+                        {eventFaculty.map((item, key) => {
+                            return <View key={key}>
+                                <FacultyItem colors={Colors} item={item} />
+                            </View>
+                        })}
+                    </View>
                 </>)}
 
             </Layout>
@@ -90,7 +92,15 @@ export default function FacultyScreen(props) {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        height: height,
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center'
+    },
     center: {
+
         justifyContent: 'center',
         alignContent: 'center',
         alignItems: 'center'
@@ -105,7 +115,5 @@ const styles = StyleSheet.create({
         fontFamily: "OpenSans-Bold",
         textTransform: "uppercase",
         marginVertical: 10,
-
-
     }
 });

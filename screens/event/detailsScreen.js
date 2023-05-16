@@ -1,16 +1,17 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Appearance, Dimensions, Image, Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Appearance, Dimensions, Image, Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Layout from '../../components/common/layout';
 import { Color, Dark } from '../../config/global';
 import GalleryImage from '../../components/common/image';
 import GeneralApiData from '../../Data/GeneralApiData';
 import OneSignal from 'react-native-onesignal';
 import Toast from 'react-native-toast-message';
-import BottomSheet from 'react-native-gesture-bottom-sheet';
 import LinearGradient from 'react-native-linear-gradient'
 import Preview from '../../components/common/preview';
 import RSVP from '../../components/common/rsvp';
+import DBConnect from '../../storage/DBConnect';
+import LocalStorage from '../../storage/LocalStorage';
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
 const { height, width } = Dimensions.get('window');
@@ -25,8 +26,12 @@ export default function EventDetails(props) {
     const [event_id, setEventID] = useState(null);
     const [items, setItems] = useState([]);
     const [rsvp, setRsvp] = useState(-1);
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     const bottomRef = useRef();
+
+    const checkRSVP = async () => {
+        bottomRef.current.show()
+    }
 
     const init = async () => {
         try {
@@ -42,7 +47,7 @@ export default function EventDetails(props) {
                     if (res.data.rsvp == -1) {
                         bottomRef?.current?.show();
                     }
-                    let features=([
+                    let features = ([
                         [
                             {
                                 key: 0,
@@ -67,7 +72,7 @@ export default function EventDetails(props) {
                     ]);
                     switch (res.data?.plan) {
                         case "silver":
-                            features=[
+                            features = [
                                 ...features,
                                 [
                                     {
@@ -95,8 +100,8 @@ export default function EventDetails(props) {
 
                             ];
                             break;
-                        case "gold", "platinum":
-                            features=[
+                        case "gold", "platinum", "free":
+                            features = [
                                 ...features,
                                 [
                                     {
@@ -152,53 +157,34 @@ export default function EventDetails(props) {
                 }
 
                 isLoading(false);
+                await DBConnect.checkEvent(res.data?.id);
+                await DBConnect.checkRSVP(res.data?.id);
 
+                let check = await LocalStorage.getData('event');
+                if (check?.id) {
+                    setOpen(false);
+                } else {
+                    setOpen(true);
+                    await DBConnect.insertTrackingInfo(res.data?.id, res.data?.title, true);
+                }
+                return () => {
+                    check = "";
+                    res = "";
+                };
             }
 
         } catch (e) {
             console.log(e);
         }
-        return () => {
-        };
-    }
-    const updateRSVP = async (status) => {
-        setRsvp(status);
-        let data = {
-            rsvp_status: status
-        };
-        isRSVPLoading(true);
-
-        let res = await GeneralApiData.UpdateRSVP(event_id, data);
-        if (res && res.status_code == 200) {
-            isRSVPLoading(false);
-            bottomRef.current.close();
-            Toast.show({
-                type: "success",
-                text1: "Info",
-                text2: "Thank you for your confirmation."
-            })
-
-        } else {
-            isRSVPLoading(false);
-            Toast.show({
-                type: "error",
-                text1: "Warning",
-                text2: "Something wrong, Please try again"
-            })
-        }
-
 
     }
+
     useEffect(() => {
         setEventID(props.route.params.event);
         init();
 
+
         return () => {
-            setEventID(-1);
-            isLoading(false);
-            setEvent(null);
-            setRsvp(-1);
-            setItems([]);
 
         }
     }, [event_id]);
@@ -229,7 +215,9 @@ export default function EventDetails(props) {
     return (
         <>
             {loading ? (<>
-                <ActivityIndicator />
+                <View style={styles.container}>
+                    <ActivityIndicator size={"large"} />
+                </View>
             </>) : (<>
                 <Layout
                     back={true}
@@ -239,8 +227,8 @@ export default function EventDetails(props) {
                     onRefresh={init}
                     refreshing={loading}
                 >
-                    <RSVP rsvp={rsvp} bottomRef={bottomRef} updateRSVP={updateRSVP} rsvp_loading={rsvp_loading} />
 
+                    <RSVP setRsvp={setRsvp} event={event} rsvp={rsvp} bottomRef={bottomRef} isRSVPLoading={isRSVPLoading} rsvp_loading={rsvp_loading} />
 
                     {event ? (<>
                         <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} colors={[Colors.white, Colors.white]}>
@@ -312,9 +300,7 @@ export default function EventDetails(props) {
                         <Text style={styles.description}>
                             {event ? event.description : ""}
                         </Text>
-                        <TouchableOpacity style={styles.flex} activeOpacity={.9} onPress={() => {
-                            bottomRef.current.show()
-                        }}>
+                        <TouchableOpacity style={styles.flex} activeOpacity={.9} onPress={checkRSVP}>
                             <View>
                                 {rsvp == 1 ? (<>
                                     <Text style={styles.rsvp}>
@@ -388,7 +374,7 @@ export default function EventDetails(props) {
                             </View>)
                         })}
                         {event && event.promo ? (<>
-                            <Preview url={event.promo} open={open} setOpen={setOpen} />
+                            <Preview event={event} url={event.promo} open={open} setOpen={setOpen} />
                         </>) : (<></>)}
                     </>) : (null)}
                 </Layout>
@@ -400,7 +386,13 @@ export default function EventDetails(props) {
     );
 }
 const styles = StyleSheet.create({
-
+    container: {
+        flex: 1,
+        height: height,
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center'
+    },
     center: {
         justifyContent: 'center',
         alignContent: 'center',

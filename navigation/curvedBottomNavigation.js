@@ -22,10 +22,10 @@ import QRCode from 'react-native-qrcode-svg';
 import DBConnect from '../storage/DBConnect';
 import LocalStorage from '../storage/LocalStorage';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-const { height, width } = Dimensions.get('window');
-const aspectRatio = height / width;
 import Lottie from 'lottie-react-native';
 
+const { height, width } = Dimensions.get('window');
+const aspectRatio = height / width;
 let Colors = Color;
 export default function CurvedBottomNavigation() {
     const [open, setOpen] = useState(false);
@@ -56,7 +56,6 @@ export default function CurvedBottomNavigation() {
                 case 'HomeScreen':
                     icon = (routeName === selectedTab) ? 'ios-home' : 'ios-home-outline';
                     break;
-
                 case 'NotificationScreen':
                     icon = (routeName === selectedTab) ? 'notifications' : 'notifications-outline';
                     break;
@@ -143,18 +142,24 @@ export default function CurvedBottomNavigation() {
                 initialRouteName="HomeScreen"
                 borderTopLeftRight
                 renderCircle={({ selectedTab, navigate }) => (
-                    <Animated.View style={{
-                        ...styles.btnCircle,
-                    }}>
-                        <TouchableOpacity
-                            style={{
-                                flex: 1,
-                                justifyContent: 'center',
-                            }}
-                            onPress={() => { setOpen(true) }}>
-                            <Ionicons name={'ios-qr-code-outline'} color={Colors.main_color} size={30} />
-                        </TouchableOpacity>
-                    </Animated.View>
+                    <TouchableOpacity
+                        style={{
+                            ...styles.btnCircle,
+                        }}
+                        onPress={() => { setOpen(true) }}>
+                        <Lottie source={require('../assets/animate/loading-qrcode.json')}
+                            colorFilters={
+                                [
+                                    {
+                                        keypath: 'button',
+                                        color:Colors.main_color
+                                    }
+                                ]
+                            }
+                            autoPlay={true} loop />
+
+                        {/* <Ionicons name={'ios-qr-code-outline'} color={Colors.main_color} size={30} /> */}
+                    </TouchableOpacity>
                 )}
                 tabBar={renderTabBar}>
                 <CurvedBottomBar.Screen
@@ -220,6 +225,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 1.41,
         elevation: 1,
+        left: 0,
         bottom: 30,
     },
     iconBtnCircle: {

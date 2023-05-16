@@ -64,7 +64,9 @@ export default function ProgramScreen(props) {
     return (
         <Layout back={true} headerColor={Colors.main_color} secondColor={Colors.main_color} onRefresh={init} refreshing={loading}>
             {loading ? (<>
-                <ActivityIndicator />
+                <View style={styles.container}>
+                    <ActivityIndicator size={"large"} />
+                </View>
             </>) : (<>
 
                 <View style={styles.center}>
@@ -117,6 +119,13 @@ export default function ProgramScreen(props) {
 
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        height: height,
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center'
+    },
     program: {
         flex: 1,
         flexDirection: 'column',

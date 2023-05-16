@@ -8,6 +8,7 @@ import EventItem from '../../components/events/item';
 import { Color } from '../../config/global';
 import GeneralApiData from '../../Data/GeneralApiData';
 import LocalStorage from '../../storage/LocalStorage';
+import Toast from 'react-native-toast-message';
 
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
@@ -37,44 +38,6 @@ function SearchScreen(props) {
             isSearchLoading(false);
         };
     }, [searchPhrase]);
-
-
-    const updateRSVP = async (status) => {
-        try {
-            setRsvp(status);
-            let data = {
-                rsvp_status: status
-            };
-            isRSVPLoading(true);
-
-            let res = await GeneralApiData.UpdateRSVP(event.id, data);
-            if (res && res.status_code == 200) {
-                isRSVPLoading(false);
-                bottomRef.current.close();
-                Toast.show({
-                    type: "success",
-                    text1: "Info",
-                    text2: "Thank you for your confirmation."
-                })
-
-            } else {
-                isRSVPLoading(false);
-                Toast.show({
-                    type: "error",
-                    text1: "Warning",
-                    text2: "Something wrong, Please try again"
-                })
-            }
-        } catch (e) {
-            isRSVPLoading(false);
-            console.log(e);
-            Toast.show({
-                type: "error",
-                text1: "Warning",
-                text2: "Something wrong, Please try again"
-            })
-        }
-    }
 
     const init = async () => {
         let user = await LocalStorage.getData('user');
@@ -115,7 +78,7 @@ function SearchScreen(props) {
                 <View style={{
                     ...styles.center, ...styles.lists,
                 }}>
-                    <RSVP rsvp={rsvp} bottomRef={bottomRef} updateRSVP={updateRSVP} rsvp_loading={rsvp_loading} />
+                    <RSVP setRsvp={setRsvp} event={event} rsvp={rsvp} bottomRef={bottomRef} isRSVPLoading={isRSVPLoading} rsvp_loading={rsvp_loading} />
 
                     <Text style={styles.title}>My Events</Text>
 
@@ -186,6 +149,8 @@ function SearchScreen(props) {
 
                 </View>
             </Layout>
+            <Toast />
+
         </>
     );
 }

@@ -22,6 +22,7 @@ export default function PollingScreen(props) {
                 const res = await GeneralApiData.EventPolling(event ? event.id : 0);
                 isLoading(false);
                 if (res && res.status_code == 200) {
+                    console.log(res.data)
                     setEventPolling(res.data);
                 } else {
                     setEventPolling(null);
@@ -53,19 +54,20 @@ export default function PollingScreen(props) {
     }, [])
     return (
         <Layout back={true}
-    
+
             onRefresh={init}
             refreshing={loading}>
             {loading ? (<>
                 <ActivityIndicator />
             </>) : (<>
 
-                    {eventPolling ? (<>
-                        <WebView
-                            source={{ uri: eventPolling.url }}
-                            style={styles.frame}
-                        />
-                    </>) : (<></>)}
+                {eventPolling ? (<>
+                    <WebView
+                        originWhitelist={['*']}
+                        source={{ uri: eventPolling.url }}
+                        style={styles.frame}
+                    />
+                </>) : (<></>)}
 
             </>)}
 
@@ -75,6 +77,9 @@ export default function PollingScreen(props) {
 
 const styles = StyleSheet.create({
     frame: {
-        marginTop: 10,marginBottom: 50, width: Dimensions.get('screen').width, minHeight: Dimensions.get('screen').height
+        flex: 1,
+        paddingTop: 10, paddingBottom: 50,
+        width: Dimensions.get('screen').width,
+        height: Dimensions.get('screen').height * .9
     }
 });

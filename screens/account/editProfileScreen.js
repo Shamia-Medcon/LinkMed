@@ -47,7 +47,10 @@ export default function EditProfileScreen(props) {
             let data = [];
             res.data.forEach(item => {
                 if (item.title == user.speciality) {
-                    setSpeciaity(item.id);
+                    setSpeciaity({
+                        title: item.title,
+                        value: item.id
+                    });
                 }
                 data.push({
                     value: item.id,
@@ -134,6 +137,7 @@ export default function EditProfileScreen(props) {
             speciality_id: speciality.value,
 
         };
+        console.log(data);
 
         if (info.first_name == ""
         ) {
@@ -189,6 +193,7 @@ export default function EditProfileScreen(props) {
         }
         isLoading(true);
         let res = await GeneralApiData.UpdateUserInfoFunction(data, info.id);
+        console.log(res);
         if (res && res.status_code == 200) {
             let user = res.data
             await DBConnect.insertData(user.id, user.first_name, user.last_name, user.email, user.country, user.speciality, user.profession, user.token, user.is_activated, false, user.created_at);

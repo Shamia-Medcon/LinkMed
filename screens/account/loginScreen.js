@@ -43,7 +43,7 @@ export default LoginScreen = (props) => {
       //hide loading
       isLoading(false);
       //processing response
-      if (res&&res.status_code == 200) {
+      if (res && res.status_code == 200) {
         let data = res.data;
         if (data.isScanner) {
           await DBConnect.insertData(data.id, data.first_name, data.last_name, data.email, "", "", "", data.token, true, true, data.created_at);
@@ -104,7 +104,10 @@ export default LoginScreen = (props) => {
               <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
                 <View style={{ ...styles.bordered }}>
                   <View style={styles.iconContent}>
-                    <Image style={styles.icon} resizeMode="contain" source={require('../../assets/img/user.png')} />
+                    <Image style={{
+                      ...styles.icon,
+                      tintColor: Colors.main_color
+                    }} resizeMode="contain" source={require('../../assets/img/user.png')} />
                   </View>
                   <TextInput style={styles.input}
                     onChangeText={setEmail}
@@ -126,7 +129,10 @@ export default LoginScreen = (props) => {
               <View style={{ ...styles.itemMargin, ...styles.inputContent }}>
                 <View style={{ ...styles.bordered }}>
                   <View style={styles.iconContent}>
-                    <Image style={styles.icon} resizeMode="contain" source={require('../../assets/img/lock.png')} />
+                    <Image style={{
+                      ...styles.icon,
+                      tintColor: Colors.main_color
+                    }} resizeMode="contain" source={require('../../assets/img/lock.png')} />
                   </View>
                   <TextInput style={styles.input}
                     onChangeText={setPassword}
@@ -205,7 +211,7 @@ const styles = StyleSheet.create({
   },
 
   content: {
-    flex:1,
+    flex: 1,
     width: width,
     height: Dimensions.get('screen').height,
     justifyContent: 'center',
@@ -329,7 +335,7 @@ const styles = StyleSheet.create({
   footerTitle: {
     fontSize: aspectRatio > 1.6 ? 12 : 18,
     color: Colors.main_color,
-    marginTop:20
+    marginTop: 20
   },
   logoCompany: {
     width: Dimensions.get('screen').width,
