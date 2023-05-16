@@ -27,6 +27,8 @@ export default function FeedBackScreen(props) {
                 if (res && res.status_code == 200) {
                     setEventFeedback(res.data);
                     isLoading(false);
+                    setAnswers()
+                    rebuildAnswer(res.data);
 
                 } else {
                     setEventFeedback([]);
@@ -43,8 +45,8 @@ export default function FeedBackScreen(props) {
         init()
 
     }, [event]);
-    const rebuildAnswer = () => {
-        let data = eventFeedback;
+    const rebuildAnswer = (data) => {
+        // let data = eventFeedback;
         let tempAnswers = [];
 
         for (var i = 0; i < data.length; i++) {
@@ -54,16 +56,15 @@ export default function FeedBackScreen(props) {
                     tempAnswers.push({
                         'id': data[i].id,
                         'answer_id': answersList[j].id,
-                        'selected': checkSelected(data[i].id, answersList[j].id)
+                        'selected': true
                     });
                 }
             }
         }
         setAnswers(tempAnswers)
+
     }
-    useLayoutEffect(() => {
-        rebuildAnswer();
-    }, []);
+   
     useEffect(() => {
         OneSignal.setNotificationOpenedHandler(async (openedEvent) => {
             const { action, notification } = openedEvent;
@@ -84,30 +85,37 @@ export default function FeedBackScreen(props) {
     }, [])
     const selectAnswers = async (id, answer_id) => {
         let exists = false;
-        let newAnswers = answers.map((item) => {
-            if (item.id === id) {
-                exists = true;
-                item.answer_id = answer_id;
-            }
-            return item;
-        });
+        let temp = [];
+        temp = (
+            answers.map((item) => {
+                if (item.id === id) {
+                    exists = true;
+                    return {
+                        ...item,
+                        answer_id: answer_id
+                    }
+                }
+                return item;
+            })
+        );
+
         if (!exists) {
-            answers.push({
+            setAnswers([...answers, {
                 id: id,
                 answer_id: answer_id
-            });
+            }]);
 
         } else {
 
-            setAnswers(newAnswers);
-            rebuildAnswer();
+            setAnswers(temp);
         }
+       
         setClicked(!clicked);
 
     }
     const checkSelected = (id, answer_id) => {
         let exist = false;
-        answers.map((item) => {
+        answers && answers.map((item) => {
             if (item.id === id && item.answer_id === answer_id) {
                 exist = true
             }
@@ -157,7 +165,7 @@ export default function FeedBackScreen(props) {
                         }} style={styles.col} key={key1}>
                             <View style={{
                                 ...styles.item,
-                                backgroundColor: checkSelected(item.id, answer.id) ? Colors.main_color : Colors.white,
+                                backgroundColor:  checkSelected(item.id, answer.id) ? Colors.main_color : Colors.white,
                                 borderColor: Colors.main_color
 
                             }}>
