@@ -1,4 +1,4 @@
-const _prefix = "http://phplaravel-996751-3506342.cloudwaysapps.com/api/v1";
+const _prefix = "https://phplaravel-996751-3506342.cloudwaysapps.com/api/v1";
 export default class {
     //Init Route
     static _initRoute = _prefix + "/init";

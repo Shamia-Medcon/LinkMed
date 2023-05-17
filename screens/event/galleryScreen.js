@@ -248,7 +248,7 @@ export default function GalleryScreen(props) {
                                 <ActivityIndicator />
                             </View>
                         </>) : (<>
-                            <LinearGradient style={{ flex: 1 }} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} colors={[Colors.linear_main_color, Colors.linear_main_color, Colors.linear_secondary_color, Colors.white]}>
+                            <LinearGradient style={{ flex: 1 }} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} colors={[Colors.white, Colors.white, Colors.white, Colors.white]}>
 
                                 <FlatGrid
 

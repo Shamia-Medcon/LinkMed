@@ -10,7 +10,7 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { CurvedBottomBar } from 'react-native-curved-bottom-bar';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from '../screens/main/homeScreen';
@@ -32,6 +32,7 @@ export default function CurvedBottomNavigation() {
     const [info, setInfo] = useState(null);
     const [loading, isLoading] = useState(true);
     const navigation = useNavigation();
+    const animationRef = useRef(null)
     useFocusEffect(() => {
         init();
         const willFoucsSubsription = navigation.addListener('foucs', () => {
@@ -39,6 +40,10 @@ export default function CurvedBottomNavigation() {
         })
         return willFoucsSubsription;
     });
+
+    useEffect(() => {
+        animationRef.current?.play();
+    }, [])
     const init = async () => {
         DBConnect.checkAuth();
         let user = await LocalStorage.getData('user');
@@ -147,16 +152,8 @@ export default function CurvedBottomNavigation() {
                             ...styles.btnCircle,
                         }}
                         onPress={() => { setOpen(true) }}>
-                        <Lottie source={require('../assets/animate/loading-qrcode.json')}
-                            colorFilters={
-                                [
-                                    {
-                                        keypath: 'button',
-                                        color:Colors.main_color
-                                    }
-                                ]
-                            }
-                            autoPlay={true} loop />
+                        <Lottie ref={animationRef} source={require('../assets/animate/loading-qrcode.json')}
+                        />
 
                         {/* <Ionicons name={'ios-qr-code-outline'} color={Colors.main_color} size={30} /> */}
                     </TouchableOpacity>
