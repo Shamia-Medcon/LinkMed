@@ -345,7 +345,7 @@ export default function EventDetails(props) {
                                             <TouchableOpacity onPressIn={() => {
 
                                             }} key={key1} onPress={() => {
-                                                if (item.available) {
+                                                if (item.available || event.plan == "free") {
                                                     navigation.navigate(item.route, {
                                                         event: event,
                                                         colors: Colors
@@ -353,9 +353,9 @@ export default function EventDetails(props) {
                                                 } else {
 
                                                     Toast.show({
-                                                        type: "info",
+                                                        type: "error",
                                                         text1: "Warning",
-                                                        text2: (!event.hasEnded ? "The Event will be coming soon" : "The Event has ended")
+                                                        text2: (!event.hasEnded ? "The Event is not live yet" : "The Event has ended")
                                                     })
                                                 }
                                             }} activeOpacity={1} style={{ ...styles.col, borderColor: Colors.main_color }}>
