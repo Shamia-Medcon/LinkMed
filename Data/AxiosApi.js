@@ -4,7 +4,7 @@ import _Parser from './Parser';
 const axios = require('axios').default;
 
 export default class {
-    static async get(url) {
+    static async get(url, data = null) {
         let user = await LocalStorage.getData('user');
         let token = ""
         if (user) {
@@ -16,7 +16,9 @@ export default class {
                 'Content-Type': "application/json",
                 'Accept': "application/json"
             },
+            params: data
         };
+        console.log(data);
         return await axios.get(url, config)
             .then(function (response) {
                 // handle success
@@ -44,13 +46,13 @@ export default class {
                 'Accept': "application/json"
             },
         };
-      
+
         return await axios.post(url, formdata, config)
             .then(function (response) {
                 return response.data;
             })
             .catch(function (error) {
-              
+
                 return error.response.data;
             });
     }

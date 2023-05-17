@@ -1,6 +1,5 @@
 import React from "react";
-import { StyleSheet, TextInput, View, Keyboard, Button, Text, Dimensions } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { StyleSheet, TextInput, View, Keyboard, Button, Text, Dimensions,TouchableOpacity } from "react-native";
 import Icon from 'react-native-vector-icons/Entypo';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import { Color } from "../../config/global";

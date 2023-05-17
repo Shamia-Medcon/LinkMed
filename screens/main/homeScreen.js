@@ -36,21 +36,28 @@ export default function HomeScreen(props) {
             let user = await LocalStorage.getData('user');
             setUser(user);
             clearTimeout(time);
+            let player = await OneSignal.getDeviceState();
+
             let data = {
-                page: page
+                page: 0,
+                fcm: player.userId
             }
             const res = await GeneralApiData.EventList(data);
             isLoading(false);
             if (res && res.status_code == 200) {
-                setEvents(res.data);
-                setPage(page + 1);
+                if (res.data.length > 0) {
+                    setEvents(res.data);
+                    setPage(page + 1);
+                } else {
+                    setPage(0);
+                }
             } else {
                 setEvents([]);
             }
         }, 2000);
     }
     useEffect(() => {
-       // init();
+        // init();
 
         const foucsHanler = navigation.addListener('focus', () => {
             init();
@@ -79,7 +86,10 @@ export default function HomeScreen(props) {
     return (<>
         <StatusBar barStyle={"light-content"} backgroundColor={Colors.main_color} />
 
-        <Layout onRefresh={init} refreshing={loading}>
+        <Layout onRefresh={() => {
+            setPage(0);
+            init();
+        }} refreshing={loading}>
             <View style={{
                 ...styles.center, ...styles.lists,
             }}>
