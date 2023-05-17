@@ -3,7 +3,6 @@ import { View, Text, Appearance, Image, StatusBar, Animated, StyleSheet, Dimensi
 import DBConnect from '../storage/DBConnect';
 import LocalStorage from '../storage/LocalStorage';
 import { Color, Dark } from '../config/global';
-import { Camera } from 'react-native-vision-camera';
 
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
