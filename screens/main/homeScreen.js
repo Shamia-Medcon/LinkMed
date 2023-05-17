@@ -84,7 +84,7 @@ export default function HomeScreen(props) {
 
     }, [])
     return (<>
-        <StatusBar barStyle={"light-content"} backgroundColor={Colors.main_color} />
+        <StatusBar translucent barStyle={"dark-content"} backgroundColor={Colors.main_color} />
 
         <Layout onRefresh={() => {
             setPage(0);
