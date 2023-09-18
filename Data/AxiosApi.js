@@ -18,7 +18,6 @@ export default class {
             },
             params: data
         };
-        console.log(data);
         return await axios.get(url, config)
             .then(function (response) {
                 // handle success
@@ -26,9 +25,6 @@ export default class {
             })
             .catch(function (error) {
                 // handle error
-                console.log("------------------")
-                console.log(JSON.stringify(error))
-                console.log("------------------")
                 return null;
             })
     }

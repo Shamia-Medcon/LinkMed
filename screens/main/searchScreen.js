@@ -19,7 +19,7 @@ function SearchScreen(props) {
 
     const [loading, isLoading] = useState(false);
     const [searchLoading, isSearchLoading] = useState(false);
-    const [searchPhrase, setSearchPhrase] = useState("");
+    const [searchPhrase, setSearchPhrase] = useState(props.route.params.searchPhrase);
     const [event, setEvent] = useState(null);
     const [clicked, setClicked] = useState(false);
     const [user, setUser] = useState(null);
@@ -28,7 +28,7 @@ function SearchScreen(props) {
     const bottomRef = useRef();
 
     useEffect(() => {
-        setSearchPhrase(props.route.params.searchPhrase);
+        //setSearchPhrase(props.route.params.searchPhrase);
 
         init();
 
@@ -56,10 +56,14 @@ function SearchScreen(props) {
                     setRsvp(res.data?.rsvp)
                 } else {
                     setEvent(null);
+                    Toast.show({
+                        type: "error",
+                        text1: "Warning",
+                        text2: "No Events Found"
+                    })
                 }
             }
         } catch (e) {
-            console.log(e)
             Toast.show({
                 type: "error",
                 text1: "Warning",
@@ -92,60 +96,76 @@ function SearchScreen(props) {
                             description={false}
                         />
                     </View>
-                    <Text style={styles.title}>Welcome to</Text>
-                    <View style={styles.divider}></View>
-                    {event ? (<>
-                        <ComponentEvent event={event} />
-                        <View >
-                            <Text style={styles.description}>
-                                {event.description}
-                            </Text>
-                        </View>
+                    {event ?
+                        <>
 
-                    </>) : (null)}
-                    <View>
-                        {rsvp == 1 ? (<>
-                            <Text style={styles.rsvp}>
-                                I will attend this event
-                            </Text>
-                        </>) : (rsvp == 0 ? (<>
-                            <Text style={styles.rsvp}>
-                                I will not attend this event
-                            </Text>
-                        </>) : (
-                            rsvp == 2 ? <>
-                                <Text style={styles.rsvp}>
-                                    I am not sure
-                                </Text>
-                            </> : (<>
-                                <Text style={styles.rsvp}>
-
-                                </Text>
-                            </>)))}
-                    </View>
-                    <TouchableOpacity style={styles.flex} activeOpacity={.9} onPress={() => {
-                        bottomRef.current.show()
-                    }}>
-
-                        {rsvp != -1 ?
-                            <View style={{ ...styles.rsvpChange, color: Colors.white, borderColor: Colors.white, backgroundColor: Colors.main_color }}>
-
-                                <Text style={{ color: Colors.white }}>
-                                    Change
-                                </Text>
-                            </View>
-                            : <>
-
-                                <View style={{ ...styles.rsvpChange, color: Colors.white, borderColor: Colors.white, backgroundColor: Colors.main_color }}>
-
-                                    <Text style={{ color: Colors.white }}>
-                                        RSVP
+                            <Text style={styles.title}>Welcome to</Text>
+                            <View style={styles.divider}></View>
+                            {event ? (<>
+                                <ComponentEvent event={event} />
+                                <View >
+                                    <Text style={styles.description}>
+                                        {event.description}
                                     </Text>
                                 </View>
 
-                            </>
-                        }
-                    </TouchableOpacity>
+                            </>) : (null)}
+                            <View>
+                                {rsvp == 1 ? (<>
+                                    <Text style={styles.rsvp}>
+                                        I will attend this event
+                                    </Text>
+                                </>) : (rsvp == 0 ? (<>
+                                    <Text style={styles.rsvp}>
+                                        I will not attend this event
+                                    </Text>
+                                </>) : (
+                                    rsvp == 2 ? <>
+                                        <Text style={styles.rsvp}>
+                                            I am not sure
+                                        </Text>
+                                    </> : (<>
+                                        <Text style={styles.rsvp}>
+
+                                        </Text>
+                                    </>)))}
+                            </View>
+                            <TouchableOpacity style={styles.flex} activeOpacity={.9} onPress={() => {
+                                bottomRef.current.show()
+                            }}>
+
+                                {rsvp != -1 ?
+                                    <View style={{ ...styles.rsvpChange, color: Colors.white, borderColor: Colors.white, backgroundColor: Colors.main_color }}>
+
+                                        <Text style={{ color: Colors.white }}>
+                                            Change
+                                        </Text>
+                                    </View>
+                                    : <>
+
+                                        <View style={{ ...styles.rsvpChange, color: Colors.white, borderColor: Colors.white, backgroundColor: Colors.main_color }}>
+
+                                            <Text style={{ color: Colors.white }}>
+                                                RSVP
+                                            </Text>
+                                        </View>
+
+                                    </>
+                                }
+                            </TouchableOpacity>
+                        </>
+
+                        : <View style={styles.container}>
+                            <View style={styles.center}>
+                                <Text style={{
+                                    color: Colors.grey_color,
+                                    fontFamily: "OpenSans-Bold",
+                                    textAlign: 'center',
+                                    fontSize: 16,
+                                }}>No Events Found</Text>
+                            </View>
+                        </View>
+                    }
 
                 </View>
             </Layout>

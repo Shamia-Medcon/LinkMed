@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Appearance, Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Color, Dark } from '../../config/global';
 import LocalStorage from '../../storage/LocalStorage';
@@ -11,7 +11,9 @@ let Colors = Color;
 export default function Header({ back, headerColor, secondColor, textColor }) {
     const navigation = useNavigation();
     const [name, setName] = useState("");
+
     const [loading, setLoading] = useState(false);
+
     const loadAuth = async () => {
         try {
             let check = await LocalStorage.checkExist("user")
@@ -44,8 +46,6 @@ export default function Header({ back, headerColor, secondColor, textColor }) {
     }
     useEffect(() => {
         loadAuth();
-
-
     }, [name]);
     return (
         <>

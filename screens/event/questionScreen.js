@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Appearance, Dimensions, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
+import { TextInput,ActivityIndicator, Appearance, Dimensions, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import OneSignal from 'react-native-onesignal';
 import Layout from '../../components/common/layout';
 import { Color, Dark } from '../../config/global';

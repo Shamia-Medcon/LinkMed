@@ -1,6 +1,5 @@
 import React from 'react';
-import { Appearance, Dimensions, StyleSheet, Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Appearance, TouchableOpacity, StyleSheet, Text, View } from 'react-native';
 import { Color, Dark } from '../../config/global';
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;

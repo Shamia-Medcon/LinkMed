@@ -64,7 +64,7 @@ export default function FeedBackScreen(props) {
         setAnswers(tempAnswers)
 
     }
-   
+
     useEffect(() => {
         OneSignal.setNotificationOpenedHandler(async (openedEvent) => {
             const { action, notification } = openedEvent;
@@ -109,7 +109,7 @@ export default function FeedBackScreen(props) {
 
             setAnswers(temp);
         }
-       
+
         setClicked(!clicked);
 
     }
@@ -165,7 +165,7 @@ export default function FeedBackScreen(props) {
                         }} style={styles.col} key={key1}>
                             <View style={{
                                 ...styles.item,
-                                backgroundColor:  checkSelected(item.id, answer.id) ? Colors.main_color : Colors.white,
+                                backgroundColor: checkSelected(item.id, answer.id) ? Colors.main_color : Colors.white,
                                 borderColor: Colors.main_color
 
                             }}>
@@ -186,26 +186,46 @@ export default function FeedBackScreen(props) {
                     <ActivityIndicator size={"large"} />
                 </View>
             </>) : (<>
-                <View style={styles.center}>
-                    <Text style={{ ...styles.feedbackTitle, color: Colors.main_color }}>EVALUATION FEEDBACK</Text>
-                </View>
 
-                <View style={styles.feedback}>
-                    {renderItems}
-                    {alert.message ? <>
-                        <View><Text style={{ ...styles.error, color: alert.color }}>{alert.message}</Text></View>
-                    </> : <></>}
-                    <View style={{ ...styles.center }}>
-                        {submitLoading ? (<>
-                            <ActivityIndicator />
-                        </>) : (<>
-                            <TouchableOpacity style={{ ...styles.button, ...styles.center, backgroundColor: Colors.main_color }} onPress={() => { submit() }} activeOpacity={.9}>
-                                <Text style={styles.white}>Send</Text>
-                            </TouchableOpacity>
-                        </>)}
+                {eventFeedback.length > 0 ? <>
+                    <View style={styles.center}>
+                        <Text style={{ ...styles.feedbackTitle, color: Colors.main_color }}>EVALUATION FEEDBACK</Text>
+                    </View>
+                    <View style={styles.feedback}>
+                        {renderItems}
+                        <>
+
+                            {alert.message ? <>
+                                <View><Text style={{ ...styles.error, color: alert.color }}>{alert.message}</Text></View>
+                            </> : null}
+                            <View style={{ ...styles.center }}>
+                                {submitLoading ? (<>
+                                    <ActivityIndicator />
+                                </>) : (<>
+                                    <TouchableOpacity style={{ ...styles.button, ...styles.center, backgroundColor: Colors.main_color }} onPress={() => { submit() }} activeOpacity={.9}>
+                                        <Text style={styles.white}>Send</Text>
+                                    </TouchableOpacity>
+                                </>)}
+
+                            </View>
+                        </>
+
 
                     </View>
-                </View>
+                </>
+                    :
+                    <View style={styles.container}>
+                        <View style={styles.center}>
+                            <Text style={{
+                                color: Colors.grey_color,
+                                fontFamily: "OpenSans-Bold",
+                                textAlign: 'center',
+                                fontSize: 16,
+                            }}>Feedback is not available now</Text>
+                        </View>
+                    </View>
+
+                }
             </>
             )}
         </Layout>

@@ -11,48 +11,57 @@ const aspectRatio = height / width;
 function ComponentEvent({ event }) {
 
     useEffect(() => {
-        Colors = JSON.parse(event.company?.colors)
+        if (event?.company) {
+            Colors = JSON.parse(event?.company?.colors)
+        }
     }, [])
 
     return (
         <View style={{ ...styles.row, ...styles.item, backgroundColor: Colors.linear_main_color, borderColor: Colors.linear_main_color }}>
             <LinearGradient style={{ ...styles.details, }} start={{ x: 1, y: 0 }} end={{ x: .5, y: 1 }} angleCenter={{ x: 0, y: 0 }} colors={[Colors.white, Colors.white]}>
 
-                <View>
+                <View style={{
+                    margin:5,
+
+                }}>
 
                     <View style={styles.col}>
-                        <View style={styles.rowFlex}>
+                        <View style={{
+                            ...styles.rowFlex, justifyContent: 'center',
+                        }}>
                             <View>
-                                <Text style={{ ...styles._font18, ...styles._center, color: Colors.main_color }}>{event.day}</Text>
+                                <Text style={{ ...styles._font20, ...styles._center, color: Colors.main_color }}>{event.day}</Text>
                                 <Text style={{ ...styles._font50, ...styles._center, color: Colors.main_color }}>{event.day_numeric}</Text>
-                                <Text style={{ ...styles._font18, ...styles._center, color: Colors.main_color }}>{event.month}</Text>
+                                <Text style={{ ...styles._font20, ...styles._center, color: Colors.main_color }}>{event.month}</Text>
                             </View>
                         </View>
-                        <View style={styles.rowFlex}>
+                        <View style={{...styles.rowFlex,}}>
                             <View style={styles.iconContent}>
                                 <Image source={require('../../assets/img/time.png')}
                                     resizeMode='contain'
                                     style={{
                                         ...styles.icon,
-                                        tintColor: Colors.main_color
+                                        tintColor: Colors.main_color,
+                                    
                                     }} />
                             </View>
                             <View style={styles.textContent}>
-                                <Text style={{ ...styles._font10, ...styles._center, color: Colors.main_color }}>{event.time}</Text>
+                                <Text style={{ ...styles._font12, ...styles._center, color: Colors.main_color, }}>{event.time}</Text>
                             </View>
                         </View>
-                        <View style={styles.rowFlex}>
+                        <View style={{...styles.rowFlex,}}>
                             <View style={styles.iconContent}>
                                 <Image source={require('../../assets/img/location.png')}
                                     resizeMode='contain'
                                     style={{
                                         ...styles.icon,
+                                        height:40,
                                         tintColor: Colors.main_color
 
                                     }} />
                             </View>
-                            <View style={styles.textContent}>
-                                <Text style={{ ...styles._font10, ...styles._center, color: Colors.main_color }}>{event.address}</Text>
+                            <View >
+                                <Text style={{ ...styles._font12, ...styles._center, color: Colors.main_color }}>{event.address}</Text>
 
                             </View>
                         </View>
@@ -89,16 +98,15 @@ const styles = StyleSheet.create({
     col: {
         flexDirection: 'column',
         justifyContent: 'center',
-        paddingHorizontal: 2
+        paddingHorizontal: 1
     },
     rowFlex: {
         flexDirection: 'row',
         alignContent: 'center',
-        justifyContent: 'center',
         alignItems: 'center',
     },
     details: {
-        width: Dimensions.get('screen').width * .35,
+        width: Dimensions.get('screen').width * .40,
         height: aspectRatio > 1.6 ? 200 : Dimensions.get('screen').height * .25,
         borderRadius: 3,
         elevation: 5,
@@ -112,7 +120,7 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
     },
     iconContent: {
-        width: "25%",
+        width: "20%",
         justifyContent: 'center',
         alignContent: 'center',
         alignItems: 'center',
@@ -121,7 +129,7 @@ const styles = StyleSheet.create({
         width: 20,
     },
     textContent: {
-        width: "75%",
+        width: "80%",
         justifyContent: 'center',
         alignContent: 'center',
         alignItems: 'center',
@@ -134,7 +142,7 @@ const styles = StyleSheet.create({
     },
     thumb: {
         height: aspectRatio > 1.6 ? 200 : Dimensions.get('screen').height * .25,
-        width: Dimensions.get('screen').width * .59,
+        width: Dimensions.get('screen').width * .54,
         backgroundColor: Colors.white,
         borderBottomRightRadius: 15,
         borderTopRightRadius: 15,
@@ -182,6 +190,8 @@ const styles = StyleSheet.create({
         textTransform: 'capitalize',
         lineHeight: aspectRatio > 1.6 ? 15 : 17,
         width: "100%",
+        marginBottom: 5
+
     },
     _font18: {
         fontSize: aspectRatio > 1.6 ? 18 : 20,
@@ -201,11 +211,11 @@ const styles = StyleSheet.create({
 
     },
     _font50: {
-        fontSize: aspectRatio > 1.6 ? 50 : 52,
+        fontSize: aspectRatio > 1.6 ? 45 : 47,
         color: Colors.main_color,
         fontFamily: "OpenSans-Bold",
         textTransform: 'capitalize',
-        lineHeight: aspectRatio > 1.6 ? 50 : 52,
+        lineHeight: aspectRatio > 1.6 ? 45 : 47,
         width: "100%",
 
     },

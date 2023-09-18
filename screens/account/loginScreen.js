@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { Component, useEffect, useRef, useState } from 'react';
-import { View, Text, StyleSheet, Button, Image, Dimensions, TouchableOpacity, Appearance, StatusBar, ScrollView } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
+import {TextInput, View, Text, StyleSheet, Button, Image, Dimensions, TouchableOpacity, Appearance, StatusBar, ScrollView } from 'react-native';
 import ProgressBarLoading from '../../components/common/ProgressBar';
 import { Color, Dark } from '../../config/global';
 import validation from '../../config/validation';

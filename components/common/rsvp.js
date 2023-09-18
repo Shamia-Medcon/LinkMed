@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { ActivityIndicator, Appearance, Dimensions, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Appearance, Dimensions, StyleSheet, Text, View,TouchableOpacity } from 'react-native';
 import BottomSheet from 'react-native-gesture-bottom-sheet';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Color } from '../../config/global';
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;

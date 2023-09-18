@@ -7,6 +7,7 @@ import { Color, Dark } from '../../config/global';
 import GeneralApiData from '../../Data/GeneralApiData';
 const colorScheme = Appearance.getColorScheme();
 let Colors = Color;
+const { height, width } = Dimensions.get('window');
 
 export default function PollingScreen(props) {
     const [loading, isLoading] = useState(false);
@@ -67,7 +68,16 @@ export default function PollingScreen(props) {
                         source={{ uri: eventPolling.url }}
                         style={styles.frame}
                     />
-                </>) : (<></>)}
+                </>) : (<View style={styles.container}>
+                    <View style={styles.center}>
+                        <Text style={{
+                            color: Colors.grey_color,
+                            fontFamily: "OpenSans-Bold",
+                            textAlign: 'center',
+                            fontSize: 16,
+                        }}>Polling is not available now</Text>
+                    </View>
+                </View>)}
 
             </>)}
 
@@ -79,7 +89,19 @@ const styles = StyleSheet.create({
     frame: {
         flex: 1,
         paddingTop: 10, paddingBottom: 50,
-        width: Dimensions.get('screen').width,
-        height: Dimensions.get('screen').height * .9
+        width: width,
+        height: height * .9
+    },
+    container: {
+        flex: 1,
+        height: height,
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center'
+    },
+    center: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });

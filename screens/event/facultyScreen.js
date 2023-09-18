@@ -73,17 +73,30 @@ export default function FacultyScreen(props) {
                         <ActivityIndicator size={"large"} />
                     </View>
                 </>) : (<>
-                    <View style={styles.center}>
-                        <Text style={{ ...styles.facultyTitle, color: Colors.main_color }}>Faculty</Text>
-                    </View>
 
-                    <View style={styles.faculty}>
-                        {eventFaculty.map((item, key) => {
-                            return <View key={key}>
-                                <FacultyItem colors={Colors} item={item} />
+                    {eventFaculty.length > 0 ? <>
+                        <View style={styles.center}>
+                            <Text style={{ ...styles.facultyTitle, color: Colors.main_color }}>Faculty</Text>
+                        </View>
+                        <View style={styles.faculty}>
+                            {eventFaculty.map((item, key) => {
+                                return <View key={key}>
+                                    <FacultyItem colors={Colors} item={item} />
+                                </View>
+                            })}
+                        </View>
+                    </>
+                        : (<View style={styles.container}>
+                            <View style={styles.center}>
+                                <Text style={{
+                                    color: Colors.grey_color,
+                                    fontFamily: "OpenSans-Bold",
+                                    textAlign: 'center',
+                                    fontSize: 16,
+
+                                }}>Faculty is not available now</Text>
                             </View>
-                        })}
-                    </View>
+                        </View>)}
                 </>)}
 
             </Layout>
